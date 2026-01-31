@@ -1,8 +1,12 @@
+'use client';
+
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ArrowRight, Activity, Shield, AlertTriangle, TrendingUp, Cpu, Server, Zap, Globe } from "lucide-react";
 import { WorldMap } from "@/components/features/maps/world-map";
+import { MapFilters } from "@/components/features/maps/map-filters";
 import {
   getModels as getOpenAIModels,
   getRiskAssessments as getOpenAIAssessments,
@@ -283,6 +287,13 @@ function ComputeInfrastructurePreview() {
 }
 
 export default function Home() {
+  const [mapFilters, setMapFilters] = useState({
+    showLabs: true,
+    showDataCenters: true,
+    showManufacturers: true,
+    showShipmentRegions: true,
+  });
+
   return (
     <div>
       {/* World Map Section */}
@@ -295,12 +306,16 @@ export default function Home() {
               Track frontier AI labs, data centers, and chip manufacturing across the globe
             </p>
           </div>
+
+          {/* Map Filters */}
+          <MapFilters onFiltersChange={setMapFilters} />
+
           <div style={{ height: "600px" }} className="rounded-lg overflow-hidden">
             <WorldMap
-              showLabs={true}
-              showDataCenters={true}
-              showManufacturers={true}
-              showShipmentRegions={true}
+              showLabs={mapFilters.showLabs}
+              showDataCenters={mapFilters.showDataCenters}
+              showManufacturers={mapFilters.showManufacturers}
+              showShipmentRegions={mapFilters.showShipmentRegions}
               height={600}
             />
           </div>
