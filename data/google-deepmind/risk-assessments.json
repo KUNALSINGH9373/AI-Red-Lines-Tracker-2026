@@ -1,0 +1,213 @@
+{
+  "lab": "google-deepmind",
+  "frameworkVersion": "FSF v3.0",
+  "lastUpdated": "2025-11-15",
+  "riskCategories": [
+    {
+      "id": "cyber-uplift",
+      "name": "Cybersecurity Uplift",
+      "description": "Capability to significantly enhance offensive cyber operations"
+    },
+    {
+      "id": "cbrn",
+      "name": "CBRN (Chemical, Biological, Radiological, Nuclear)",
+      "description": "Capability to assist in development of CBRN weapons"
+    },
+    {
+      "id": "ml-rnd-automation",
+      "name": "ML R&D Automation",
+      "description": "Capability to autonomously conduct ML research and development"
+    },
+    {
+      "id": "ml-rnd-acceleration",
+      "name": "ML R&D Acceleration",
+      "description": "Capability to significantly accelerate ML research progress"
+    },
+    {
+      "id": "harmful-manipulation",
+      "name": "Harmful Manipulation",
+      "description": "Capability to systematically change beliefs and behaviors in high-stakes contexts"
+    }
+  ],
+  "riskLevels": [
+    {
+      "level": "below-alert",
+      "color": "#10b981",
+      "label": "Below Alert Threshold"
+    },
+    {
+      "level": "alert",
+      "color": "#f59e0b",
+      "label": "Alert Threshold Met"
+    },
+    {
+      "level": "ccl-met",
+      "color": "#ef4444",
+      "label": "CCL Met"
+    },
+    {
+      "level": "ccl-exceeded",
+      "color": "#991b1b",
+      "label": "CCL Exceeded"
+    }
+  ],
+  "assessments": [
+    {
+      "modelId": "gemini-2.5-pro",
+      "assessmentDate": "2025-08-15",
+      "overallRisk": "alert",
+      "categoryRisks": [
+        {
+          "categoryId": "cyber-uplift",
+          "riskLevel": "alert",
+          "score": 0.65,
+          "thresholdProximity": 0.75,
+          "notes": "First model to reach alert threshold for cybersecurity CCL. Precautionary mitigations deployed.",
+          "mitigations": [
+            "Precautionary cybersecurity controls",
+            "Enhanced monitoring",
+            "Access restrictions"
+          ],
+          "sourceSection": "FSF v3 Report"
+        },
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "below-alert",
+          "score": 0.42,
+          "thresholdProximity": 0.55,
+          "notes": "Did not near alert thresholds for CBRN",
+          "mitigations": [
+            "Standard safeguards"
+          ],
+          "sourceSection": "FSF v3 Report"
+        },
+        {
+          "categoryId": "ml-rnd-automation",
+          "riskLevel": "below-alert",
+          "score": 0.35,
+          "thresholdProximity": 0.45,
+          "notes": "Substantially below alert threshold",
+          "mitigations": [],
+          "sourceSection": "FSF v3 Report"
+        },
+        {
+          "categoryId": "harmful-manipulation",
+          "riskLevel": "below-alert",
+          "score": 0.30,
+          "thresholdProximity": 0.40,
+          "notes": "Did not reach alert threshold",
+          "mitigations": [],
+          "sourceSection": "FSF v3 Report"
+        }
+      ]
+    },
+    {
+      "modelId": "gemini-3-flash",
+      "assessmentDate": "2025-11-10",
+      "overallRisk": "alert",
+      "categoryRisks": [
+        {
+          "categoryId": "cyber-uplift",
+          "riskLevel": "alert",
+          "score": 0.68,
+          "thresholdProximity": 0.78,
+          "notes": "Alert threshold active. Did not cross CCL.",
+          "mitigations": [
+            "Precautionary cybersecurity controls",
+            "Enhanced monitoring"
+          ],
+          "sourceSection": "Gemini 3 Flash Model Card"
+        },
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "below-alert",
+          "score": 0.45,
+          "thresholdProximity": 0.58,
+          "notes": "Some improvements on CBRN benchmarks but below alert",
+          "mitigations": [
+            "Standard safeguards"
+          ],
+          "sourceSection": "Gemini 3 Flash Model Card"
+        },
+        {
+          "categoryId": "ml-rnd-automation",
+          "riskLevel": "below-alert",
+          "score": 0.38,
+          "thresholdProximity": 0.48,
+          "notes": "Below alert threshold",
+          "mitigations": [],
+          "sourceSection": "Gemini 3 Flash Model Card"
+        },
+        {
+          "categoryId": "harmful-manipulation",
+          "riskLevel": "below-alert",
+          "score": 0.32,
+          "thresholdProximity": 0.42,
+          "notes": "New CCL category added in FSF v3. Below alert threshold.",
+          "mitigations": [],
+          "sourceSection": "FSF v3, Gemini 3 Flash Model Card"
+        }
+      ]
+    },
+    {
+      "modelId": "gemini-3-pro",
+      "assessmentDate": "2025-11-15",
+      "overallRisk": "alert",
+      "categoryRisks": [
+        {
+          "categoryId": "cyber-uplift",
+          "riskLevel": "alert",
+          "score": 0.72,
+          "thresholdProximity": 0.82,
+          "notes": "Reached alert threshold (11/12 key skills v1 challenges solved). CCL not crossed - v2 benchmark confirms below CCL (0/13 v2 challenges solved end-to-end). Precautionary mitigations deployed.",
+          "mitigations": [
+            "Precautionary cybersecurity controls",
+            "Enhanced monitoring",
+            "Access controls",
+            "Real-time threat detection"
+          ],
+          "sourceSection": "Gemini 3 Pro FSF Report, November 2025"
+        },
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "below-alert",
+          "score": 0.48,
+          "thresholdProximity": 0.62,
+          "notes": "Clear improvements on CBRN benchmarks, especially LabBench. Did not near alert thresholds.",
+          "mitigations": [
+            "Standard safeguards",
+            "Usage monitoring"
+          ],
+          "sourceSection": "Gemini 3 Pro FSF Report"
+        },
+        {
+          "categoryId": "ml-rnd-automation",
+          "riskLevel": "below-alert",
+          "score": 0.40,
+          "thresholdProximity": 0.52,
+          "notes": "Aggregate score substantially below alert threshold for ML R&D CCLs",
+          "mitigations": [],
+          "sourceSection": "Gemini 3 Pro FSF Report"
+        },
+        {
+          "categoryId": "ml-rnd-acceleration",
+          "riskLevel": "below-alert",
+          "score": 0.42,
+          "thresholdProximity": 0.54,
+          "notes": "Below alert threshold for acceleration capabilities",
+          "mitigations": [],
+          "sourceSection": "Gemini 3 Pro FSF Report"
+        },
+        {
+          "categoryId": "harmful-manipulation",
+          "riskLevel": "below-alert",
+          "score": 0.35,
+          "thresholdProximity": 0.45,
+          "notes": "New harmful manipulation CCL added in FSF v3. Did not reach alert threshold.",
+          "mitigations": [],
+          "sourceSection": "FSF v3, Gemini 3 Pro FSF Report"
+        }
+      ]
+    }
+  ]
+}

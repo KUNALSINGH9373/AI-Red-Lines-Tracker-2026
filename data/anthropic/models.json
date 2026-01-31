@@ -1,0 +1,40 @@
+{
+  "lab": "anthropic",
+  "models": [
+    {
+      "id": "claude-haiku-4.5",
+      "name": "Claude Haiku 4.5",
+      "family": "claude-4",
+      "releaseDate": "2025-10-15",
+      "systemCardUrl": "https://assets.anthropic.com/m/99128ddd009bdcb/Claude-Haiku-4-5-System-Card.pdf"
+    },
+    {
+      "id": "claude-sonnet-4",
+      "name": "Claude Sonnet 4",
+      "family": "claude-4",
+      "releaseDate": "2025-05-14",
+      "systemCardUrl": "https://www.anthropic.com/claude-4-system-card"
+    },
+    {
+      "id": "claude-sonnet-4.5",
+      "name": "Claude Sonnet 4.5",
+      "family": "claude-4",
+      "releaseDate": "2025-10-22",
+      "systemCardUrl": "https://www.anthropic.com/claude-sonnet-4-5-system-card"
+    },
+    {
+      "id": "claude-opus-4",
+      "name": "Claude Opus 4",
+      "family": "claude-4",
+      "releaseDate": "2025-05-14",
+      "systemCardUrl": "https://www.anthropic.com/claude-4-system-card"
+    },
+    {
+      "id": "claude-opus-4.5",
+      "name": "Claude Opus 4.5",
+      "family": "claude-4",
+      "releaseDate": "2025-11-24",
+      "systemCardUrl": "https://www.anthropic.com/claude-opus-4-5-system-card"
+    }
+  ]
+}

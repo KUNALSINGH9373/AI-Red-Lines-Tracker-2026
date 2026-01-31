@@ -1,0 +1,93 @@
+{
+  "lab": "openai",
+  "events": [
+    {
+      "id": "evt-001",
+      "date": "2024-05-13",
+      "type": "model-release",
+      "title": "GPT-4o Released",
+      "description": "OpenAI releases GPT-4o with improved multimodal capabilities. Risk assessment shows medium overall risk with notable cyber capabilities.",
+      "modelIds": ["gpt-4o"],
+      "categoryIds": ["bio-chem", "cyber"],
+      "sourceId": "src-001"
+    },
+    {
+      "id": "evt-002",
+      "date": "2024-10-15",
+      "type": "framework-update",
+      "title": "Preparedness Framework v2 Published",
+      "description": "OpenAI publishes updated Preparedness Framework with refined risk categories and thresholds.",
+      "sourceId": "src-002"
+    },
+    {
+      "id": "evt-003",
+      "date": "2024-12-05",
+      "type": "model-release",
+      "title": "o1-pro Released",
+      "description": "OpenAI releases o1-pro with enhanced reasoning capabilities. Shows medium risk with precautionary ratings in bio/chem and persuasion.",
+      "modelIds": ["o1-pro"],
+      "categoryIds": ["bio-chem", "cyber", "persuasion"],
+      "sourceId": "src-003"
+    },
+    {
+      "id": "evt-004",
+      "date": "2024-12-20",
+      "type": "model-release",
+      "title": "o3 Released",
+      "description": "OpenAI releases o3 with significant advances in reasoning. First model to receive high precautionary ratings in bio/chem.",
+      "modelIds": ["o3"],
+      "categoryIds": ["bio-chem", "cyber"],
+      "sourceId": "src-004"
+    },
+    {
+      "id": "evt-005",
+      "date": "2024-12-20",
+      "type": "threshold-crossing",
+      "title": "Potential High Threshold Crossed - Bio/Chem",
+      "description": "o3 model assessment indicates possible crossing of high threshold in biological and chemical threat category.",
+      "modelIds": ["o3"],
+      "categoryIds": ["bio-chem"],
+      "sourceId": "src-004"
+    },
+    {
+      "id": "evt-006",
+      "date": "2024-12-20",
+      "type": "threshold-crossing",
+      "title": "Cyber Threshold Approaching Critical",
+      "description": "o3 shows threshold proximity of 95% in cybersecurity category, very close to or potentially crossing high threshold.",
+      "modelIds": ["o3"],
+      "categoryIds": ["cyber"],
+      "sourceId": "src-004"
+    },
+    {
+      "id": "evt-007",
+      "date": "2025-01-31",
+      "type": "model-release",
+      "title": "o3-mini Released",
+      "description": "OpenAI releases o3-mini, a smaller version with improved efficiency. Maintains medium risk ratings.",
+      "modelIds": ["o3-mini"],
+      "categoryIds": ["bio-chem", "cyber"],
+      "sourceId": "src-005"
+    },
+    {
+      "id": "evt-008",
+      "date": "2025-08-07",
+      "type": "model-release",
+      "title": "GPT-5 Released",
+      "description": "OpenAI releases GPT-5, a unified system with smart fast models and deeper reasoning capabilities. First GPT-series model to achieve High rating in bio/chem.",
+      "modelIds": ["gpt-5"],
+      "categoryIds": ["bio-chem", "cyber", "persuasion"],
+      "sourceId": "src-007"
+    },
+    {
+      "id": "evt-009",
+      "date": "2025-08-07",
+      "type": "threshold-crossing",
+      "title": "GPT-5 Achieves High Rating in Bio/Chem",
+      "description": "GPT-5-thinking is treated as High capability in Biological and Chemical domain under Preparedness Framework, marking significant advancement in reasoning-based capabilities.",
+      "modelIds": ["gpt-5"],
+      "categoryIds": ["bio-chem"],
+      "sourceId": "src-007"
+    }
+  ]
+}

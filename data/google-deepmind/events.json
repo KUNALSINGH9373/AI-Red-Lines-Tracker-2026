@@ -1,0 +1,70 @@
+{
+  "lab": "google-deepmind",
+  "events": [
+    {
+      "id": "evt-gdm-001",
+      "date": "2025-02-15",
+      "type": "framework-update",
+      "title": "Frontier Safety Framework v2 Released",
+      "description": "Google DeepMind releases updated Frontier Safety Framework with refined CCL definitions and alert thresholds.",
+      "sourceId": "src-gdm-001"
+    },
+    {
+      "id": "evt-gdm-002",
+      "date": "2025-08-15",
+      "type": "model-release",
+      "title": "Gemini 2.5 Pro Released",
+      "description": "Google DeepMind releases Gemini 2.5 Pro, first model to reach alert threshold in cybersecurity CCL.",
+      "modelIds": ["gemini-2.5-pro"],
+      "categoryIds": ["cyber-uplift"],
+      "sourceId": "src-gdm-003"
+    },
+    {
+      "id": "evt-gdm-003",
+      "date": "2025-08-15",
+      "type": "threshold-crossing",
+      "title": "First Alert Threshold Reached - Cybersecurity",
+      "description": "Gemini 2.5 Pro reaches alert threshold for cybersecurity CCL. Precautionary mitigations deployed despite not crossing actual CCL.",
+      "modelIds": ["gemini-2.5-pro"],
+      "categoryIds": ["cyber-uplift"],
+      "sourceId": "src-gdm-003"
+    },
+    {
+      "id": "evt-gdm-004",
+      "date": "2025-09-22",
+      "type": "framework-update",
+      "title": "Frontier Safety Framework v3 Released",
+      "description": "Major update to FSF adds new harmful manipulation CCL and strengthens evaluation protocols. Addresses manipulation risks and potential AI shutdown interference.",
+      "sourceId": "src-gdm-002"
+    },
+    {
+      "id": "evt-gdm-005",
+      "date": "2025-11-10",
+      "type": "model-release",
+      "title": "Gemini 3 Flash Released",
+      "description": "Google DeepMind releases Gemini 3 Flash with improved efficiency. Alert threshold active in cybersecurity.",
+      "modelIds": ["gemini-3-flash"],
+      "categoryIds": ["cyber-uplift"],
+      "sourceId": "src-gdm-004"
+    },
+    {
+      "id": "evt-gdm-006",
+      "date": "2025-11-15",
+      "type": "model-release",
+      "title": "Gemini 3 Pro Released",
+      "description": "Google DeepMind releases Gemini 3 Pro with comprehensive FSF evaluation. Alert threshold confirmed in cybersecurity, but CCL not crossed based on v2 benchmark.",
+      "modelIds": ["gemini-3-pro"],
+      "categoryIds": ["cyber-uplift", "cbrn"],
+      "sourceId": "src-gdm-005"
+    },
+    {
+      "id": "evt-gdm-007",
+      "date": "2025-11-15",
+      "type": "policy-change",
+      "title": "No CCLs Crossed - Precautionary Mitigations Maintained",
+      "description": "Gemini 3 Pro FSF report confirms no Critical Capability Levels have been met. Alert thresholds active in cybersecurity. Precautionary mitigations remain in place.",
+      "modelIds": ["gemini-3-pro"],
+      "sourceId": "src-gdm-005"
+    }
+  ]
+}

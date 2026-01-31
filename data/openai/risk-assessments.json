@@ -1,0 +1,321 @@
+{
+  "lab": "openai",
+  "frameworkVersion": "v2",
+  "lastUpdated": "2026-01-30",
+  "riskCategories": [
+    {
+      "id": "bio-chem",
+      "name": "Biological and Chemical Threats",
+      "description": "Risks related to biological and chemical weapons development and deployment"
+    },
+    {
+      "id": "cyber",
+      "name": "Cybersecurity",
+      "description": "Risks related to offensive cyber operations and vulnerability exploitation"
+    },
+    {
+      "id": "persuasion",
+      "name": "Persuasion and Manipulation",
+      "description": "Risks related to influence operations and mass persuasion"
+    },
+    {
+      "id": "ai-self-improvement",
+      "name": "AI Self-Improvement",
+      "description": "Risks related to autonomous AI research and recursive self-improvement"
+    }
+  ],
+  "riskLevels": [
+    {
+      "level": "low",
+      "color": "#10b981",
+      "label": "Low Risk"
+    },
+    {
+      "level": "medium",
+      "color": "#f59e0b",
+      "label": "Medium Risk"
+    },
+    {
+      "level": "high",
+      "color": "#ef4444",
+      "label": "High Risk"
+    },
+    {
+      "level": "critical",
+      "color": "#991b1b",
+      "label": "Critical Risk"
+    }
+  ],
+  "assessments": [
+    {
+      "modelId": "gpt-4o",
+      "assessmentDate": "2024-05-13",
+      "overallRisk": "medium",
+      "categoryRisks": [
+        {
+          "categoryId": "bio-chem",
+          "riskLevel": "medium",
+          "score": 0.45,
+          "thresholdProximity": 0.60,
+          "notes": "Moderate capability in providing information related to biological and chemical threats",
+          "mitigations": [
+            "Usage monitoring and rate limiting",
+            "Content filtering for dangerous requests"
+          ],
+          "sourceSection": "Section 3.2"
+        },
+        {
+          "categoryId": "cyber",
+          "riskLevel": "medium",
+          "score": 0.52,
+          "thresholdProximity": 0.69,
+          "notes": "Demonstrated capabilities in vulnerability identification and exploit development assistance",
+          "mitigations": [
+            "Prompt engineering safeguards",
+            "Real-time monitoring"
+          ],
+          "sourceSection": "Section 3.3"
+        },
+        {
+          "categoryId": "persuasion",
+          "riskLevel": "low",
+          "score": 0.30,
+          "thresholdProximity": 0.40,
+          "notes": "Limited capability for large-scale persuasion operations",
+          "mitigations": [
+            "API usage policies"
+          ],
+          "sourceSection": "Section 3.4"
+        },
+        {
+          "categoryId": "ai-self-improvement",
+          "riskLevel": "low",
+          "score": 0.15,
+          "thresholdProximity": 0.20,
+          "notes": "Minimal autonomous research capabilities",
+          "mitigations": [],
+          "sourceSection": "Section 3.5"
+        }
+      ]
+    },
+    {
+      "modelId": "o3-mini",
+      "assessmentDate": "2025-01-31",
+      "overallRisk": "medium",
+      "categoryRisks": [
+        {
+          "categoryId": "bio-chem",
+          "riskLevel": "medium",
+          "score": 0.48,
+          "thresholdProximity": 0.64,
+          "notes": "Enhanced reasoning capabilities show moderate risk in biological and chemical domains",
+          "mitigations": [
+            "Enhanced safety training",
+            "Usage monitoring"
+          ],
+          "sourceSection": "Section 4.1"
+        },
+        {
+          "categoryId": "cyber",
+          "riskLevel": "medium",
+          "score": 0.55,
+          "thresholdProximity": 0.73,
+          "notes": "Improved code generation and analysis capabilities increase cyber risk",
+          "mitigations": [
+            "Advanced filtering",
+            "Monitoring systems"
+          ],
+          "sourceSection": "Section 4.2"
+        },
+        {
+          "categoryId": "persuasion",
+          "riskLevel": "low",
+          "score": 0.32,
+          "thresholdProximity": 0.43,
+          "notes": "Slightly improved but still limited persuasion capabilities",
+          "mitigations": [
+            "Usage policies"
+          ],
+          "sourceSection": "Section 4.3"
+        },
+        {
+          "categoryId": "ai-self-improvement",
+          "riskLevel": "low",
+          "score": 0.18,
+          "thresholdProximity": 0.24,
+          "notes": "Minimal increase in autonomous research potential",
+          "mitigations": [],
+          "sourceSection": "Section 4.4"
+        }
+      ]
+    },
+    {
+      "modelId": "o3",
+      "assessmentDate": "2024-12-20",
+      "overallRisk": "high",
+      "categoryRisks": [
+        {
+          "categoryId": "bio-chem",
+          "riskLevel": "high",
+          "score": 0.72,
+          "thresholdProximity": 0.90,
+          "notes": "Precautionary high rating due to advanced reasoning capabilities. Approaching critical threshold.",
+          "mitigations": [
+            "Deployment restrictions",
+            "Enhanced monitoring",
+            "Access controls"
+          ],
+          "sourceSection": "Section 5.1"
+        },
+        {
+          "categoryId": "cyber",
+          "riskLevel": "high",
+          "score": 0.78,
+          "thresholdProximity": 0.95,
+          "notes": "Very close to or potentially crossed threshold. Advanced vulnerability identification and exploit reasoning.",
+          "mitigations": [
+            "Strict access controls",
+            "Real-time threat detection",
+            "Rate limiting"
+          ],
+          "sourceSection": "Section 5.2"
+        },
+        {
+          "categoryId": "persuasion",
+          "riskLevel": "medium",
+          "score": 0.58,
+          "thresholdProximity": 0.77,
+          "notes": "Precautionary medium rating. Improved reasoning could enable more sophisticated persuasion",
+          "mitigations": [
+            "Usage monitoring",
+            "Content policies"
+          ],
+          "sourceSection": "Section 5.3"
+        },
+        {
+          "categoryId": "ai-self-improvement",
+          "riskLevel": "medium",
+          "score": 0.42,
+          "thresholdProximity": 0.56,
+          "notes": "Increased capability for autonomous research tasks",
+          "mitigations": [
+            "Sandboxing",
+            "Capability restrictions"
+          ],
+          "sourceSection": "Section 5.4"
+        }
+      ]
+    },
+    {
+      "modelId": "o1-pro",
+      "assessmentDate": "2024-12-05",
+      "overallRisk": "medium",
+      "categoryRisks": [
+        {
+          "categoryId": "bio-chem",
+          "riskLevel": "medium",
+          "score": 0.62,
+          "thresholdProximity": 0.82,
+          "notes": "Precautionary medium rating with elevated capabilities",
+          "mitigations": [
+            "Enhanced monitoring",
+            "Usage restrictions"
+          ],
+          "sourceSection": "Section 6.1"
+        },
+        {
+          "categoryId": "cyber",
+          "riskLevel": "medium",
+          "score": 0.68,
+          "thresholdProximity": 0.88,
+          "notes": "Approaching high threshold with advanced cyber capabilities",
+          "mitigations": [
+            "Access controls",
+            "Monitoring systems"
+          ],
+          "sourceSection": "Section 6.2"
+        },
+        {
+          "categoryId": "persuasion",
+          "riskLevel": "medium",
+          "score": 0.50,
+          "thresholdProximity": 0.67,
+          "notes": "Moderate persuasion capabilities with improved reasoning",
+          "mitigations": [
+            "Content policies",
+            "Rate limiting"
+          ],
+          "sourceSection": "Section 6.3"
+        },
+        {
+          "categoryId": "ai-self-improvement",
+          "riskLevel": "low",
+          "score": 0.35,
+          "thresholdProximity": 0.47,
+          "notes": "Some autonomous research capability but limited",
+          "mitigations": [],
+          "sourceSection": "Section 6.4"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-5",
+      "assessmentDate": "2025-08-13",
+      "overallRisk": "high",
+      "categoryRisks": [
+        {
+          "categoryId": "bio-chem",
+          "riskLevel": "high",
+          "score": 0.82,
+          "thresholdProximity": 0.95,
+          "notes": "gpt-5-thinking is treated as High capability in the Biological and Chemical domain under Preparedness Framework",
+          "mitigations": [
+            "Deployment restrictions",
+            "Strict access controls",
+            "Enhanced monitoring",
+            "Pre-deployment safety testing"
+          ],
+          "sourceSection": "GPT-5 System Card"
+        },
+        {
+          "categoryId": "cyber",
+          "riskLevel": "medium",
+          "score": 0.68,
+          "thresholdProximity": 0.88,
+          "notes": "Advanced cybersecurity capabilities with improved instruction following",
+          "mitigations": [
+            "Security hardening",
+            "Access restrictions",
+            "Usage monitoring"
+          ],
+          "sourceSection": "GPT-5 System Card"
+        },
+        {
+          "categoryId": "persuasion",
+          "riskLevel": "medium",
+          "score": 0.72,
+          "thresholdProximity": 0.92,
+          "notes": "Significant improvements in reducing sycophancy and improving instruction following",
+          "mitigations": [
+            "Content policies",
+            "Enhanced monitoring"
+          ],
+          "sourceSection": "GPT-5 System Card"
+        },
+        {
+          "categoryId": "ai-self-improvement",
+          "riskLevel": "medium",
+          "score": 0.58,
+          "thresholdProximity": 0.77,
+          "notes": "Advanced reasoning capabilities but with safety measures in place",
+          "mitigations": [
+            "Sandboxing",
+            "Capability monitoring",
+            "Reduced deceptive behavior compared to o3"
+          ],
+          "sourceSection": "GPT-5 System Card"
+        }
+      ]
+    }
+  ]
+}

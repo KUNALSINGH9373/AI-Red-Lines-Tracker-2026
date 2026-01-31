@@ -1,0 +1,72 @@
+{
+  "lab": "anthropic",
+  "events": [
+    {
+      "id": "evt-ant-001",
+      "date": "2025-05-14",
+      "type": "threshold-crossing",
+      "title": "ASL-3 Activated for First Time",
+      "description": "Anthropic activates ASL-3 protections for Claude Opus 4, marking the first deployment under enhanced security and safety standards.",
+      "modelIds": ["claude-opus-4"],
+      "categoryIds": ["cbrn"],
+      "sourceId": "src-ant-002"
+    },
+    {
+      "id": "evt-ant-002",
+      "date": "2025-05-14",
+      "type": "model-release",
+      "title": "Claude Opus 4 & Sonnet 4 Released",
+      "description": "Anthropic releases Claude 4 family with precautionary ASL-3 protections, first models to deploy under enhanced safety framework.",
+      "modelIds": ["claude-opus-4", "claude-sonnet-4"],
+      "categoryIds": ["cbrn", "ai-rnd"],
+      "sourceId": "src-ant-003"
+    },
+    {
+      "id": "evt-ant-003",
+      "date": "2025-05-14",
+      "type": "framework-update",
+      "title": "RSP v2.2 Effective",
+      "description": "Responsible Scaling Policy version 2.2 becomes effective with refined ASL-3 security standards.",
+      "sourceId": "src-ant-001"
+    },
+    {
+      "id": "evt-ant-004",
+      "date": "2025-10-15",
+      "type": "model-release",
+      "title": "Claude Haiku 4.5 Released",
+      "description": "Anthropic releases Claude Haiku 4.5 under ASL-2 classification with standard deployment safeguards.",
+      "modelIds": ["claude-haiku-4.5"],
+      "sourceId": "src-ant-004"
+    },
+    {
+      "id": "evt-ant-005",
+      "date": "2025-10-22",
+      "type": "model-release",
+      "title": "Claude Sonnet 4.5 Released",
+      "description": "Anthropic releases Claude Sonnet 4.5 with precautionary ASL-3 classification and enhanced capabilities.",
+      "modelIds": ["claude-sonnet-4.5"],
+      "categoryIds": ["cbrn", "ai-rnd", "autonomy"],
+      "sourceId": "src-ant-005"
+    },
+    {
+      "id": "evt-ant-006",
+      "date": "2025-11-24",
+      "type": "model-release",
+      "title": "Claude Opus 4.5 Released",
+      "description": "Anthropic releases Claude Opus 4.5 under provisional ASL-3 classification. High rule-out scores indicate approaching ASL-4 thresholds.",
+      "modelIds": ["claude-opus-4.5"],
+      "categoryIds": ["cbrn", "ai-rnd", "autonomy"],
+      "sourceId": "src-ant-006"
+    },
+    {
+      "id": "evt-ant-007",
+      "date": "2025-11-24",
+      "type": "threshold-crossing",
+      "title": "Approaching ASL-4 Thresholds",
+      "description": "Claude Opus 4.5 shows high rule-out scores in CBRN, AI R&D, and autonomy, indicating next frontier model may trigger full ASL-4 evaluation and potential pause/mitigation requirements.",
+      "modelIds": ["claude-opus-4.5"],
+      "categoryIds": ["cbrn", "ai-rnd", "autonomy"],
+      "sourceId": "src-ant-006"
+    }
+  ]
+}

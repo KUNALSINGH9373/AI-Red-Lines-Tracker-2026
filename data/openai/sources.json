@@ -1,0 +1,59 @@
+{
+  "lab": "openai",
+  "sources": [
+    {
+      "id": "src-001",
+      "title": "GPT-4o System Card",
+      "url": "https://openai.com/index/gpt-4o-system-card/",
+      "type": "system-card",
+      "publishDate": "2024-05-13",
+      "pdfPath": "/docs/openai/gpt-4o-system-card.pdf"
+    },
+    {
+      "id": "src-002",
+      "title": "OpenAI Preparedness Framework v2",
+      "url": "https://openai.com/preparedness/",
+      "type": "framework",
+      "publishDate": "2024-10-15"
+    },
+    {
+      "id": "src-003",
+      "title": "OpenAI o1 System Card",
+      "url": "https://openai.com/index/openai-o1-system-card/",
+      "type": "system-card",
+      "publishDate": "2024-12-05",
+      "pdfPath": "/docs/openai/o1-system-card.pdf"
+    },
+    {
+      "id": "src-004",
+      "title": "OpenAI o3 and o4-mini System Card",
+      "url": "https://openai.com/index/o3-o4-mini-system-card/",
+      "type": "system-card",
+      "publishDate": "2024-12-20",
+      "pdfPath": "/docs/openai/o3-system-card.pdf"
+    },
+    {
+      "id": "src-005",
+      "title": "OpenAI o3-mini System Card",
+      "url": "https://openai.com/index/o3-mini-system-card/",
+      "type": "system-card",
+      "publishDate": "2025-01-31",
+      "pdfPath": "/docs/openai/o3-mini-system-card.pdf"
+    },
+    {
+      "id": "src-006",
+      "title": "OpenAI Safety Hub",
+      "url": "https://openai.com/safety/",
+      "type": "policy",
+      "publishDate": "2024-01-01"
+    },
+    {
+      "id": "src-007",
+      "title": "GPT-5 System Card",
+      "url": "https://openai.com/index/gpt-5-system-card/",
+      "type": "system-card",
+      "publishDate": "2025-08-13",
+      "pdfPath": "/docs/openai/gpt-5-system-card.pdf"
+    }
+  ]
+}

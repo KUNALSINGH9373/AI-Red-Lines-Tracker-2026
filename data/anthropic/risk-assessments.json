@@ -1,0 +1,270 @@
+{
+  "lab": "anthropic",
+  "frameworkVersion": "RSP v2.2",
+  "lastUpdated": "2025-12-01",
+  "riskCategories": [
+    {
+      "id": "cbrn",
+      "name": "CBRN (Chemical, Biological, Radiological, Nuclear)",
+      "description": "Risks related to development or acquisition of CBRN weapons"
+    },
+    {
+      "id": "ai-rnd",
+      "name": "AI R&D Acceleration",
+      "description": "Risks related to autonomous AI research and development capabilities"
+    },
+    {
+      "id": "autonomy",
+      "name": "Autonomy and Agency",
+      "description": "Risks related to autonomous decision-making and independent action"
+    },
+    {
+      "id": "cyber",
+      "name": "Cybersecurity",
+      "description": "Risks related to offensive cyber operations"
+    }
+  ],
+  "riskLevels": [
+    {
+      "level": "asl-1",
+      "color": "#10b981",
+      "label": "ASL-1"
+    },
+    {
+      "level": "asl-2",
+      "color": "#f59e0b",
+      "label": "ASL-2"
+    },
+    {
+      "level": "asl-3",
+      "color": "#ef4444",
+      "label": "ASL-3"
+    },
+    {
+      "level": "asl-4",
+      "color": "#991b1b",
+      "label": "ASL-4"
+    }
+  ],
+  "assessments": [
+    {
+      "modelId": "claude-haiku-4.5",
+      "assessmentDate": "2025-10-15",
+      "overallRisk": "asl-2",
+      "categoryRisks": [
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "asl-2",
+          "score": 0.35,
+          "thresholdProximity": 0.45,
+          "notes": "ASL-2 classification for CBRN capabilities",
+          "mitigations": [
+            "Standard deployment safeguards",
+            "Usage monitoring"
+          ],
+          "sourceSection": "System Card"
+        },
+        {
+          "categoryId": "ai-rnd",
+          "riskLevel": "asl-2",
+          "score": 0.30,
+          "thresholdProximity": 0.40,
+          "notes": "Limited autonomous R&D capabilities",
+          "mitigations": [
+            "Standard safeguards"
+          ],
+          "sourceSection": "System Card"
+        },
+        {
+          "categoryId": "autonomy",
+          "riskLevel": "asl-2",
+          "score": 0.32,
+          "thresholdProximity": 0.42,
+          "notes": "Moderate autonomy capabilities",
+          "mitigations": [
+            "Deployment monitoring"
+          ],
+          "sourceSection": "System Card"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-sonnet-4",
+      "assessmentDate": "2025-05-14",
+      "overallRisk": "asl-3",
+      "categoryRisks": [
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "asl-3",
+          "score": 0.68,
+          "thresholdProximity": 0.85,
+          "notes": "Precautionary ASL-3. First Anthropic model deployed under ASL-3 protections.",
+          "mitigations": [
+            "ASL-3 security standard",
+            "Enhanced deployment safeguards",
+            "CBRN-specific restrictions"
+          ],
+          "sourceSection": "ASL-3 Activation Report"
+        },
+        {
+          "categoryId": "ai-rnd",
+          "riskLevel": "asl-2",
+          "score": 0.55,
+          "thresholdProximity": 0.72,
+          "notes": "Approaching ASL-3 threshold in AI R&D acceleration",
+          "mitigations": [
+            "Enhanced monitoring",
+            "Capability restrictions"
+          ],
+          "sourceSection": "System Card"
+        },
+        {
+          "categoryId": "autonomy",
+          "riskLevel": "asl-2",
+          "score": 0.58,
+          "thresholdProximity": 0.75,
+          "notes": "Approaching ASL-3 threshold in autonomy",
+          "mitigations": [
+            "Enhanced safeguards"
+          ],
+          "sourceSection": "System Card"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-sonnet-4.5",
+      "assessmentDate": "2025-10-22",
+      "overallRisk": "asl-3",
+      "categoryRisks": [
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "asl-3",
+          "score": 0.72,
+          "thresholdProximity": 0.88,
+          "notes": "Precautionary ASL-3 classification with enhanced CBRN capabilities",
+          "mitigations": [
+            "ASL-3 security standard",
+            "Enhanced deployment safeguards",
+            "CBRN monitoring"
+          ],
+          "sourceSection": "System Card"
+        },
+        {
+          "categoryId": "ai-rnd",
+          "riskLevel": "asl-3",
+          "score": 0.62,
+          "thresholdProximity": 0.80,
+          "notes": "Approaching ASL-4 threshold in AI R&D acceleration",
+          "mitigations": [
+            "Enhanced monitoring",
+            "Capability testing"
+          ],
+          "sourceSection": "System Card"
+        },
+        {
+          "categoryId": "autonomy",
+          "riskLevel": "asl-3",
+          "score": 0.65,
+          "thresholdProximity": 0.82,
+          "notes": "Approaching ASL-4 threshold in autonomy",
+          "mitigations": [
+            "ASL-3 safeguards",
+            "Autonomy restrictions"
+          ],
+          "sourceSection": "System Card"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-opus-4",
+      "assessmentDate": "2025-05-14",
+      "overallRisk": "asl-3",
+      "categoryRisks": [
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "asl-3",
+          "score": 0.75,
+          "thresholdProximity": 0.90,
+          "notes": "Provisional ASL-3. First model to activate ASL-3 protections.",
+          "mitigations": [
+            "ASL-3 security standard",
+            "ASL-3 deployment safeguards",
+            "CBRN-specific controls"
+          ],
+          "sourceSection": "ASL-3 Activation Report, May 2025"
+        },
+        {
+          "categoryId": "ai-rnd",
+          "riskLevel": "asl-3",
+          "score": 0.68,
+          "thresholdProximity": 0.85,
+          "notes": "Approaching ASL-4 in AI R&D acceleration",
+          "mitigations": [
+            "Enhanced monitoring",
+            "R&D capability restrictions"
+          ],
+          "sourceSection": "System Card"
+        },
+        {
+          "categoryId": "autonomy",
+          "riskLevel": "asl-3",
+          "score": 0.70,
+          "thresholdProximity": 0.87,
+          "notes": "Approaching ASL-4 in autonomy capabilities",
+          "mitigations": [
+            "ASL-3 safeguards",
+            "Autonomy monitoring"
+          ],
+          "sourceSection": "System Card"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-opus-4.5",
+      "assessmentDate": "2025-11-24",
+      "overallRisk": "asl-3",
+      "categoryRisks": [
+        {
+          "categoryId": "cbrn",
+          "riskLevel": "asl-3",
+          "score": 0.82,
+          "thresholdProximity": 0.95,
+          "notes": "Provisionally ASL-3. Ruled out ASL-4 so far. High rule-out scores in CBRN uplift - approaching ASL-4 threshold. Next frontier model could trigger full ASL-4 evaluation.",
+          "mitigations": [
+            "ASL-3 security standard",
+            "ASL-3 deployment safeguards",
+            "Enhanced CBRN monitoring",
+            "Expert uplift testing"
+          ],
+          "sourceSection": "Claude Opus 4.5 System Card, November 2025"
+        },
+        {
+          "categoryId": "ai-rnd",
+          "riskLevel": "asl-3",
+          "score": 0.78,
+          "thresholdProximity": 0.92,
+          "notes": "Approaching ASL-4 in AI R&D acceleration. High rule-out scores indicate next frontier model may trigger ASL-4 evaluation.",
+          "mitigations": [
+            "Enhanced monitoring",
+            "Capability restrictions",
+            "Continuous evaluation"
+          ],
+          "sourceSection": "Claude Opus 4.5 System Card"
+        },
+        {
+          "categoryId": "autonomy",
+          "riskLevel": "asl-3",
+          "score": 0.80,
+          "thresholdProximity": 0.93,
+          "notes": "Approaching ASL-4 in autonomy. High rule-out scores warrant close monitoring of next models.",
+          "mitigations": [
+            "ASL-3 safeguards",
+            "Autonomy testing",
+            "Deployment restrictions"
+          ],
+          "sourceSection": "Claude Opus 4.5 System Card"
+        }
+      ]
+    }
+  ]
+}

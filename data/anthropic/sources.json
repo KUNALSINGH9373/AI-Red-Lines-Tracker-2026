@@ -1,0 +1,68 @@
+{
+  "lab": "anthropic",
+  "sources": [
+    {
+      "id": "src-ant-001",
+      "title": "Responsible Scaling Policy v2.2",
+      "url": "https://www.anthropic.com/responsible-scaling-policy",
+      "type": "framework",
+      "publishDate": "2025-05-14"
+    },
+    {
+      "id": "src-ant-002",
+      "title": "Activating AI Safety Level 3 Protections Report",
+      "url": "https://www.anthropic.com/activating-asl3-report",
+      "type": "system-card",
+      "publishDate": "2025-05-14"
+    },
+    {
+      "id": "src-ant-003",
+      "title": "Claude Opus 4 & Claude Sonnet 4 System Card",
+      "url": "https://www.anthropic.com/claude-4-system-card",
+      "type": "system-card",
+      "publishDate": "2025-05-14"
+    },
+    {
+      "id": "src-ant-004",
+      "title": "Claude Haiku 4.5 System Card",
+      "url": "https://assets.anthropic.com/m/99128ddd009bdcb/Claude-Haiku-4-5-System-Card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-10-15"
+    },
+    {
+      "id": "src-ant-005",
+      "title": "Claude Sonnet 4.5 System Card",
+      "url": "https://www.anthropic.com/claude-sonnet-4-5-system-card",
+      "type": "system-card",
+      "publishDate": "2025-10-22"
+    },
+    {
+      "id": "src-ant-006",
+      "title": "Claude Opus 4.5 System Card",
+      "url": "https://www.anthropic.com/claude-opus-4-5-system-card",
+      "type": "system-card",
+      "publishDate": "2025-11-24"
+    },
+    {
+      "id": "src-ant-007",
+      "title": "RSP Updates and Changelog",
+      "url": "https://www.anthropic.com/rsp-updates",
+      "type": "policy",
+      "publishDate": "2025-05-14"
+    },
+    {
+      "id": "src-ant-008",
+      "title": "Anthropic Transparency Hub",
+      "url": "https://www.anthropic.com/transparency",
+      "type": "policy",
+      "publishDate": "2025-01-01"
+    },
+    {
+      "id": "src-ant-009",
+      "title": "ASL-3 Deployment Safeguards Report",
+      "url": "https://www.anthropic.com/asl3-deployment-safeguards",
+      "type": "policy",
+      "publishDate": "2025-05-14"
+    }
+  ]
+}

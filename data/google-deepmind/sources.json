@@ -1,0 +1,61 @@
+{
+  "lab": "google-deepmind",
+  "sources": [
+    {
+      "id": "src-gdm-001",
+      "title": "Frontier Safety Framework v2.0",
+      "url": "https://deepmind.google/blog/updating-the-frontier-safety-framework/",
+      "type": "framework",
+      "publishDate": "2025-02-15"
+    },
+    {
+      "id": "src-gdm-002",
+      "title": "Frontier Safety Framework v3.0",
+      "url": "https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/strengthening-our-frontier-safety-framework/frontier-safety-framework_3.pdf",
+      "type": "framework",
+      "publishDate": "2025-09-22"
+    },
+    {
+      "id": "src-gdm-003",
+      "title": "Gemini 2.5 Pro Model Card",
+      "url": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Pro-Model-Card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-08-15"
+    },
+    {
+      "id": "src-gdm-004",
+      "title": "Gemini 3 Flash Model Card",
+      "url": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-Flash-Model-Card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-11-10"
+    },
+    {
+      "id": "src-gdm-005",
+      "title": "Gemini 3 Pro Frontier Safety Framework Report",
+      "url": "https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf",
+      "type": "system-card",
+      "publishDate": "2025-11-15"
+    },
+    {
+      "id": "src-gdm-006",
+      "title": "Gemini 3 Pro Model Card",
+      "url": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-Pro-Model-Card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-11-15"
+    },
+    {
+      "id": "src-gdm-007",
+      "title": "Strengthening the Frontier Safety Framework - Blog Post",
+      "url": "https://deepmind.google/blog/strengthening-our-frontier-safety-framework/",
+      "type": "policy",
+      "publishDate": "2025-09-22"
+    },
+    {
+      "id": "src-gdm-008",
+      "title": "Introducing the Frontier Safety Framework",
+      "url": "https://deepmind.google/blog/introducing-the-frontier-safety-framework/",
+      "type": "policy",
+      "publishDate": "2024-05-01"
+    }
+  ]
+}
