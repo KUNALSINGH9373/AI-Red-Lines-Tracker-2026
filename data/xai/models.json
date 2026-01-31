@@ -1,0 +1,33 @@
+{
+  "lab": "xai",
+  "models": [
+    {
+      "id": "grok-4",
+      "name": "Grok 4",
+      "family": "grok-4",
+      "releaseDate": "2025-08-20",
+      "systemCardUrl": "https://data.x.ai/2025-08-20-grok-4-model-card.pdf"
+    },
+    {
+      "id": "grok-4.1",
+      "name": "Grok 4.1",
+      "family": "grok-4",
+      "releaseDate": "2025-11-17",
+      "systemCardUrl": "https://data.x.ai/2025-11-17-grok-4-1-model-card.pdf"
+    },
+    {
+      "id": "grok-4-fast",
+      "name": "Grok 4 Fast",
+      "family": "grok-4",
+      "releaseDate": "2025-09-19",
+      "systemCardUrl": "https://data.x.ai/2025-09-19-grok-4-fast-model-card.pdf"
+    },
+    {
+      "id": "grok-code-fast-1",
+      "name": "Grok Code Fast 1",
+      "family": "grok-code",
+      "releaseDate": "2025-08-26",
+      "systemCardUrl": "https://data.x.ai/2025-08-26-grok-code-fast-1-model-card.pdf"
+    }
+  ]
+}

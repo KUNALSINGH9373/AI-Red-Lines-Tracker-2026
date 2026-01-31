@@ -1,0 +1,228 @@
+{
+  "lab": "xai",
+  "frameworkVersion": "Frontier Artificial Intelligence Framework (FAIF)",
+  "lastUpdated": "2025-12-30",
+  "riskCategories": [
+    {
+      "id": "abuse-potential",
+      "name": "Abuse Potential",
+      "description": "Evaluates the model's vulnerability to exploitation through jailbreaks, adversarial attacks, or harmful queries, such as those involving CBRN weapons, CSAM, or self-harm, focusing on refusal rates and robustness."
+    },
+    {
+      "id": "concerning-propensities",
+      "name": "Concerning Propensities",
+      "description": "Assesses inherent model behaviors that could lead to loss of control, including deception, sycophancy, and political bias, measured via benchmarks like MASK to maintain honesty and alignment."
+    },
+    {
+      "id": "dual-use-capabilities",
+      "name": "Dual-Use Capabilities",
+      "description": "Examines the model's potential for misuse in high-risk domains like biology, chemistry, cybersecurity, and persuasion, using benchmarks to ensure capabilities do not enable catastrophic outcomes."
+    }
+  ],
+  "riskLevels": [
+    {
+      "level": "low",
+      "color": "#10b981",
+      "label": "Low Risk"
+    },
+    {
+      "level": "moderate",
+      "color": "#f59e0b",
+      "label": "Moderate Risk"
+    },
+    {
+      "level": "high",
+      "color": "#ef4444",
+      "label": "High Risk"
+    },
+    {
+      "level": "critical",
+      "color": "#991b1b",
+      "label": "Critical Risk"
+    }
+  ],
+  "assessments": [
+    {
+      "modelId": "grok-4",
+      "assessmentDate": "2025-08-20",
+      "overallRisk": "low",
+      "categoryRisks": [
+        {
+          "categoryId": "abuse-potential",
+          "riskLevel": "low",
+          "score": 0.01,
+          "thresholdProximity": 0.15,
+          "notes": "Grok 4 refuses almost all harmful requests with system prompt; robustness to jailbreaks achieved via policy warnings. Response rates near 0.0 for harmful queries.",
+          "mitigations": [
+            "Refusal policy in system prompt",
+            "Input filters for CBRN, cyber weapons, CSAM",
+            "Warning against jailbreaks",
+            "System prompt-based approach to block harmful requests"
+          ],
+          "sourceSection": "Abuse Potential section, Grok 4 Model Card"
+        },
+        {
+          "categoryId": "concerning-propensities",
+          "riskLevel": "low",
+          "score": 0.29,
+          "thresholdProximity": 0.35,
+          "notes": "System prompt reduces deception (dishonesty rate 0.43), political bias (0.36), and sycophancy (0.07). Focuses on honesty and objectivity.",
+          "mitigations": [
+            "Explicit instructions in system prompt to avoid deception",
+            "Instructions to avoid bias and manipulation",
+            "Training for honesty and objectivity"
+          ],
+          "sourceSection": "Concerning Propensities section, Grok 4 Model Card"
+        },
+        {
+          "categoryId": "dual-use-capabilities",
+          "riskLevel": "moderate",
+          "score": 0.62,
+          "thresholdProximity": 0.70,
+          "notes": "Expert-level biology performance (0.47-0.71 accuracy) exceeds human baselines. Strong chemistry (0.79-0.88 accuracy) and moderate cyber (0.43 success rate). Filters address high capabilities.",
+          "mitigations": [
+            "Topically-focused filters for bioweapons and chemical weapons",
+            "Refusal policy sufficient for cyber",
+            "Monitoring of expert-level biological capabilities"
+          ],
+          "sourceSection": "Dual-Use Capabilities section, Grok 4 Model Card"
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4.1",
+      "assessmentDate": "2025-11-17",
+      "overallRisk": "low",
+      "categoryRisks": [
+        {
+          "categoryId": "abuse-potential",
+          "riskLevel": "low",
+          "score": 0.10,
+          "thresholdProximity": 0.20,
+          "notes": "Refuses almost all harmful requests in chat mode even under adversarial attack. Chat refusals 0.07, jailbreak attempts 0.02, AgentHarm 0.14. Input filter false negatives on restricted topics are 0.20 (biology) and 0.12 (chemistry).",
+          "mitigations": [
+            "Safety training on appropriate responses",
+            "Input filters to reject sensitive requests (bioweapons, chemical weapons, self-harm, CSAM)",
+            "Trained filters with synthetic and production data",
+            "Adversarial attack resistance"
+          ],
+          "sourceSection": "Abuse Potential section, Grok 4.1 Model Card"
+        },
+        {
+          "categoryId": "concerning-propensities",
+          "riskLevel": "low",
+          "score": 0.35,
+          "thresholdProximity": 0.40,
+          "notes": "Training reduces deception and sycophancy rates. Dishonesty rate 0.49 (reasoning) / 0.46 (non-reasoning), sycophancy rate 0.19 / 0.23. Deception measured via MASK dataset consistency.",
+          "mitigations": [
+            "Training to be honest and less sycophantic",
+            "MASK dataset evaluation for consistency"
+          ],
+          "sourceSection": "Concerning Propensities section, Grok 4.1 Model Card"
+        },
+        {
+          "categoryId": "dual-use-capabilities",
+          "riskLevel": "moderate",
+          "score": 0.42,
+          "thresholdProximity": 0.50,
+          "notes": "WMDP Bio accuracy 0.87, VCT accuracy 0.61-0.22, CyBench success rate 0.39, persuasion win rate 0.00. Similar to Grok 4 on chemical/biological capabilities. Underperforms on multi-modal/reasoning tasks.",
+          "mitigations": [
+            "Input filters for restricted chemical and biological knowledge",
+            "Safeguards removed for dual-use evaluations but implemented post-evaluation"
+          ],
+          "sourceSection": "Dual-Use Capabilities section, Grok 4.1 Model Card"
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-fast",
+      "assessmentDate": "2025-09-19",
+      "overallRisk": "low",
+      "categoryRisks": [
+        {
+          "categoryId": "abuse-potential",
+          "riskLevel": "low",
+          "score": 0.02,
+          "thresholdProximity": 0.15,
+          "notes": "Answer rates near 0.00 for harmful queries with system prompt. Robust to jailbreaks (answer rates 0.00-0.01) and hijacking (attack success rate 0.00). Near-total refusal of harmful requests.",
+          "mitigations": [
+            "Refusal policy in system prompt",
+            "Input filters for harmful requests",
+            "Warnings against jailbreaks",
+            "Same robustness mechanisms as Grok 4"
+          ],
+          "sourceSection": "Abuse Potential section, Grok 4 Fast Model Card"
+        },
+        {
+          "categoryId": "concerning-propensities",
+          "riskLevel": "moderate",
+          "score": 0.48,
+          "thresholdProximity": 0.55,
+          "notes": "Dishonesty rate 0.47 (reasoning) / 0.63 (non-reasoning), bias 0.79, sycophancy 0.10. Deception reduced with honesty instructions (to 0.21-0.54). Political bias and sycophancy are present but lower.",
+          "mitigations": [
+            "System prompt with honesty instructions",
+            "Reasoning mode to reduce dishonesty",
+            "Similar honesty approach as Grok 4"
+          ],
+          "sourceSection": "Concerning Propensities section, Grok 4 Fast Model Card"
+        },
+        {
+          "categoryId": "dual-use-capabilities",
+          "riskLevel": "moderate",
+          "score": 0.60,
+          "thresholdProximity": 0.65,
+          "notes": "Strong in cybersecurity (81.4% accuracy) and biology/chemistry (39.0-85.2% accuracy). Low persuasiveness (win rate 0.12). Below Grok 4 capabilities. Success rate 30.0% on tested capabilities.",
+          "mitigations": [
+            "Narrow filters for CBRN abuse",
+            "Unchanged filter approach from Grok 4"
+          ],
+          "sourceSection": "Dual-Use Capabilities section, Grok 4 Fast Model Card"
+        }
+      ]
+    },
+    {
+      "modelId": "grok-code-fast-1",
+      "assessmentDate": "2025-08-26",
+      "overallRisk": "low",
+      "categoryRisks": [
+        {
+          "categoryId": "abuse-potential",
+          "riskLevel": "low",
+          "score": 0.15,
+          "thresholdProximity": 0.25,
+          "notes": "Refusal answer rate 0.00 (with policy). Agentic abuse completion rate 17.0% on AgentHarm (no-attack). Hijacking attack success rate 26.9%. Refusal policy and system prompt enable near-total refusal.",
+          "mitigations": [
+            "Fixed safety system prompt prefix reminding of refusal policy",
+            "Safety training on refusal behaviors and jailbreak strategies",
+            "Input filters rejecting harmful requests (biological/chemical weapons, child exploitation)"
+          ],
+          "sourceSection": "Abuse Potential section, Grok Code Fast 1 Model Card"
+        },
+        {
+          "categoryId": "concerning-propensities",
+          "riskLevel": "moderate",
+          "score": 0.72,
+          "thresholdProximity": 0.80,
+          "notes": "Elevated dishonesty rate 71.9% on MASK dataset - exceeds that of Grok 4. Likely due to safety training encouraging responses to non-malicious queries. Limited exposure as specialized agentic coding assistant.",
+          "mitigations": [
+            "Safety training hierarchy considering use-case (agentic coding)",
+            "Limited general-purpose exposure due to specialized nature"
+          ],
+          "sourceSection": "Concerning Propensities section, Grok Code Fast 1 Model Card"
+        },
+        {
+          "categoryId": "dual-use-capabilities",
+          "riskLevel": "low",
+          "score": 0.43,
+          "thresholdProximity": 0.50,
+          "notes": "Does not exceed human expert performance on BioLP-Bench (19.9% vs 38.4% expert). Exceeds human expert on VCT virology (28.7% vs 22.1% expert). Biology 19.9-72.0%, chemistry 52.7%, cybersecurity 22.5-62.1%. Weaker than Grok 4.",
+          "mitigations": [
+            "Narrow chemical/biological filters as in Grok 4",
+            "No meaningful risk increase due to lower capabilities"
+          ],
+          "sourceSection": "Dual-Use Capabilities section, Grok Code Fast 1 Model Card"
+        }
+      ]
+    }
+  ]
+}

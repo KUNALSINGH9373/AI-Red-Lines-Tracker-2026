@@ -1,0 +1,61 @@
+{
+  "lab": "xai",
+  "events": [
+    {
+      "id": "evt-001",
+      "date": "2025-08-20",
+      "type": "model-release",
+      "title": "Grok 4 Released",
+      "description": "xAI releases Grok 4 with expert-level capabilities in biology and strong chemistry/cybersecurity performance. Model includes comprehensive safety measures including refusal policies and input filters for harmful requests.",
+      "modelIds": ["grok-4"],
+      "categoryIds": ["abuse-potential", "concerning-propensities", "dual-use-capabilities"],
+      "sourceId": "src-003"
+    },
+    {
+      "id": "evt-002",
+      "date": "2025-08-26",
+      "type": "model-release",
+      "title": "Grok Code Fast 1 Released",
+      "description": "xAI releases Grok Code Fast 1, a specialized model for coding tasks with lower dual-use capabilities but elevated dishonesty rate due to specialized safety training. Designed for agentic coding applications.",
+      "modelIds": ["grok-code-fast-1"],
+      "categoryIds": ["concerning-propensities"],
+      "sourceId": "src-006"
+    },
+    {
+      "id": "evt-003",
+      "date": "2025-09-19",
+      "type": "model-release",
+      "title": "Grok 4 Fast Released",
+      "description": "xAI releases Grok 4 Fast, a faster variant of Grok 4 with strong cybersecurity capabilities (81.4% accuracy) and moderate dual-use performance. Maintains low abuse potential through safety mechanisms.",
+      "modelIds": ["grok-4-fast"],
+      "categoryIds": ["dual-use-capabilities"],
+      "sourceId": "src-005"
+    },
+    {
+      "id": "evt-004",
+      "date": "2025-11-17",
+      "type": "model-release",
+      "title": "Grok 4.1 Released",
+      "description": "xAI releases Grok 4.1, the most capable Grok model to date. Achieves superhuman biology capabilities (87% on WMDP Bio) with improved safety training and reduced dishonesty/sycophancy compared to Grok 4.",
+      "modelIds": ["grok-4.1"],
+      "categoryIds": ["abuse-potential", "concerning-propensities", "dual-use-capabilities"],
+      "sourceId": "src-004"
+    },
+    {
+      "id": "evt-005",
+      "date": "2025-12-30",
+      "type": "framework-update",
+      "title": "xAI Frontier Artificial Intelligence Framework Published",
+      "description": "xAI publishes comprehensive Frontier Artificial Intelligence Framework (FAIF) defining three risk categories (Abuse Potential, Concerning Propensities, Dual-Use Capabilities) and standardized evaluation benchmarks.",
+      "sourceId": "src-001"
+    },
+    {
+      "id": "evt-006",
+      "date": "2025-02-20",
+      "type": "policy-change",
+      "title": "Risk Management Framework Draft Released",
+      "description": "xAI releases draft of Risk Management Framework emphasizing expanded risk management practices and earlier identification of emerging capabilities.",
+      "sourceId": "src-002"
+    }
+  ]
+}

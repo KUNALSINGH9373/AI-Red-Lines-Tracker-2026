@@ -1,0 +1,53 @@
+{
+  "lab": "xai",
+  "sources": [
+    {
+      "id": "src-001",
+      "title": "xAI Frontier Artificial Intelligence Framework",
+      "url": "https://data.x.ai/2025-12-31-xai-frontier-artificial-intelligence-framework.pdf",
+      "type": "framework",
+      "publishDate": "2025-12-30",
+      "pdfPath": "/docs/xai/frontier-ai-framework.pdf"
+    },
+    {
+      "id": "src-002",
+      "title": "xAI Risk Management Framework Draft",
+      "url": "https://data.x.ai/2025.02.20-RMF-Draft.pdf",
+      "type": "policy",
+      "publishDate": "2025-02-20",
+      "pdfPath": "/docs/xai/rmf-draft.pdf"
+    },
+    {
+      "id": "src-003",
+      "title": "Grok 4 Model Card",
+      "url": "https://data.x.ai/2025-08-20-grok-4-model-card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-08-20",
+      "pdfPath": "/docs/xai/grok-4-model-card.pdf"
+    },
+    {
+      "id": "src-004",
+      "title": "Grok 4.1 Model Card",
+      "url": "https://data.x.ai/2025-11-17-grok-4-1-model-card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-11-17",
+      "pdfPath": "/docs/xai/grok-4-1-model-card.pdf"
+    },
+    {
+      "id": "src-005",
+      "title": "Grok 4 Fast Model Card",
+      "url": "https://data.x.ai/2025-09-19-grok-4-fast-model-card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-09-19",
+      "pdfPath": "/docs/xai/grok-4-fast-model-card.pdf"
+    },
+    {
+      "id": "src-006",
+      "title": "Grok Code Fast 1 Model Card",
+      "url": "https://data.x.ai/2025-08-26-grok-code-fast-1-model-card.pdf",
+      "type": "system-card",
+      "publishDate": "2025-08-26",
+      "pdfPath": "/docs/xai/grok-code-fast-1-model-card.pdf"
+    }
+  ]
+}

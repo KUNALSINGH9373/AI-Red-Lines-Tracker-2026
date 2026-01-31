@@ -15,6 +15,10 @@ import {
   getRiskAssessments as getGoogleAssessments,
 } from "@/lib/data/google-deepmind-data";
 import {
+  getModels as getXAIModels,
+  getRiskAssessments as getXAIAssessments,
+} from "@/lib/data/xai-data";
+import {
   getTrainingComputeData,
   getDataCenterExpansions,
   getEUActCompliance,
@@ -28,6 +32,8 @@ function FrontierLabsPreview() {
   const anthropicAssessments = getAnthropicAssessments();
   const googleModels = getGoogleModels();
   const googleAssessments = getGoogleAssessments();
+  const xaiModels = getXAIModels();
+  const xaiAssessments = getXAIAssessments();
 
   const calculateRiskStats = (assessments: any) => {
     const riskCounts = { critical: 0, high: 0, medium: 0, low: 0 };
@@ -42,6 +48,7 @@ function FrontierLabsPreview() {
   const openAIRisks = calculateRiskStats(openAIAssessments);
   const anthropicRisks = calculateRiskStats(anthropicAssessments);
   const googleRisks = calculateRiskStats(googleAssessments);
+  const xaiRisks = calculateRiskStats(xaiAssessments);
 
   return (
     <>
@@ -119,6 +126,34 @@ function FrontierLabsPreview() {
               {googleRisks.high > 0 && <div>🟠 High: {googleRisks.high}</div>}
               {googleRisks.medium > 0 && <div>🟡 Medium: {googleRisks.medium}</div>}
               {googleRisks.low > 0 && <div>🟢 Low: {googleRisks.low}</div>}
+            </div>
+          </div>
+          <Link href="/frontier-labs" className="inline-block mt-4">
+            <Button variant="outline" size="sm" className="w-full">
+              View Details <ArrowRight className="ml-1 h-3 w-3" />
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
+
+      {/* xAI */}
+      <Card className="col-span-1 md:col-span-4 lg:col-span-1">
+        <CardHeader>
+          <CardTitle className="text-base">xAI</CardTitle>
+          <CardDescription>Frontier AI Framework</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div>
+            <p className="text-xs text-muted-foreground mb-1">Models Tracked</p>
+            <p className="text-2xl font-bold">{xaiModels.length}</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground mb-2">Risk Distribution</p>
+            <div className="space-y-1 text-xs">
+              {xaiRisks.critical > 0 && <div>🔴 Critical: {xaiRisks.critical}</div>}
+              {xaiRisks.high > 0 && <div>🟠 High: {xaiRisks.high}</div>}
+              {xaiRisks.medium > 0 && <div>🟡 Medium: {xaiRisks.medium}</div>}
+              {xaiRisks.low > 0 && <div>🟢 Low: {xaiRisks.low}</div>}
             </div>
           </div>
           <Link href="/frontier-labs" className="inline-block mt-4">
@@ -256,7 +291,7 @@ export default function Home() {
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
           Track how close frontier AI models are to critical risk thresholds using official
           system cards and preparedness frameworks. Compare risk assessments across OpenAI,
-          Anthropic, and Google DeepMind, monitor training compute and infrastructure, and
+          Anthropic, Google DeepMind, and xAI, monitor training compute and infrastructure, and
           stay informed on regulatory compliance.
         </p>
       </div>

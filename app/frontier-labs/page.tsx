@@ -40,6 +40,18 @@ import {
   getRiskLevels as getGoogleRiskLevels,
   getRiskLevelColor as getGoogleRiskLevelColor,
 } from "@/lib/data/google-deepmind-data";
+import {
+  getModels as getXAIModels,
+  getRiskAssessments as getXAIAssessments,
+  getRiskCategories as getXAICategories,
+  getEvents as getXAIEvents,
+  getLastUpdated as getXAILastUpdated,
+  getFrameworkVersion as getXAIFrameworkVersion,
+  getSources as getXAISources,
+  getModelById as getXAIModelById,
+  getRiskLevels as getXAIRiskLevels,
+  getRiskLevelColor as getXAIRiskLevelColor,
+} from "@/lib/data/xai-data";
 import { RiskOverviewCard } from "@/components/features/dashboard/risk-overview-card";
 import { ThresholdProximityIndicator } from "@/components/features/dashboard/threshold-proximity-indicator";
 import { LatestUpdatesFeed } from "@/components/features/dashboard/latest-updates-feed";
@@ -102,6 +114,22 @@ const LAB_CONFIG = {
     getRiskLevels: getGoogleRiskLevels,
     getRiskLevelColor: getGoogleRiskLevelColor,
   },
+  xai: {
+    name: "xAI",
+    title: "xAI Risk Dashboard",
+    frameworkUrl: "https://data.x.ai/2025-12-31-xai-frontier-artificial-intelligence-framework.pdf",
+    spotlightModel: "Grok 4.1",
+    getModels: getXAIModels,
+    getAssessments: getXAIAssessments,
+    getCategories: getXAICategories,
+    getEvents: getXAIEvents,
+    getLastUpdated: getXAILastUpdated,
+    getFrameworkVersion: getXAIFrameworkVersion,
+    getSources: getXAISources,
+    getModelById: getXAIModelById,
+    getRiskLevels: getXAIRiskLevels,
+    getRiskLevelColor: getXAIRiskLevelColor,
+  },
 };
 
 type LabKey = keyof typeof LAB_CONFIG;
@@ -127,6 +155,8 @@ function LabContent({ lab }: { lab: LabKey }) {
         return 0.77;
       case "google":
         return 0.4;
+      case "xai":
+        return 0.35;
     }
   };
 
@@ -217,6 +247,34 @@ function LabContent({ lab }: { lab: LabKey }) {
                   <h3 className="font-semibold text-sm">CCL Framework Approach</h3>
                   <p className="text-sm text-muted-foreground mt-1">
                     The CCL (Capability Confidence Level) framework provides different thresholds for different risk categories, allowing more granular assessment of model capabilities and safety.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      case "xai":
+        return (
+          <>
+            <div className="p-4 rounded-lg border-l-4 border-l-blue-500 bg-blue-50 dark:bg-blue-950/20">
+              <div className="flex items-start gap-2 mb-2">
+                <TrendingUp className="h-5 w-5 text-blue-500 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-sm">Superhuman Biology Capabilities</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    <strong>Grok 4.1</strong> achieves superhuman performance on biological threat benchmarks (87% on WMDP Bio), with comprehensive mitigations including input filters for bioweapons knowledge.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg border-l-4 border-l-green-500 bg-green-50 dark:bg-green-950/20">
+              <div className="flex items-start gap-2 mb-2">
+                <Shield className="h-5 w-5 text-green-500 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-sm">Quantitative Benchmark Framework</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    xAI uses rigorous benchmarks (WMDP, VCT, BioLP-Bench, CyBench, MASK) for risk assessment. All models maintain low overall risk through enforced safety measures and quantitative evaluation.
                   </p>
                 </div>
               </div>
@@ -479,7 +537,7 @@ export default function FrontierLabsRiskAnalysisDashboard() {
       <Tabs defaultValue="openai" value={activeTab} onValueChange={(value) => setActiveTab(value as LabKey)} className="w-full">
         <div className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
           <div className="container">
-            <TabsList className="grid w-full grid-cols-3 bg-transparent border-0">
+            <TabsList className="grid w-full grid-cols-4 bg-transparent border-0">
               <TabsTrigger value="openai" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
                 OpenAI
               </TabsTrigger>
@@ -488,6 +546,9 @@ export default function FrontierLabsRiskAnalysisDashboard() {
               </TabsTrigger>
               <TabsTrigger value="google" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
                 Google DeepMind
+              </TabsTrigger>
+              <TabsTrigger value="xai" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
+                xAI
               </TabsTrigger>
             </TabsList>
           </div>
@@ -501,6 +562,9 @@ export default function FrontierLabsRiskAnalysisDashboard() {
         </TabsContent>
         <TabsContent value="google">
           <LabContent lab="google" />
+        </TabsContent>
+        <TabsContent value="xai">
+          <LabContent lab="xai" />
         </TabsContent>
       </Tabs>
     </>
