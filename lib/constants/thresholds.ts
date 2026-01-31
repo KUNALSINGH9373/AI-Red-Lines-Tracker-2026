@@ -25,6 +25,11 @@ export const CHART_COLORS = {
   "gemini-2.5-flash": "#06b6d4", // Cyan
   "gemini-3-pro": "#eab308", // Yellow
   "gemini-3-flash": "#ec4899", // Pink
+  // xAI models
+  "grok-4": "#8B5CF6", // Purple
+  "grok-4.1": "#7C3AED", // Dark Purple
+  "grok-4-fast": "#A78BFA", // Light Purple
+  "grok-code-fast-1": "#C4B5FD", // Very Light Purple
 };
 
 export const CATEGORY_COLORS = {

@@ -200,3 +200,54 @@ export interface ComputeInfrastructureData {
   sources: Source[];
   lastUpdated: string;
 }
+
+export interface FrontierLab {
+  id: string;
+  name: string;
+  city: string;
+  state?: string;
+  country: string;
+  coordinates: { lat: number; lng: number };
+  framework: string;
+  modelCount: number;
+  primaryColor: string;
+  latestModel: string;
+  latestReleaseDate: string;
+  dataCenterCount: number;
+}
+
+export interface FrontierLabsData {
+  labs: FrontierLab[];
+}
+
+export interface ChipManufacturer {
+  id: string;
+  name: string;
+  city: string;
+  state?: string;
+  country: string;
+  coordinates: { lat: number; lng: number };
+  primaryColor: string;
+  chipModels: string[];
+  totalShipments2025: number;
+  topShipmentRegion: string;
+}
+
+export interface ShipmentZone {
+  id: string;
+  region: string;
+  coordinates: { polygon: [number, number][] };
+  totalShipments2025: number;
+  percentage: number;
+  color: string;
+}
+
+export interface ChipManufacturersData {
+  manufacturers: ChipManufacturer[];
+  shipmentZones: ShipmentZone[];
+}
+
+export type MapMarker =
+  | { type: "lab"; data: FrontierLab }
+  | { type: "data-center"; data: DataCenterExpansion }
+  | { type: "manufacturer"; data: ChipManufacturer };

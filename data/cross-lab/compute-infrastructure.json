@@ -225,7 +225,8 @@
       "location": {
         "city": "Texas",
         "state": "TX",
-        "country": "USA"
+        "country": "USA",
+        "coordinates": { "lat": 31.9686, "lng": -99.9018 }
       },
       "capacity": "500 GW",
       "announcementDate": "2025-01-16",
@@ -239,7 +240,8 @@
       "company": "Google/Microsoft",
       "location": {
         "city": "Midwest US",
-        "country": "USA"
+        "country": "USA",
+        "coordinates": { "lat": 41.8781, "lng": -87.6298 }
       },
       "capacity": "200+ GW",
       "announcementDate": "2025-01-15",
@@ -254,7 +256,8 @@
       "location": {
         "city": "Northern Virginia",
         "state": "VA",
-        "country": "USA"
+        "country": "USA",
+        "coordinates": { "lat": 38.9072, "lng": -77.0369 }
       },
       "capacity": "200+ MW",
       "announcementDate": "2024-11-01",
@@ -268,7 +271,8 @@
       "company": "Microsoft",
       "location": {
         "city": "Multiple US Locations",
-        "country": "USA"
+        "country": "USA",
+        "coordinates": { "lat": 47.6062, "lng": -122.3321 }
       },
       "capacity": "150+ GW",
       "announcementDate": "2024-10-01",
@@ -281,8 +285,10 @@
       "projectName": "Meta's AI Infrastructure Program",
       "company": "Meta",
       "location": {
-        "city": "Global Expansion",
-        "country": "USA"
+        "city": "Menlo Park",
+        "state": "CA",
+        "country": "USA",
+        "coordinates": { "lat": 37.4849, "lng": -122.1477 }
       },
       "capacity": "120 GW",
       "announcementDate": "2024-06-01",
@@ -295,9 +301,10 @@
       "projectName": "Anthropic Compute Infrastructure",
       "company": "Anthropic",
       "location": {
-        "city": "Northern California",
+        "city": "San Francisco",
         "state": "CA",
-        "country": "USA"
+        "country": "USA",
+        "coordinates": { "lat": 37.7749, "lng": -122.4194 }
       },
       "capacity": "50 GW",
       "announcementDate": "2024-04-01",
@@ -310,9 +317,10 @@
       "projectName": "Lambda Labs GPU Data Center Expansion",
       "company": "Lambda Labs",
       "location": {
-        "city": "Silicon Valley",
+        "city": "Palo Alto",
         "state": "CA",
-        "country": "USA"
+        "country": "USA",
+        "coordinates": { "lat": 37.3861, "lng": -122.0838 }
       },
       "capacity": "20 GW",
       "announcementDate": "2024-09-15",
@@ -325,8 +333,9 @@
       "projectName": "European AI Computing Initiative",
       "company": "EU Commission / Private Partners",
       "location": {
-        "city": "Multiple European Cities",
-        "country": "EU"
+        "city": "Brussels",
+        "country": "EU",
+        "coordinates": { "lat": 50.8503, "lng": 4.3517 }
       },
       "capacity": "80 GW",
       "announcementDate": "2024-07-01",
@@ -339,8 +348,9 @@
       "projectName": "Tencent AI Computing Centers",
       "company": "Tencent",
       "location": {
-        "city": "China",
-        "country": "China"
+        "city": "Shenzhen",
+        "country": "China",
+        "coordinates": { "lat": 22.5431, "lng": 114.0579 }
       },
       "capacity": "100 GW",
       "announcementDate": "2023-11-01",

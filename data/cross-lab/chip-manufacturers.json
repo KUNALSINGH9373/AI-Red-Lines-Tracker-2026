@@ -1,0 +1,83 @@
+{
+  "manufacturers": [
+    {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "city": "Santa Clara",
+      "state": "CA",
+      "country": "USA",
+      "coordinates": {
+        "lat": 37.3708,
+        "lng": -121.9644
+      },
+      "primaryColor": "#76B900",
+      "chipModels": ["H100", "H200", "Blackwell GB200"],
+      "totalShipments2025": 10.7,
+      "topShipmentRegion": "USA"
+    },
+    {
+      "id": "amd",
+      "name": "AMD",
+      "city": "Santa Clara",
+      "state": "CA",
+      "country": "USA",
+      "coordinates": {
+        "lat": 37.3861,
+        "lng": -121.9644
+      },
+      "primaryColor": "#ED1C24",
+      "chipModels": ["EPYC Bergamo", "Ryzen Threadripper"],
+      "totalShipments2025": 2.5,
+      "topShipmentRegion": "USA"
+    },
+    {
+      "id": "intel",
+      "name": "Intel",
+      "city": "Santa Clara",
+      "state": "CA",
+      "country": "USA",
+      "coordinates": {
+        "lat": 37.3861,
+        "lng": -121.9644
+      },
+      "primaryColor": "#0071C5",
+      "chipModels": ["Xeon Emerald Rapids", "Gaudi 3"],
+      "totalShipments2025": 3.2,
+      "topShipmentRegion": "USA"
+    }
+  ],
+  "shipmentZones": [
+    {
+      "id": "us-zone",
+      "region": "USA",
+      "coordinates": {
+        "polygon": [
+          [37.0, -95.0],
+          [37.0, -85.0],
+          [49.0, -85.0],
+          [49.0, -125.0],
+          [24.0, -125.0],
+          [24.0, -95.0]
+        ]
+      },
+      "totalShipments2025": 21.4,
+      "percentage": 85,
+      "color": "rgba(59, 130, 246, 0.2)"
+    },
+    {
+      "id": "china-zone",
+      "region": "China",
+      "coordinates": {
+        "polygon": [
+          [18.0, 73.0],
+          [18.0, 135.0],
+          [53.0, 135.0],
+          [53.0, 73.0]
+        ]
+      },
+      "totalShipments2025": 0.05,
+      "percentage": 0.2,
+      "color": "rgba(239, 68, 68, 0.2)"
+    }
+  ]
+}

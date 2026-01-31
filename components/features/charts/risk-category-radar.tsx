@@ -12,11 +12,12 @@ import {
 } from "recharts";
 import { transformToRadarData } from "@/lib/data/chart-transformers";
 import { CHART_COLORS } from "@/lib/constants/thresholds";
-import type { RiskAssessment } from "@/lib/types/risk-data";
+import type { RiskAssessment, Model } from "@/lib/types/risk-data";
 
 interface RiskCategoryRadarProps {
   assessments: RiskAssessment[];
   getModelColor?: (modelId: string) => string;
+  getModelById?: (modelId: string) => Model | undefined;
 }
 
 export function RiskCategoryRadar({
@@ -24,6 +25,7 @@ export function RiskCategoryRadar({
   getModelColor = (modelId) => {
     return CHART_COLORS[modelId as keyof typeof CHART_COLORS] || "#6b7280";
   },
+  getModelById = (modelId) => undefined,
 }: RiskCategoryRadarProps) {
   if (assessments.length === 0) return null;
 
@@ -77,16 +79,20 @@ export function RiskCategoryRadar({
           }}
         />
         <Legend />
-        {assessments.map((assessment, index) => (
-          <Radar
-            key={assessment.modelId}
-            name={assessment.modelId}
-            dataKey={assessment.modelId}
-            stroke={getModelColor(assessment.modelId)}
-            fill={getModelColor(assessment.modelId)}
-            fillOpacity={0.2 + index * 0.1}
-          />
-        ))}
+        {assessments.map((assessment, index) => {
+          const model = getModelById(assessment.modelId);
+          const modelName = model?.name || assessment.modelId;
+          return (
+            <Radar
+              key={assessment.modelId}
+              name={modelName}
+              dataKey={assessment.modelId}
+              stroke={getModelColor(assessment.modelId)}
+              fill={getModelColor(assessment.modelId)}
+              fillOpacity={0.2 + index * 0.1}
+            />
+          );
+        })}
       </RadarChart>
     </ResponsiveContainer>
   );

@@ -54,6 +54,7 @@ export function ModelComparisonChart({
     if (!acc[key]) {
       acc[key] = {
         name: key,
+        displayName: categoryId ? item.modelName : `${item.modelName}\n${item.categoryName}`,
         score: item.score,
         riskLevel: item.riskLevel,
         modelId: item.modelId,
@@ -66,19 +67,21 @@ export function ModelComparisonChart({
   const chartData = Object.values(groupedData);
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={categoryId ? 400 : 600}>
       <BarChart
         data={chartData}
-        margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+        margin={{ top: 20, right: 30, left: 20, bottom: categoryId ? 60 : 120 }}
         onClick={onBarClick}
       >
         <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
         <XAxis
-          dataKey="name"
-          angle={-45}
-          textAnchor="end"
-          height={100}
+          dataKey="displayName"
+          angle={categoryId ? -45 : -90}
+          textAnchor={categoryId ? "end" : "end"}
+          height={categoryId ? 80 : 120}
           className="text-xs"
+          tick={{ fontSize: categoryId ? 12 : 10 }}
+          interval={0}
         />
         <YAxis
           domain={[0, 1]}

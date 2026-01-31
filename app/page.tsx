@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowRight, Activity, Shield, AlertTriangle, TrendingUp, Cpu, Server, Zap } from "lucide-react";
+import { ArrowRight, Activity, Shield, AlertTriangle, TrendingUp, Cpu, Server, Zap, Globe } from "lucide-react";
+import { WorldMap } from "@/components/features/maps/world-map";
 import {
   getModels as getOpenAIModels,
   getRiskAssessments as getOpenAIAssessments,
@@ -283,18 +284,41 @@ function ComputeInfrastructurePreview() {
 
 export default function Home() {
   return (
-    <div className="container py-16">
-      {/* Hero Section - Simplified */}
-      <div className="text-center mb-16">
-        <Activity className="h-16 w-16 mx-auto mb-6 text-primary" />
-        <h1 className="text-5xl font-bold mb-4">AI Red Lines Tracker</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Track how close frontier AI models are to critical risk thresholds using official
-          system cards and preparedness frameworks. Compare risk assessments across OpenAI,
-          Anthropic, Google DeepMind, and xAI, monitor training compute and infrastructure, and
-          stay informed on regulatory compliance.
-        </p>
+    <div>
+      {/* World Map Section */}
+      <div className="mb-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-12 bg-muted/30 border-y">
+        <div className="container">
+          <div className="text-center mb-8">
+            <Globe className="h-10 w-10 mx-auto mb-4 text-primary" />
+            <h2 className="text-3xl font-bold mb-2">Global AI Infrastructure & Risk Landscape</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Track frontier AI labs, data centers, and chip manufacturing across the globe
+            </p>
+          </div>
+          <div style={{ height: "600px" }} className="rounded-lg overflow-hidden">
+            <WorldMap
+              showLabs={true}
+              showDataCenters={true}
+              showManufacturers={true}
+              showShipmentRegions={true}
+              height={600}
+            />
+          </div>
+        </div>
       </div>
+
+      <div className="container py-16">
+        {/* Hero Section - Simplified */}
+        <div className="text-center mb-16">
+          <Activity className="h-16 w-16 mx-auto mb-6 text-primary" />
+          <h1 className="text-5xl font-bold mb-4">AI Red Lines Tracker</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Track how close frontier AI models are to critical risk thresholds using official
+            system cards and preparedness frameworks. Compare risk assessments across OpenAI,
+            Anthropic, Google DeepMind, and xAI, monitor training compute and infrastructure, and
+            stay informed on regulatory compliance.
+          </p>
+        </div>
 
       {/* Key Features */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
@@ -449,6 +473,7 @@ export default function Home() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

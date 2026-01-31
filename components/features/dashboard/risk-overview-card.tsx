@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, TrendingUp, Shield, AlertCircle } from "lucide-react";
+import { AlertTriangle, TrendingUp, Shield, AlertCircle, AlertOctagon } from "lucide-react";
 import type { RiskAssessment, Model, RiskLevelConfig } from "@/lib/types/risk-data";
 import { countByRiskLevel } from "@/lib/data/risk-calculations";
 import { SourceBadge } from "@/components/shared/source-badge";
@@ -147,6 +147,68 @@ export function RiskOverviewCard({ assessments, getModelById, riskLevels }: Risk
                       <div key={assessment.modelId} className="flex items-center gap-2 text-sm">
                         <span className="font-medium">{model?.name}</span>
                         <SourceBadge sourceId={sourceId} section="Risk Assessment" />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          )}
+
+          {/* Near Threshold Section */}
+          {assessments.some((a) => {
+            const maxProximity = Math.max(...a.categoryRisks.map(r => r.thresholdProximity || 0));
+            return maxProximity >= 0.75;
+          }) && (
+            <div className="space-y-2">
+              <div className="text-sm font-medium text-yellow-600 flex items-center gap-1">
+                <AlertOctagon className="h-4 w-4" />
+                Near Threshold:
+              </div>
+              <div className="space-y-1">
+                {assessments
+                  .filter((a) => {
+                    const maxProximity = Math.max(...a.categoryRisks.map(r => r.thresholdProximity || 0));
+                    return maxProximity >= 0.75;
+                  })
+                  .map((assessment) => {
+                    const model = getModelById(assessment.modelId);
+                    const nearCategory = assessment.categoryRisks.find(
+                      r => (r.thresholdProximity || 0) >= 0.75
+                    );
+                    return (
+                      <div key={assessment.modelId} className="flex items-center gap-2 text-sm">
+                        <span className="font-medium">{model?.name}</span>
+                        <Badge variant="outline" className="text-xs">
+                          {nearCategory?.categoryId || "multiple"}
+                        </Badge>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          )}
+
+          {/* Low Risk Models Section */}
+          {assessments.some((a) => {
+            const levelValue = a.overallRisk.toLowerCase();
+            return levelValue.includes("low") || levelValue.includes("asl-1") || levelValue.includes("below");
+          }) && (
+            <div className="space-y-2">
+              <div className="text-sm font-medium text-green-600">Low Risk Models:</div>
+              <div className="space-y-1">
+                {assessments
+                  .filter((a) => {
+                    const levelValue = a.overallRisk.toLowerCase();
+                    return levelValue.includes("low") || levelValue.includes("asl-1") || levelValue.includes("below");
+                  })
+                  .map((assessment) => {
+                    const model = getModelById(assessment.modelId);
+                    return (
+                      <div key={assessment.modelId} className="flex items-center gap-2 text-sm">
+                        <span className="font-medium">{model?.name}</span>
+                        <Badge variant="outline" className="text-xs bg-green-50">
+                          {assessment.overallRisk}
+                        </Badge>
                       </div>
                     );
                   })}

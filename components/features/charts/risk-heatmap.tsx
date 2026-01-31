@@ -77,10 +77,7 @@ export function RiskHeatmap({
                     onClick={() => onCellClick?.(model.id, category.id)}
                   >
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-white">
-                        {((cell?.score || 0) * 100).toFixed(0)}%
-                      </div>
-                      <div className="text-xs text-white/90 capitalize mt-1">
+                      <div className="text-sm font-bold text-white capitalize">
                         {cell?.riskLevel || "low"}
                       </div>
                     </div>

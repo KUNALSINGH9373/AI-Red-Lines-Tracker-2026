@@ -1,0 +1,71 @@
+{
+  "labs": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA",
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "framework": "Preparedness Framework v2",
+      "modelCount": 5,
+      "primaryColor": "#10a37f",
+      "latestModel": "o3",
+      "latestReleaseDate": "2024-12-20",
+      "dataCenterCount": 3
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA",
+      "coordinates": {
+        "lat": 37.7749,
+        "lng": -122.4194
+      },
+      "framework": "Responsible Scaling Policy (RSP) v2.2",
+      "modelCount": 5,
+      "primaryColor": "#f97316",
+      "latestModel": "Claude Opus 4.5",
+      "latestReleaseDate": "2025-11-01",
+      "dataCenterCount": 1
+    },
+    {
+      "id": "google-deepmind",
+      "name": "Google DeepMind",
+      "city": "London",
+      "country": "UK",
+      "coordinates": {
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      "framework": "Frontier Safety Framework v3.0",
+      "modelCount": 4,
+      "primaryColor": "#4285f4",
+      "latestModel": "Gemini 3 Pro",
+      "latestReleaseDate": "2025-11-15",
+      "dataCenterCount": 2
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "city": "Palo Alto",
+      "state": "CA",
+      "country": "USA",
+      "coordinates": {
+        "lat": 37.3861,
+        "lng": -122.0838
+      },
+      "framework": "Frontier AI Framework",
+      "modelCount": 4,
+      "primaryColor": "#8B5CF6",
+      "latestModel": "Grok-4",
+      "latestReleaseDate": "2026-Q1",
+      "dataCenterCount": 0
+    }
+  ]
+}

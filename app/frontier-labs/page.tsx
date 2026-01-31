@@ -381,10 +381,35 @@ function LabContent({ lab }: { lab: LabKey }) {
             <CardHeader>
               <CardTitle>Model Risk Comparison</CardTitle>
               <CardDescription>
-                Compare risk scores across different models and categories
+                {selectedCategory
+                  ? `Risk comparison for the selected category`
+                  : `Compare risk scores across different models and categories`}
               </CardDescription>
             </CardHeader>
             <CardContent>
+              <div className="mb-4">
+                <div className="flex gap-2 flex-wrap">
+                  <Badge
+                    variant={selectedCategory === undefined ? "default" : "outline"}
+                    className="cursor-pointer"
+                    onClick={() => setSelectedCategory(undefined)}
+                  >
+                    All Categories
+                  </Badge>
+                  {categories.map((category) => (
+                    <Badge
+                      key={category.id}
+                      variant={
+                        selectedCategory === category.id ? "default" : "outline"
+                      }
+                      className="cursor-pointer"
+                      onClick={() => setSelectedCategory(category.id)}
+                    >
+                      {category.name}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
               <ModelComparisonChart
                 assessments={assessments}
                 categoryId={selectedCategory}
@@ -405,6 +430,7 @@ function LabContent({ lab }: { lab: LabKey }) {
               <RiskCategoryRadar
                 assessments={assessments}
                 getModelColor={(modelId) => CHART_COLORS[modelId as keyof typeof CHART_COLORS] || "#6b7280"}
+                getModelById={config.getModelById}
               />
             </CardContent>
           </Card>
