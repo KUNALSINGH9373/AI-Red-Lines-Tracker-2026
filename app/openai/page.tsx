@@ -19,6 +19,8 @@ import {
 import { RiskOverviewCard } from "@/components/features/dashboard/risk-overview-card";
 import { ThresholdProximityIndicator } from "@/components/features/dashboard/threshold-proximity-indicator";
 import { LatestUpdatesFeed } from "@/components/features/dashboard/latest-updates-feed";
+import { AiRndSpotlightCard } from "@/components/features/dashboard/ai-rnd-spotlight-card";
+import { getRedLineDefinitionByLab } from "@/lib/data/cross-lab-data";
 import { RiskProgressionChart } from "@/components/features/charts/risk-progression-chart";
 import { ModelComparisonChart } from "@/components/features/charts/model-comparison-chart";
 import { RiskCategoryRadar } from "@/components/features/charts/risk-category-radar";
@@ -279,6 +281,13 @@ export default function OpenAIDashboard() {
           </div>
         </CardContent>
       </Card>
+
+      <AiRndSpotlightCard
+        redLineDefinition={getRedLineDefinitionByLab("openai")}
+        proximity={0.5}
+        modelName="GPT-5"
+        lab="openai"
+      />
 
       <Card>
         <CardHeader>

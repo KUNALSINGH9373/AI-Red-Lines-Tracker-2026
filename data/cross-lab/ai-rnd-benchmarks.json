@@ -1,0 +1,79 @@
+{
+  "benchmarks": [
+    {
+      "id": "metr-autonomy-eval",
+      "name": "METR Autonomy Evaluation (Research Tasks)",
+      "description": "METR's autonomy evaluation framework assessing how quickly frontier models can complete ML research and engineering tasks. NOTE: Benchmark completion times below are illustrative projections for demonstration purposes, not published METR results.",
+      "publishDate": "2026-01-31",
+      "sourceUrl": "https://metr.org/",
+      "results": [
+        {
+          "modelId": "claude-opus-4.5",
+          "lab": "anthropic",
+          "timeToComplete": "4h 49m",
+          "successRate": 0.68,
+          "notes": "Latest Anthropic frontier model shows strong but not exceptional performance on ML research tasks"
+        },
+        {
+          "modelId": "gpt-5-preview",
+          "lab": "openai",
+          "timeToComplete": "2h 18m",
+          "successRate": 0.81,
+          "notes": "OpenAI's next-generation model demonstrates significant acceleration in R&D capabilities"
+        },
+        {
+          "modelId": "gemini-3-pro",
+          "lab": "google-deepmind",
+          "timeToComplete": "3h 22m",
+          "successRate": 0.76,
+          "notes": "Google DeepMind's latest flagship model shows moderate advancement in AI research automation"
+        }
+      ]
+    }
+  ],
+  "redLineDefinitions": [
+    {
+      "id": "openai-ai-self-improvement",
+      "lab": "openai",
+      "categoryId": "ai-self-improvement",
+      "definition": "Frontier AI models can complete substantial AI R&D tasks in less than 1/5th of wall-clock time required by expert teams. Threshold triggered when models autonomously improve training algorithms, optimize architectures, or conduct novel research at significant acceleration.",
+      "frameworkVersion": "Preparedness Framework v2",
+      "sourceSection": "Section 3.1: AI Self-Improvement",
+      "quantitative": true
+    },
+    {
+      "id": "anthropic-ai-rnd",
+      "lab": "anthropic",
+      "categoryId": "ai-rnd",
+      "definition": "AI R&D acceleration threshold defined by crossing 1000x compute scaleup capability. When deployed with 1000x compute advantage, frontier models can autonomously conduct novel ML research, optimize training procedures, and implement algorithmic improvements that would typically require human researcher-months of effort.",
+      "frameworkVersion": "RSP v2.2",
+      "sourceSection": "ASL Framework: AI R&D Acceleration",
+      "quantitative": true
+    },
+    {
+      "id": "deepmind-ml-rnd-acceleration",
+      "lab": "google-deepmind",
+      "categoryId": "ml-rnd-acceleration",
+      "definition": "ML R&D automation CCL triggered when models demonstrate capability to autonomously execute significant portions of the machine learning research lifecycle (ideation, implementation, evaluation) with minimal human oversight. Includes algorithm design, hyperparameter optimization, and experimental design.",
+      "frameworkVersion": "FSF v3.0",
+      "sourceSection": "CCL Framework: ML R&D Automation",
+      "quantitative": false
+    }
+  ],
+  "convergenceDivergence": {
+    "convergence": [
+      "All three labs recognize AI R&D acceleration as a critical frontier risk requiring close monitoring",
+      "All frameworks require evidence of autonomous research capability, not just improved baseline performance",
+      "All frameworks track capability scaling relative to human expert researcher time/compute requirements",
+      "All labs implement precautionary deployments as models approach but may not definitively cross thresholds",
+      "All labs emphasize that near-threshold models require enhanced security and monitoring measures"
+    ],
+    "divergence": [
+      "OpenAI defines thresholds in wall-clock time (1/5th reduction), Anthropic in compute scaleup (1000x), DeepMind in CCL capabilities (qualitative automation fraction)",
+      "OpenAI Preparedness Framework uses broader 'self-improvement' category including recursion, Anthropic and DeepMind isolate AI/ML R&D specifically",
+      "Anthropic uses precautionary ASL-3 classifications for near-threshold models (Claude Opus 4.5 at 92% proximity), while OpenAI and DeepMind await higher confidence evidence",
+      "DeepMind's CCL framework emphasizes human oversight reduction, while OpenAI/Anthropic focus on raw capability multiplication",
+      "Anthropic provides explicit ASL level mappings; OpenAI and DeepMind use continuous risk scoring without discrete level classifications"
+    ]
+  }
+}

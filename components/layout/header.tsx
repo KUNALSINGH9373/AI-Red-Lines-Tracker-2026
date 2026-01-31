@@ -13,22 +13,23 @@ export function Header() {
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Link
-              href="/openai"
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
+              href="/frontier-labs"
+              className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
             >
-              OpenAI
+              Frontier Labs
+            </Link>
+            <span className="text-foreground/30">•</span>
+            <Link
+              href="/ai-rnd"
+              className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
+            >
+              AI R&D Tracker
             </Link>
             <Link
-              href="/anthropic"
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
+              href="/compute-infrastructure"
+              className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
             >
-              Anthropic
-            </Link>
-            <Link
-              href="/google-deepmind"
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
-            >
-              Google DeepMind
+              Compute Infrastructure
             </Link>
           </nav>
         </div>

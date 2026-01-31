@@ -19,6 +19,8 @@ import {
 import { RiskOverviewCard } from "@/components/features/dashboard/risk-overview-card";
 import { ThresholdProximityIndicator } from "@/components/features/dashboard/threshold-proximity-indicator";
 import { LatestUpdatesFeed } from "@/components/features/dashboard/latest-updates-feed";
+import { AiRndSpotlightCard } from "@/components/features/dashboard/ai-rnd-spotlight-card";
+import { getRedLineDefinitionByLab } from "@/lib/data/cross-lab-data";
 import { RiskProgressionChart } from "@/components/features/charts/risk-progression-chart";
 import { ModelComparisonChart } from "@/components/features/charts/model-comparison-chart";
 import { RiskCategoryRadar } from "@/components/features/charts/risk-category-radar";
@@ -200,6 +202,13 @@ export default function GoogleDeepMindDashboard() {
           </div>
         </CardContent>
       </Card>
+
+      <AiRndSpotlightCard
+        redLineDefinition={getRedLineDefinitionByLab("google-deepmind")}
+        proximity={0.4}
+        modelName="Gemini 3 Pro"
+        lab="google-deepmind"
+      />
 
       <Tabs defaultValue="comparison" className="mb-8">
         <TabsList className="grid w-full grid-cols-3">
