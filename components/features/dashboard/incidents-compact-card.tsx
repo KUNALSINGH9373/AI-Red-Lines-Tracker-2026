@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { ExternalLink, AlertCircle, ChevronDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { Incident } from "@/lib/data/ai-incidents-data";
 
 interface IncidentsCompactCardProps {
@@ -43,9 +49,13 @@ export function IncidentsCompactCard({
 
       <div className="w-full max-w-sm space-y-3">
         {/* Main Indicator Card */}
-        <Card className="incident-blink-compact border-2 border-red-500 bg-red-950/30 hover:bg-red-950/40 transition-colors cursor-pointer"
-          onClick={() => setExpanded(!expanded)}>
-          <CardContent className="pt-4">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <Card className="incident-blink-compact border-2 border-red-500 bg-red-950/30 hover:bg-red-950/40 transition-colors cursor-pointer"
+                  onClick={() => setExpanded(!expanded)}>
+                  <CardContent className="pt-4">
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
@@ -84,8 +94,17 @@ export function IncidentsCompactCard({
               Database
               <ExternalLink className="h-3 w-3" />
             </a>
-          </CardContent>
-        </Card>
+                  </CardContent>
+                </Card>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="max-w-xs bg-red-900 text-white border-red-700">
+              <p className="text-sm">
+                Malaysian Teenager Allegedly Arrested for Creating and Selling AI-Generated Deepfake Images of Schoolmates and Alumni in Johor
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         {/* Expanded Incidents List */}
         {expanded && (
