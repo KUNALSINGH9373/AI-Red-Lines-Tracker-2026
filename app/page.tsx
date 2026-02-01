@@ -29,6 +29,15 @@ import {
   getEUActCompliance,
   calculateTotalDataCenterCapacity,
 } from "@/lib/data/compute-infrastructure-data";
+import {
+  getGlobalIncidentTotal,
+  getIncidentsSource,
+  getIncidentsSourceUrl,
+  getIncidents,
+} from "@/lib/data/ai-incidents-data";
+import { IncidentsCompactCard } from "@/components/features/dashboard/incidents-compact-card";
+import { CrossLabProximityGauge } from "@/components/features/charts/cross-lab-proximity-gauge";
+import { getAiRndBenchmarks } from "@/lib/data/cross-lab-data";
 
 function FrontierLabsPreview() {
   const openAIModels = getOpenAIModels();
@@ -309,13 +318,42 @@ export default function Home() {
           {/* Map Filters */}
           <MapFilters onFiltersChange={setMapFilters} />
 
-          <div style={{ height: "600px" }} className="rounded-lg overflow-hidden">
-            <WorldMap
-              showLabs={mapFilters.showLabs}
-              showDataCenters={mapFilters.showDataCenters}
-              showManufacturers={mapFilters.showManufacturers}
-              height={600}
-            />
+          <div className="flex gap-4">
+            {/* Map - 70% */}
+            <div style={{ height: "600px", flex: "0 0 70%" }} className="rounded-lg overflow-hidden">
+              <WorldMap
+                showLabs={mapFilters.showLabs}
+                showDataCenters={mapFilters.showDataCenters}
+                showManufacturers={mapFilters.showManufacturers}
+                height={600}
+              />
+            </div>
+
+            {/* Incidents Card - 30% */}
+            <div style={{ flex: "0 0 30%", display: "flex", alignItems: "flex-start" }}>
+              <IncidentsCompactCard
+                totalIncidents={getGlobalIncidentTotal()}
+                lastUpdated={getIncidentsSource().lastUpdated}
+                sourceUrl={getIncidentsSourceUrl()}
+                incidents={getIncidents()}
+                defaultExpanded={true}
+              />
+            </div>
+          </div>
+
+          {/* AI R&D Proximity Gauge */}
+          <div className="mt-12">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold mb-2">Frontier Model Proximity to Red Lines</h3>
+              <p className="text-muted-foreground">
+                Current assessment of how close frontier models are to critical AI R&D acceleration thresholds across labs
+              </p>
+            </div>
+            <Card>
+              <CardContent className="pt-8">
+                <CrossLabProximityGauge benchmarkResults={getAiRndBenchmarks().flatMap((b) => b.results)} />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

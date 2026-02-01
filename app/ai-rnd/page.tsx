@@ -77,8 +77,8 @@ export default function AiRndDashboard() {
           <p className="text-sm text-blue-800 dark:text-blue-200 mb-3">
             AI R&D acceleration represents one of the most critical frontier AI risks, where
             models achieve significant speedup in their own training or optimization cycles.
-            This dashboard tracks how frontier models from OpenAI, Anthropic, and Google
-            DeepMind approach laboratory-defined red lines for this risk category.
+            This dashboard tracks how frontier models from OpenAI, Anthropic, Google
+            DeepMind, and xAI approach laboratory-defined red lines for this risk category.
           </p>
           <p className="text-sm text-blue-800 dark:text-blue-200">
             Each lab uses different frameworks and thresholds, creating an opportunity to

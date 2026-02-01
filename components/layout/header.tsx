@@ -13,6 +13,13 @@ export function Header() {
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Link
+              href="/ai-red-line-analysis"
+              className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
+            >
+              AI Red Line Analysis
+            </Link>
+            <span className="text-foreground/30">•</span>
+            <Link
               href="/frontier-labs"
               className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
             >
@@ -30,6 +37,13 @@ export function Header() {
               className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
             >
               Compute Infrastructure
+            </Link>
+            <span className="text-foreground/30">•</span>
+            <Link
+              href="/ai-incidents"
+              className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
+            >
+              AI Incidents
             </Link>
           </nav>
         </div>

@@ -1,6 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, TrendingUp, Shield, AlertCircle, AlertOctagon } from "lucide-react";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 import type { RiskAssessment, Model, RiskLevelConfig } from "@/lib/types/risk-data";
 import { countByRiskLevel } from "@/lib/data/risk-calculations";
 import { SourceBadge } from "@/components/shared/source-badge";
@@ -9,9 +14,55 @@ interface RiskOverviewCardProps {
   assessments: RiskAssessment[];
   getModelById: (id: string) => Model | undefined;
   riskLevels?: RiskLevelConfig[];
+  labName?: "openai" | "anthropic" | "google-deepmind" | "xai";
+  frameworkVersion?: string;
 }
 
-export function RiskOverviewCard({ assessments, getModelById, riskLevels }: RiskOverviewCardProps) {
+// Risk level definitions by framework
+const RISK_DEFINITIONS: Record<string, Record<string, string>> = {
+  openai: {
+    critical: "Extreme capability - Model demonstrates severe capability to enable catastrophic outcomes. Deployment restrictions required.",
+    high: "Significant capability - Model shows substantial capability to enable serious harms. Strict access controls needed.",
+    medium: "Moderate capability - Model shows meaningful capability but with mitigations. Enhanced monitoring required.",
+    low: "Minimal capability - Model shows little to no significant capability. Standard mitigations sufficient.",
+  },
+  anthropic: {
+    "asl-4": "ASL-4 (Extreme) - Capabilities that pose extreme risk and require the most stringent controls",
+    "asl-3": "ASL-3 (High) - Significant capabilities requiring strict deployment restrictions and controls",
+    "asl-2": "ASL-2 (Moderate) - Moderate capabilities requiring enhanced monitoring and safeguards",
+    "asl-1": "ASL-1 (Minimal) - Minimal capabilities manageable with standard safeguards",
+  },
+  "google-deepmind": {
+    "ccl-exceeded": "CCL Exceeded - Model capabilities have exceeded the Capability Confidence Level threshold",
+    "ccl-met": "CCL Met - Model has reached the Capability Confidence Level threshold",
+    alert: "Alert Threshold Met - Model capabilities have reached alert-level thresholds",
+    "below-alert": "Below Alert - Model capabilities are below alert thresholds",
+  },
+  xai: {
+    critical: "Critical Risk - Model demonstrates extreme risk potential across multiple dimensions",
+    high: "High Risk - Model shows significant risk potential requiring strict controls",
+    moderate: "Moderate Risk - Model shows moderate risk requiring enhanced safeguards",
+    low: "Low Risk - Model shows minimal risk with standard mitigations sufficient",
+  },
+};
+
+function getRiskLevelDescription(
+  labName: string | undefined,
+  riskLevel: string
+): string {
+  const labDefinitions =
+    RISK_DEFINITIONS[labName || "openai"] || RISK_DEFINITIONS.openai;
+  const levelKey = riskLevel.toLowerCase();
+  return labDefinitions[levelKey] || "Risk level - Monitor model capabilities";
+}
+
+export function RiskOverviewCard({
+  assessments,
+  getModelById,
+  riskLevels,
+  labName,
+  frameworkVersion,
+}: RiskOverviewCardProps) {
   const riskCounts = countByRiskLevel(assessments);
 
   // Determine which risk levels are "high risk" and "medium risk" based on framework
@@ -56,50 +107,70 @@ export function RiskOverviewCard({ assessments, getModelById, riskLevels }: Risk
   const stats = [
     {
       label: "Critical Risk",
+      level: "critical",
       value: criticalCount,
       icon: AlertCircle,
       color: "#991b1b",
     },
     {
       label: "High Risk",
+      level: "high",
       value: highCount,
       icon: AlertTriangle,
       color: "#ef4444",
     },
     {
       label: "Medium Risk",
+      level: "medium",
       value: mediumCount,
       icon: TrendingUp,
       color: "#f59e0b",
     },
     {
       label: "Low Risk",
+      level: "low",
       value: lowCount,
       icon: Shield,
       color: "#10b981",
     },
   ];
 
+  const labDisplayName =
+    labName === "google-deepmind"
+      ? "Google DeepMind"
+      : labName
+        ? labName.charAt(0).toUpperCase() + labName.slice(1)
+        : "AI Models";
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Risk Overview</CardTitle>
+        <CardDescription>
+          Number of {labDisplayName} models at each risk level
+          {frameworkVersion && ` (${frameworkVersion})`}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {stats.map((stat) => {
             const Icon = stat.icon;
+            const tooltipContent = getRiskLevelDescription(labName, stat.level);
             return (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center p-4 rounded-lg border"
-              >
-                <Icon className="h-8 w-8 mb-2" style={{ color: stat.color }} />
-                <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                <div className="text-xs text-muted-foreground text-center">
-                  {stat.label}
-                </div>
-              </div>
+              <Tooltip key={stat.label}>
+                <TooltipTrigger asChild>
+                  <div className="flex flex-col items-center p-4 rounded-lg border cursor-help hover:bg-accent/50 transition-colors">
+                    <Icon className="h-8 w-8 mb-2" style={{ color: stat.color }} />
+                    <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground text-center">
+                      {stat.label}
+                    </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs text-sm">
+                  <p>{tooltipContent}</p>
+                </TooltipContent>
+              </Tooltip>
             );
           })}
         </div>

@@ -75,7 +75,13 @@ export default function GoogleDeepMindDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="lg:col-span-2">
-          <RiskOverviewCard assessments={assessments} getModelById={getModelById} riskLevels={riskLevels} />
+          <RiskOverviewCard
+            assessments={assessments}
+            getModelById={getModelById}
+            riskLevels={riskLevels}
+            labName="google-deepmind"
+            frameworkVersion={frameworkVersion}
+          />
         </div>
         <div>
           <ThresholdProximityIndicator assessments={assessments} threshold={0.75} />

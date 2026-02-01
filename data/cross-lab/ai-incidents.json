@@ -1,0 +1,132 @@
+{
+  "source": {
+    "title": "AI Incident Database",
+    "url": "https://incidentdatabase.ai/entities/",
+    "description": "Tracking AI incidents and harmful outcomes from deployed systems",
+    "lastUpdated": "2026-02-01",
+    "summariesUrl": "https://incidentdatabase.ai/summaries/incidents/",
+    "totalIncidents": 1352
+  },
+  "incidents": [
+    {
+      "id": "openai-001",
+      "name": "OpenAI",
+      "type": "Deployer and Developer",
+      "totalIncidents": 61,
+      "incidentsAsDeployer": 0,
+      "incidentsAsDeveloper": 75,
+      "harmedBy": 10,
+      "implicatedSystem": 0,
+      "relatedEntities": 682,
+      "incidentResponses": 10
+    },
+    {
+      "id": "google-001",
+      "name": "Google",
+      "type": "Deployer and Developer",
+      "totalIncidents": 58,
+      "incidentsAsDeployer": 0,
+      "incidentsAsDeveloper": 21,
+      "harmedBy": 4,
+      "implicatedSystem": 3,
+      "relatedEntities": 386,
+      "incidentResponses": 6
+    },
+    {
+      "id": "facebook-001",
+      "name": "Facebook",
+      "type": "Deployer and Developer",
+      "totalIncidents": 52,
+      "incidentsAsDeployer": 2,
+      "incidentsAsDeveloper": 1,
+      "harmedBy": 1,
+      "implicatedSystem": 48,
+      "relatedEntities": 442,
+      "incidentResponses": 2
+    },
+    {
+      "id": "tesla-001",
+      "name": "Tesla",
+      "type": "Deployer and Developer",
+      "totalIncidents": 43,
+      "incidentsAsDeployer": 0,
+      "incidentsAsDeveloper": 5,
+      "harmedBy": 3,
+      "implicatedSystem": 2,
+      "relatedEntities": 89,
+      "incidentResponses": 2
+    },
+    {
+      "id": "meta-001",
+      "name": "Meta",
+      "type": "Deployer and Developer",
+      "totalIncidents": 39,
+      "incidentsAsDeployer": 2,
+      "incidentsAsDeveloper": 7,
+      "harmedBy": 2,
+      "implicatedSystem": 0,
+      "relatedEntities": 287,
+      "incidentResponses": 1
+    },
+    {
+      "id": "microsoft-001",
+      "name": "Microsoft",
+      "type": "Deployer and Developer",
+      "totalIncidents": 28,
+      "incidentsAsDeployer": 1,
+      "incidentsAsDeveloper": 9,
+      "harmedBy": 13,
+      "implicatedSystem": 0,
+      "relatedEntities": 257,
+      "incidentResponses": 3
+    },
+    {
+      "id": "amazon-001",
+      "name": "Amazon",
+      "type": "Deployer and Developer",
+      "totalIncidents": 24,
+      "incidentsAsDeployer": 2,
+      "incidentsAsDeveloper": 4,
+      "harmedBy": 3,
+      "implicatedSystem": 0,
+      "relatedEntities": 79,
+      "incidentResponses": 1
+    },
+    {
+      "id": "unknown-001",
+      "name": "Unknown",
+      "type": "Deployer and Developer",
+      "totalIncidents": 19,
+      "incidentsAsDeployer": 8,
+      "incidentsAsDeveloper": 70,
+      "harmedBy": 4,
+      "implicatedSystem": 0,
+      "relatedEntities": 293,
+      "incidentResponses": 6
+    },
+    {
+      "id": "xai-001",
+      "name": "xAI",
+      "type": "Deployer and Developer",
+      "totalIncidents": 16,
+      "incidentsAsDeployer": 0,
+      "incidentsAsDeveloper": 5,
+      "harmedBy": 0,
+      "implicatedSystem": 0,
+      "relatedEntities": 138,
+      "incidentResponses": 1
+    },
+    {
+      "id": "apple-001",
+      "name": "Apple",
+      "type": "Deployer and Developer",
+      "totalIncidents": 14,
+      "incidentsAsDeployer": 0,
+      "incidentsAsDeveloper": 2,
+      "harmedBy": 3,
+      "implicatedSystem": 0,
+      "relatedEntities": 65,
+      "incidentResponses": 1
+    }
+  ]
+}

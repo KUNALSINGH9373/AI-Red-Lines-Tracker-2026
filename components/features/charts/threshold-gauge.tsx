@@ -18,6 +18,12 @@ export function ThresholdGauge({ thresholdProximity, title }: ThresholdGaugeProp
     return "#10b981";
   };
 
+  const getCategory = () => {
+    if (thresholdProximity >= 0.7) return "High";
+    if (thresholdProximity >= 0.4) return "Medium";
+    return "Low";
+  };
+
   const data = [
     {
       name: "Proximity",
@@ -59,10 +65,7 @@ export function ThresholdGauge({ thresholdProximity, title }: ThresholdGaugeProp
       </ResponsiveContainer>
       <div className="text-center mt-2">
         <div className="text-3xl font-bold" style={{ color: getColor() }}>
-          {gaugeData.value.toFixed(0)}%
-        </div>
-        <div className="text-xs text-muted-foreground mt-1">
-          Threshold Proximity
+          {getCategory()}
         </div>
       </div>
     </div>

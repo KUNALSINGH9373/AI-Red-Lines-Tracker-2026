@@ -27,6 +27,13 @@
           "timeToComplete": "3h 22m",
           "successRate": 0.76,
           "notes": "Google DeepMind's latest flagship model shows moderate advancement in AI research automation"
+        },
+        {
+          "modelId": "grok-4.1-fast",
+          "lab": "xai",
+          "timeToComplete": "8.8m",
+          "successRate": 0.88,
+          "notes": "xAI's Grok 4.1 Fast demonstrates state-of-the-art autonomous agent capabilities with 88% code generation success rate and #1 ranking on τ²-bench Telecom autonomous agent benchmark"
         }
       ]
     }
@@ -58,22 +65,34 @@
       "frameworkVersion": "FSF v3.0",
       "sourceSection": "CCL Framework: ML R&D Automation",
       "quantitative": false
+    },
+    {
+      "id": "xai-uncontrolled-autonomous-ai-rnd",
+      "lab": "xai",
+      "categoryId": "dual-use-capabilities",
+      "definition": "Uncontrolled autonomous AI R&D red line: AI at this level will be capable of replacing human researchers and fully automating the research, development, and deployment of frontier models that will pose severe risk such as accelerating the development of enhanced CBRN weapons and offensive cybersecurity methods. Currently assessed as green/yellow zone - no models crossing red line threshold.",
+      "frameworkVersion": "Frontier Artificial Intelligence Framework (Dec 2025)",
+      "sourceSection": "Critical Risk Areas: Uncontrolled Autonomous AI R&D",
+      "quantitative": false
     }
   ],
   "convergenceDivergence": {
     "convergence": [
-      "All three labs recognize AI R&D acceleration as a critical frontier risk requiring close monitoring",
+      "All four labs recognize AI R&D acceleration as a critical frontier risk requiring close monitoring",
       "All frameworks require evidence of autonomous research capability, not just improved baseline performance",
       "All frameworks track capability scaling relative to human expert researcher time/compute requirements",
       "All labs implement precautionary deployments as models approach but may not definitively cross thresholds",
-      "All labs emphasize that near-threshold models require enhanced security and monitoring measures"
+      "All labs emphasize that near-threshold models require enhanced security and monitoring measures",
+      "All labs currently assess frontier models as remaining in green/yellow zones without crossing red line thresholds"
     ],
     "divergence": [
-      "OpenAI defines thresholds in wall-clock time (1/5th reduction), Anthropic in compute scaleup (1000x), DeepMind in CCL capabilities (qualitative automation fraction)",
-      "OpenAI Preparedness Framework uses broader 'self-improvement' category including recursion, Anthropic and DeepMind isolate AI/ML R&D specifically",
-      "Anthropic uses precautionary ASL-3 classifications for near-threshold models (Claude Opus 4.5 at 92% proximity), while OpenAI and DeepMind await higher confidence evidence",
-      "DeepMind's CCL framework emphasizes human oversight reduction, while OpenAI/Anthropic focus on raw capability multiplication",
-      "Anthropic provides explicit ASL level mappings; OpenAI and DeepMind use continuous risk scoring without discrete level classifications"
+      "OpenAI defines thresholds in wall-clock time (1/5th reduction), Anthropic in compute scaleup (1000x), DeepMind in CCL capabilities (automation fraction), xAI in full researcher replacement capability",
+      "OpenAI Preparedness Framework uses broader 'self-improvement' category, Anthropic/DeepMind/xAI isolate AI/ML R&D specifically",
+      "Anthropic uses precautionary ASL-3 classifications (Claude Opus 4.5 at 92% proximity), while OpenAI, DeepMind, and xAI await higher confidence evidence",
+      "DeepMind's CCL framework emphasizes human oversight reduction, OpenAI/Anthropic focus on capability multiplication, xAI emphasizes full automation of frontier model development",
+      "xAI employs red/yellow/green zone framework with explicit tier-based assessment; OpenAI and DeepMind use continuous risk scoring; Anthropic uses discrete ASL levels",
+      "xAI's framework explicitly addresses deployment acceleration risks (CBRN/cyber), aligning with concerns shared but differently framed by other labs",
+      "xAI's autonomous agent capabilities (τ²-bench Telecom #1, 88% code generation) currently assessed as yellow-zone (enhanced mitigations), not crossing red line"
     ]
   }
 }

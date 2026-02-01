@@ -4,15 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**AI Red Lines Tracker** is an interactive web dashboard tracking frontier AI model capabilities against critical AI risk thresholds. It visualizes official risk assessments from major AI labs (OpenAI, Anthropic, Google DeepMind, xAI) across their respective risk frameworks.
+**AI Red Lines Tracker** is an interactive web dashboard tracking frontier AI model capabilities against critical AI risk thresholds. It visualizes official risk assessments from major AI labs (OpenAI, Anthropic, Google DeepMind, xAI) across their respective risk frameworks, plus cross-lab AI R&D benchmarking and compute infrastructure analysis.
 
 Currently tracking:
 - **OpenAI**: 5 models across Preparedness Framework v2 categories (bio-chem, cyber, persuasion, ai-self-improvement)
 - **Anthropic**: 5 models across RSP v2.2 levels (ASL-1 to ASL-4)
-- **Google DeepMind**: 4 models across FSF v3.0 (Capability Confidence Levels)
+- **Google DeepMind**: 3 models across FSF v3.0 (Capability Confidence Levels)
 - **xAI**: 4 Grok models across Frontier AI Framework (Abuse Potential, Concerning Propensities, Dual-Use Capabilities)
+- **Cross-Lab AI R&D**: METR benchmark results and red line definitions across 3 major labs
+- **Compute Infrastructure**: Training compute analysis, data center expansions, chip shipments, compute concentration
+- **AI Incidents**: Documented incidents from the AI Incident Database, tracking harmed parties and system involvement
 
-All data sourced from official system cards and published frameworks.
+All data sourced from official system cards, published frameworks, and public research datasets.
 
 ## Development Commands
 
@@ -31,6 +34,12 @@ npm start
 
 # Run linter
 npm lint
+
+# Run linter with auto-fix
+npm lint -- --fix
+
+# Build production bundle locally (without starting server)
+npm run build
 ```
 
 **Requirements**: Node.js 18+
@@ -61,25 +70,34 @@ UI Components (pages, features)
 ```
 /app                          # Next.js App Router pages
   ├── layout.tsx             # Root layout with theme provider
-  ├── page.tsx               # Home/landing page
+  ├── page.tsx               # Home/landing page (world map with infrastructure)
   ├── frontier-labs/page.tsx # Unified multi-lab dashboard with tab switching
+  ├── ai-rnd/page.tsx        # AI R&D benchmarks and red lines comparison
+  ├── compute-infrastructure/page.tsx # Compute analysis dashboard
+  ├── ai-incidents/page.tsx  # AI incidents tracking dashboard
   └── [lab]/page.tsx         # Lab-specific dashboards (openai/, anthropic/, google-deepmind/, xai/)
 
 /components                   # React components
   ├── /ui                    # shadcn/ui pre-built components (Card, Badge, Tabs, etc.)
   ├── /layout                # Header, footer, theme provider/toggle
   ├── /features
-  │   ├── /dashboard         # Risk overview, threshold indicator, updates feed, spotlight cards
-  │   ├── /charts            # Line, bar, radar, heatmap visualizations (Recharts)
-  │   └── /maps              # Interactive world map with filters, tooltips, legend
+  │   ├── /dashboard         # Risk overview, threshold indicator, updates feed, incident metrics
+  │   ├── /charts            # Recharts visualizations (Line, Bar, Radar, Heatmap, Incidents Bar Chart, etc.)
+  │   ├── /maps              # Interactive world map with filters, tooltips, legend
+  │   ├── /filters           # Filter UI components
+  │   └── /modals            # Detail and information modals
   └── /shared                # Source badges with lab citations
 
 /lib                         # Business logic and utilities
   ├── /data                  # Data accessors and transformations
   │   ├── [lab]-data.ts      # Lab-specific functions (getModels, getRiskAssessments, etc.)
-  │   ├── cross-lab-data.ts  # Cross-lab utilities (red line definitions)
+  │   ├── cross-lab-data.ts  # Cross-lab utilities (METR benchmarks, red line definitions)
+  │   ├── frontier-labs-data.ts # Frontier lab accessor functions
+  │   ├── chip-manufacturers-data.ts # Chip manufacturer accessor functions
+  │   ├── compute-infrastructure-data.ts # Compute infrastructure accessor functions
   │   ├── risk-calculations.ts # Risk aggregation and counting
-  │   └── chart-transformers.ts # Time series, radar, heatmap data formatting
+  │   ├── chart-transformers.ts # Time series, radar, heatmap data formatting
+  │   └── compute-infrastructure-transformers.ts # Compute bar chart and visualization formatting
   ├── /types                 # risk-data.ts with core interfaces
   └── /constants             # Thresholds, CHART_COLORS, CATEGORY_COLORS
 
@@ -88,14 +106,16 @@ UI Components (pages, features)
   ├── /anthropic/           # Anthropic models and assessments
   ├── /google-deepmind/     # Google DeepMind models and assessments
   ├── /xai/                 # xAI Grok models and assessments
-  │   ├── models.json       # 4 Grok models
-  │   ├── risk-assessments.json  # 3-category framework
-  │   ├── events.json       # Model releases and framework updates
-  │   └── sources.json      # Links to 6 xAI documents
-  └── /cross-lab/           # Cross-lab data (compute infrastructure, world map)
+  │   ├── models.json
+  │   ├── risk-assessments.json
+  │   ├── events.json
+  │   └── sources.json
+  └── /cross-lab/           # Cross-lab data
       ├── frontier-labs.json # 4 lab HQs with coordinates
-      ├── chip-manufacturers.json # 3 manufacturers, shipment zones
-      └── compute-infrastructure.json # Data centers with coordinates, training compute
+      ├── chip-manufacturers.json # 3 chip manufacturers with shipment zones
+      ├── compute-infrastructure.json # Data centers, training compute, chip shipments, compute concentration
+      ├── ai-rnd-benchmarks.json # METR benchmarks and red line definitions
+      └── ai-incidents.json # Incident data from AI Incident Database (10 organizations)
 ```
 
 ### Multi-Lab Architecture
@@ -151,6 +171,18 @@ Core types in `/lib/types/risk-data.ts`:
 
 **Threshold Proximity**: 0.0–1.0 scale indicating how close to next threshold (0.85+ = warning, 0.95+ = critical)
 
+**AI R&D Benchmark Types:**
+- **Benchmark**: `{ id, name, description, publishDate, sourceUrl, results[] }`
+- **BenchmarkResult**: `{ modelId, lab, timeToComplete, successRate, notes }`
+- **RedLineDefinition**: `{ id, lab, categoryId, definition, frameworkVersion, sourceSection, quantitative }`
+- **ConvergenceDivergence**: `{ convergence: string[], divergence: string[] }`
+
+**Compute Infrastructure Types:**
+- **TrainingComputeData**: `{ modelId, modelName, organization, releaseDate, trainingCompute (FLOP), euActCompliant, source }`
+- **DataCenterExpansion**: `{ id, projectName, company, location: { city, state?, country, coordinates? }, capacity, announcementDate, status, source }`
+- **ComputeConcentration**: `{ entity, capex2024, capex2025_2026, marketShare, source }`
+- **ChipShipment**: `{ id, year, chipModel, shipmentsToUS, shipmentsToChina, totalGlobal, source }`
+
 ## Technology Stack
 
 - **Framework**: Next.js 16.1.6 (App Router, React Server Components)
@@ -203,6 +235,111 @@ react-simple-maps calculates SVG transform attributes on client, causing server/
 - **.npmrc**: `legacy-peer-deps=true` enables Vercel deployment with react-simple-maps v3 + React 19
 - No ERESOLVE errors during `npm install` on Vercel
 
+## AI R&D Benchmarks Feature (/ai-rnd)
+
+Cross-lab AI R&D capability tracking using METR benchmarks and red line definitions:
+
+### Data Structure
+- **ai-rnd-benchmarks.json**: Contains benchmarks, benchmark results, and red line definitions
+  - **Benchmarks**: METR benchmark tests with publication dates and source URLs
+  - **BenchmarkResults**: Per-model performance data (timeToComplete, successRate by lab)
+  - **RedLineDefinitions**: Lab-specific red line thresholds for AI R&D capabilities
+  - **ConvergenceDivergence**: Areas where labs converge vs. diverge on capabilities
+
+### Key Components
+- **RedLineComparisonChart**: Visualizes red line definitions across labs
+- **CrossLabProximityGauge**: Shows how close models are to crossing red lines
+- **METRBenchmarkTable**: Displays benchmark results in tabular format
+- **ConvergenceDivergencePanel**: Highlights areas of capability convergence/divergence
+- **CrossLabTimelineChart**: Timeline of benchmark performance over time
+
+### Data Accessor Functions (cross-lab-data.ts)
+- `getAiRndBenchmarks()` - Returns all benchmarks
+- `getBenchmarkById(id)` - Fetch specific benchmark
+- `getBenchmarkResults()` - Aggregate results across all benchmarks
+- `getRedLineDefinitions()` - Return all red line definitions
+- `getRedLineDefinitionByLab(lab)` - Filter by lab
+- `getConvergenceDivergence()` - Convergence/divergence analysis
+- `getLatestBenchmarkDate()` - Get most recent benchmark publication date
+
+## Compute Infrastructure Feature (/compute-infrastructure)
+
+Global compute infrastructure analysis for frontier AI development:
+
+### Data Structure (compute-infrastructure.json)
+1. **TrainingComputeData**: Model-level training compute (FLOP scale)
+   - Organization, release date, EU AI Act compliance status
+   - Used for training compute bar chart showing scale trends
+
+2. **DataCenterExpansions**: Major data center projects (10+ facilities)
+   - Coordinates for world map visualization
+   - Status: announced, in-progress, operational
+   - Capacity in MW or GW
+
+3. **ComputeConcentration**: Market share and capex trends
+   - CAPEX 2024 and 2025-2026 projections
+   - Market share percentages by organization
+
+4. **ChipShipments**: Semiconductor supply tracking
+   - Annual shipments by region (US, China, Global)
+   - Linked to chip manufacturer data
+
+### Key Components
+- **ComputeBarChart**: Training compute by model (log scale)
+- **DataCenterMap**: Geographic visualization on world map
+- **ComputeConcentrationChart**: Market share trends
+- **ChipShipmentChart**: Semiconductor supply analysis
+
+### Data Accessor Functions (compute-infrastructure-data.ts)
+- `getTrainingComputeData()` - All training compute records
+- `getDataCenterExpansions()` - All data center projects
+- `getComputeConcentration()` - Market share data
+- `getChipShipments()` - Semiconductor supply data
+- `getDataCentersByCountry(country)` - Filter by location
+- `getDataCentersByStatus(status)` - Filter by project status
+
+## AI Incidents Feature (/ai-incidents)
+
+Tracking reported AI incidents and harmful outcomes from deployed systems:
+
+### Data Structure (ai-incidents.json)
+- **Organization**: Name of company/entity
+- **Type**: Role in incidents (Deployer and Developer)
+- **Incidents Metrics**:
+  - **totalIncidents**: Cumulative incidents involving this organization
+  - **incidentsAsDeployer**: Incidents where organization deployed the AI system
+  - **incidentsAsDeveloper**: Incidents where organization developed the AI system
+  - **harmedBy**: Number of parties harmed by incidents
+  - **implicatedSystem**: Number of AI systems implicated
+  - **relatedEntities**: Other organizations/systems involved
+  - **incidentResponses**: Number of documented responses
+
+### Key Components
+- **IncidentsMetricsCard**: Overview metrics (total, deployer, developer, harmed)
+- **IncidentsBarChart**: Bar chart showing incidents by organization and role
+- **IncidentsDetailedTable**: Comprehensive table with all metrics
+- **Data Source Link**: Direct link to AI Incident Database at https://incidentdatabase.ai/entities/
+
+### Data Accessor Functions (ai-incidents-data.ts)
+- `getIncidents()` - Return all incident records
+- `getIncidentById(id)` - Fetch specific incident
+- `getIncidentByName(name)` - Find by organization name
+- `getIncidentsSource()` - Get source metadata
+- `getIncidentsSortedByTotal()` - Sort by total incidents
+- `getIncidentsSortedByDeployer()` - Sort by deployer incidents
+- `getIncidentsSortedByDeveloper()` - Sort by developer incidents
+- `getTotalIncidentsAcrossOrgs()` - Aggregate total
+- `getTotalDeployerIncidents()` - Sum deployer incidents
+- `getTotalDeveloperIncidents()` - Sum developer incidents
+- `getHarmedByTotal()` - Sum harmed parties
+- `getIncidentResponsesTotal()` - Sum responses
+
+### Integration Notes
+- Data sourced from AI Incident Database (https://incidentdatabase.ai/entities/)
+- Accessible via navigation link: `/ai-incidents`
+- Includes 10 major AI organizations (OpenAI, Google, Facebook, Tesla, Meta, Microsoft, Amazon, Unknown, xAI, Apple)
+- Visualizations help track incident patterns across deployer vs developer roles
+
 ## Common Development Tasks
 
 ### Updating Risk Data for Existing Lab
@@ -225,6 +362,23 @@ When new system cards are released:
 3. Test locally: `npm run dev` → Navigate to `/[lab]` → Verify charts render with new data
 
 **Data Validation**: Ensure all categoryIds in categoryRisks array match riskCategories defined in the same file. Ensure riskLevels match those in riskLevels array.
+
+**System Card Link Verification**: Each model must link to its own system card. Verify:
+- **OpenAI**: Each model has distinct system card (no cross-contamination with other models)
+- **Anthropic**: Claude Opus 4 & Claude Sonnet 4 share one official system card (correct per Anthropic)
+- **Google DeepMind**: Each model has its own model card
+- **xAI**: Each Grok model has its own model card
+
+Always validate that `systemCardUrl` in models.json matches the corresponding URL in sources.json for that specific model.
+
+**Quick Data Validation Checklist**:
+- [ ] All model IDs in risk-assessments.json exist in models.json
+- [ ] All categoryIds in assessments match riskCategories in same file
+- [ ] Risk scores are 0.0–1.0 (decimal format, displayed as percentage)
+- [ ] Threshold proximity is 0.0–1.0 scale
+- [ ] systemCardUrl points to correct model's card (no cross-lab contamination)
+- [ ] All source sections referenced in assessments exist in sources.json
+- [ ] All new models have colors defined in CHART_COLORS
 
 ### Understanding Risk Progression Chart
 
@@ -319,7 +473,7 @@ All risk assessments must come from official published frameworks:
 | OpenAI | Preparedness Framework | v2 | bio-chem, cyber, persuasion, ai-self-improvement |
 | Anthropic | Responsible Scaling Policy | v2.2 | cbrn, ai-rnd, autonomy, cyber (mapped to ASL levels) |
 | Google DeepMind | Frontier Safety Framework | v3.0 | cyber-uplift, cbrn, ml-rnd-automation, etc. (CCL levels) |
-| xAI | Frontier AI Framework | Dec 2025 | abuse-potential, concerning-propensities, dual-use-capabilities |
+| xAI | Frontier AI Framework | Dec 2025 (v1) | abuse-potential, concerning-propensities, dual-use-capabilities |
 
 Each assessment must cite specific sections and link to official system cards in `sources.json`.
 
@@ -335,12 +489,29 @@ Each assessment must cite specific sections and link to official system cards in
 **World Map & Infrastructure:**
 - `/app/page.tsx`: Home page with MapFilters component, stateful filter management
 - `/components/features/maps/world-map.tsx`: Main map component (client-side rendered only)
-- `/lib/data/frontier-labs-data.ts`: Accessor functions for lab data (8 functions)
-- `/lib/data/chip-manufacturers-data.ts`: Accessor functions for manufacturer data (9 functions)
-- `/lib/data/compute-infrastructure-data.ts`: Existing accessor for data centers (includes geocoding)
-- `/data/cross-lab/frontier-labs.json`: Lab HQs data
-- `/data/cross-lab/chip-manufacturers.json`: Manufacturer data + shipment zones
+- `/lib/data/frontier-labs-data.ts`: Accessor functions for lab data
+- `/lib/data/chip-manufacturers-data.ts`: Accessor functions for manufacturer data
+- `/lib/data/compute-infrastructure-data.ts`: Accessor for data centers, training compute, chip shipments
+- `/data/cross-lab/frontier-labs.json`: Lab HQs with coordinates and metadata
+- `/data/cross-lab/chip-manufacturers.json`: Chip manufacturers with shipment zones
 - `/public/maps/world-110m.json`: TopoJSON world map (105KB)
+
+**AI R&D & Compute:**
+- `/app/ai-rnd/page.tsx`: METR benchmarks and red line comparison dashboard
+- `/app/compute-infrastructure/page.tsx`: Compute analysis dashboard (training scale, data centers, market concentration)
+- `/lib/data/cross-lab-data.ts`: AI R&D benchmark and red line definition accessors
+- `/lib/data/compute-infrastructure-transformers.ts`: Compute chart data formatters
+- `/data/cross-lab/ai-rnd-benchmarks.json`: METR benchmark results and red line definitions
+- `/data/cross-lab/compute-infrastructure.json`: Training compute, data centers, chip shipments, compute concentration
+
+**AI Incidents:**
+- `/app/ai-incidents/page.tsx`: Incident tracking dashboard with visualizations
+- `/lib/data/ai-incidents-data.ts`: Incident data accessor functions
+- `/components/features/dashboard/incidents-metrics-card.tsx`: Overview metrics component
+- `/components/features/charts/incidents-bar-chart.tsx`: Incidents visualization by organization
+- `/components/features/charts/incidents-detailed-table.tsx`: Comprehensive incident breakdown table
+- `/data/cross-lab/ai-incidents.json`: Incident data from AI Incident Database
+- **Source**: https://incidentdatabase.ai/entities/
 
 ### Build and Deployment
 
