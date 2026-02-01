@@ -7,8 +7,9 @@ import { MapMarker } from './map-marker';
 import { MapTooltip } from './map-tooltip';
 import { MapLegend } from './map-legend';
 import { getFrontierLabs } from '@/lib/data/frontier-labs-data';
-import { getChipManufacturers, getShipmentZones } from '@/lib/data/chip-manufacturers-data';
+import { getChipManufacturers } from '@/lib/data/chip-manufacturers-data';
 import { getDataCenterExpansions } from '@/lib/data/compute-infrastructure-data';
+import { offsetCollisionMarkers } from '@/lib/utils/map-offset';
 
 const geoUrl = '/maps/world-110m.json';
 
@@ -16,7 +17,6 @@ interface WorldMapProps {
   showLabs?: boolean;
   showDataCenters?: boolean;
   showManufacturers?: boolean;
-  showShipmentRegions?: boolean;
   height?: number;
 }
 
@@ -24,7 +24,6 @@ export function WorldMap({
   showLabs = true,
   showDataCenters = true,
   showManufacturers = true,
-  showShipmentRegions = true,
   height = 600,
 }: WorldMapProps) {
   const [isClient, setIsClient] = useState(false);
@@ -50,10 +49,18 @@ export function WorldMap({
     () => (showManufacturers ? getChipManufacturers() : []),
     [showManufacturers]
   );
-  const shipmentZones = useMemo(
-    () => (showShipmentRegions ? getShipmentZones() : []),
-    [showShipmentRegions]
-  );
+
+  // Apply collision detection to labs
+  const offsetLabs = useMemo(() => {
+    if (!showLabs || labs.length === 0) return [];
+    const labMarkers = labs.map((lab) => ({
+      ...lab,
+      id: lab.id,
+      lat: lab.coordinates.lat,
+      lng: lab.coordinates.lng,
+    }));
+    return offsetCollisionMarkers(labMarkers);
+  }, [labs, showLabs]);
 
   const getDataCenterColor = (status: string) => {
     switch (status) {
@@ -134,54 +141,46 @@ export function WorldMap({
             }
           </Geographies>
 
-          {/* Shipment region overlays */}
-          {showShipmentRegions && shipmentZones.map((zone) => (
-            <g key={zone.id} className="shipment-region" opacity={0.15}>
-              <text
-                x={zone.id === 'us-zone' ? -100 : 100}
-                y={zone.id === 'us-zone' ? 35 : 35}
-                textAnchor="middle"
-                fontSize={14}
-                fontWeight="bold"
-                fill="currentColor"
-                opacity={0.5}
-              >
-                {zone.region}
-              </text>
-            </g>
-          ))}
 
           {/* Lab HQs */}
           {showLabs &&
-            labs.map((lab) => (
-              <Marker
-                key={lab.id}
-                coordinates={[lab.coordinates.lng, lab.coordinates.lat]}
-              >
-                <g
-                  onMouseMove={(e) => handleMarkerHover(e, 'lab', lab)}
-                  onMouseLeave={() => setHoveredMarker(null)}
-                  style={{ cursor: 'pointer' }}
+            offsetLabs.map((labWithOffset) => {
+              const lab = labs.find((l) => l.id === labWithOffset.id);
+              if (!lab) return null;
+
+              const displayLng = labWithOffset.displayLng || lab.coordinates.lng;
+              const displayLat = labWithOffset.displayLat || lab.coordinates.lat;
+
+              return (
+                <Marker
+                  key={lab.id}
+                  coordinates={[displayLng, displayLat]}
                 >
-                  <circle
-                    cx={0}
-                    cy={0}
-                    r={8}
-                    fill={lab.primaryColor}
-                    opacity={0.8}
-                    style={{ transition: 'opacity 0.2s' }}
-                  />
-                  <circle
-                    cx={0}
-                    cy={0}
-                    r={11}
-                    fill={lab.primaryColor}
-                    opacity={0.2}
-                    style={{ transition: 'opacity 0.2s' }}
-                  />
-                </g>
-              </Marker>
-            ))}
+                  <g
+                    onMouseMove={(e) => handleMarkerHover(e, 'lab', lab)}
+                    onMouseLeave={() => setHoveredMarker(null)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <circle
+                      cx={0}
+                      cy={0}
+                      r={8}
+                      fill={lab.primaryColor}
+                      opacity={0.8}
+                      style={{ transition: 'opacity 0.2s' }}
+                    />
+                    <circle
+                      cx={0}
+                      cy={0}
+                      r={11}
+                      fill={lab.primaryColor}
+                      opacity={0.2}
+                      style={{ transition: 'opacity 0.2s' }}
+                    />
+                  </g>
+                </Marker>
+              );
+            })}
 
           {/* Data Centers */}
           {showDataCenters &&
@@ -278,7 +277,6 @@ export function WorldMap({
           showLabs={showLabs}
           showDataCenters={showDataCenters}
           showManufacturers={showManufacturers}
-          showShipmentRegions={showShipmentRegions}
         />
       </div>
     </div>

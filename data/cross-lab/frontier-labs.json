@@ -66,6 +66,108 @@
       "latestModel": "Grok-4",
       "latestReleaseDate": "2026-Q1",
       "dataCenterCount": 0
+    },
+    {
+      "id": "baidu",
+      "name": "Baidu",
+      "city": "Beijing",
+      "state": "Haidian",
+      "country": "China",
+      "coordinates": {
+        "lat": 40.0509,
+        "lng": 116.3014
+      },
+      "framework": "Internal Safety Framework",
+      "modelCount": 4,
+      "primaryColor": "#DE3C31",
+      "latestModel": "Ernie 4.0",
+      "latestReleaseDate": "2025-11-01",
+      "dataCenterCount": 2
+    },
+    {
+      "id": "alibaba",
+      "name": "Alibaba",
+      "city": "Hangzhou",
+      "state": "Zhejiang",
+      "country": "China",
+      "coordinates": {
+        "lat": 30.2741,
+        "lng": 120.1551
+      },
+      "framework": "Internal Safety Framework",
+      "modelCount": 3,
+      "primaryColor": "#FF6A00",
+      "latestModel": "Qwen 2.5",
+      "latestReleaseDate": "2025-12-19",
+      "dataCenterCount": 2
+    },
+    {
+      "id": "bytedance",
+      "name": "ByteDance",
+      "city": "Beijing",
+      "state": "Haidian",
+      "country": "China",
+      "coordinates": {
+        "lat": 39.9833,
+        "lng": 116.3167
+      },
+      "framework": "Internal Safety Framework",
+      "modelCount": 3,
+      "primaryColor": "#000000",
+      "latestModel": "Doubao",
+      "latestReleaseDate": "2025-10-01",
+      "dataCenterCount": 3
+    },
+    {
+      "id": "tencent",
+      "name": "Tencent",
+      "city": "Shenzhen",
+      "state": "Nanshan",
+      "country": "China",
+      "coordinates": {
+        "lat": 22.5329,
+        "lng": 113.9344
+      },
+      "framework": "Internal Safety Framework",
+      "modelCount": 2,
+      "primaryColor": "#2B5CE6",
+      "latestModel": "Hunyuan 3",
+      "latestReleaseDate": "2025-09-15",
+      "dataCenterCount": 2
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "city": "Hangzhou",
+      "state": "Zhejiang",
+      "country": "China",
+      "coordinates": {
+        "lat": 30.2500,
+        "lng": 120.1700
+      },
+      "framework": "Internal Safety Framework",
+      "modelCount": 2,
+      "primaryColor": "#5A67D8",
+      "latestModel": "DeepSeek-R1",
+      "latestReleaseDate": "2024-12-20",
+      "dataCenterCount": 1
+    },
+    {
+      "id": "moonshot-ai",
+      "name": "Moonshot AI",
+      "city": "Beijing",
+      "state": "Chaoyang",
+      "country": "China",
+      "coordinates": {
+        "lat": 39.9042,
+        "lng": 116.4074
+      },
+      "framework": "Internal Safety Framework",
+      "modelCount": 1,
+      "primaryColor": "#1E3A8A",
+      "latestModel": "Kimi",
+      "latestReleaseDate": "2025-06-01",
+      "dataCenterCount": 1
     }
   ]
 }

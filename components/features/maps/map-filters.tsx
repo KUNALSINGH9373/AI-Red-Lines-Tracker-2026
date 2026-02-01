@@ -2,14 +2,13 @@
 
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Globe, Building2, Cpu, Radio } from 'lucide-react';
+import { Globe, Building2, Cpu } from 'lucide-react';
 
 interface MapFiltersProps {
   onFiltersChange: (filters: {
     showLabs: boolean;
     showDataCenters: boolean;
     showManufacturers: boolean;
-    showShipmentRegions: boolean;
   }) => void;
 }
 
@@ -17,7 +16,6 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
   const [showLabs, setShowLabs] = useState(true);
   const [showDataCenters, setShowDataCenters] = useState(true);
   const [showManufacturers, setShowManufacturers] = useState(true);
-  const [showShipmentRegions, setShowShipmentRegions] = useState(true);
 
   const handleToggleLabs = () => {
     const newState = !showLabs;
@@ -26,7 +24,6 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
       showLabs: newState,
       showDataCenters,
       showManufacturers,
-      showShipmentRegions,
     });
   };
 
@@ -37,7 +34,6 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
       showLabs,
       showDataCenters: newState,
       showManufacturers,
-      showShipmentRegions,
     });
   };
 
@@ -48,18 +44,6 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
       showLabs,
       showDataCenters,
       showManufacturers: newState,
-      showShipmentRegions,
-    });
-  };
-
-  const handleToggleShipmentRegions = () => {
-    const newState = !showShipmentRegions;
-    setShowShipmentRegions(newState);
-    onFiltersChange({
-      showLabs,
-      showDataCenters,
-      showManufacturers,
-      showShipmentRegions: newState,
     });
   };
 
@@ -81,7 +65,7 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
           variant={showLabs ? 'secondary' : 'outline'}
           className="ml-1 text-xs"
         >
-          4
+          10
         </Badge>
       </button>
 
@@ -99,7 +83,7 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
           variant={showDataCenters ? 'secondary' : 'outline'}
           className="ml-1 text-xs"
         >
-          10
+          18
         </Badge>
       </button>
 
@@ -118,24 +102,6 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
           className="ml-1 text-xs"
         >
           3
-        </Badge>
-      </button>
-
-      <button
-        onClick={handleToggleShipmentRegions}
-        className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-          showShipmentRegions
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-muted text-muted-foreground hover:bg-muted/80'
-        }`}
-      >
-        <Radio className="h-4 w-4" />
-        <span className="text-sm font-medium">Shipment Zones</span>
-        <Badge
-          variant={showShipmentRegions ? 'secondary' : 'outline'}
-          className="ml-1 text-xs"
-        >
-          2
         </Badge>
       </button>
     </div>

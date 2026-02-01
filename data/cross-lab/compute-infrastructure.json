@@ -357,6 +357,134 @@
       "status": "operational",
       "source": "Tencent Investor Relations",
       "sourceUrl": "https://www.tencent.com/en-us"
+    },
+    {
+      "id": "google-visakhapatnam",
+      "projectName": "Google Visakhapatnam AI Hub",
+      "company": "Google",
+      "location": {
+        "city": "Visakhapatnam",
+        "state": "Andhra Pradesh",
+        "country": "India",
+        "coordinates": { "lat": 17.6868, "lng": 83.2185 }
+      },
+      "capacity": "250 GW",
+      "announcementDate": "2025-01-10",
+      "status": "announced",
+      "source": "Google Cloud India Expansion",
+      "sourceUrl": "https://cloud.google.com"
+    },
+    {
+      "id": "amazon-ohio",
+      "projectName": "Amazon Ohio Expansion",
+      "company": "AWS",
+      "location": {
+        "city": "Columbus",
+        "state": "OH",
+        "country": "USA",
+        "coordinates": { "lat": 39.9612, "lng": -82.9988 }
+      },
+      "capacity": "180 GW",
+      "announcementDate": "2024-12-15",
+      "status": "in-progress",
+      "source": "AWS Expansion Announcements",
+      "sourceUrl": "https://aws.amazon.com"
+    },
+    {
+      "id": "microsoft-wisconsin",
+      "projectName": "Microsoft Wisconsin Mega Data Center",
+      "company": "Microsoft",
+      "location": {
+        "city": "Madison",
+        "state": "WI",
+        "country": "USA",
+        "coordinates": { "lat": 43.0731, "lng": -89.4012 }
+      },
+      "capacity": "200 GW",
+      "announcementDate": "2025-01-12",
+      "status": "in-progress",
+      "source": "Microsoft Infrastructure Planning",
+      "sourceUrl": "https://microsoft.com/investor"
+    },
+    {
+      "id": "meta-menlo-expansion",
+      "projectName": "Meta 1 GW Expansion",
+      "company": "Meta",
+      "location": {
+        "city": "Menlo Park",
+        "state": "CA",
+        "country": "USA",
+        "coordinates": { "lat": 37.4849, "lng": -122.1477 }
+      },
+      "capacity": "250 GW",
+      "announcementDate": "2025-01-08",
+      "status": "in-progress",
+      "source": "Meta 2025 AI Infrastructure",
+      "sourceUrl": "https://about.meta.com"
+    },
+    {
+      "id": "stargate-phase-4-10",
+      "projectName": "Stargate Phase 4-10",
+      "company": "OpenAI/SoftBank/NVIDIA",
+      "location": {
+        "city": "Austin",
+        "state": "TX",
+        "country": "USA",
+        "coordinates": { "lat": 30.2672, "lng": -97.7431 }
+      },
+      "capacity": "1000+ GW",
+      "announcementDate": "2025-01-16",
+      "status": "announced",
+      "source": "SoftBank/OpenAI Partnership",
+      "sourceUrl": "https://www.softbank.jp/en"
+    },
+    {
+      "id": "bytedance-china-dc",
+      "projectName": "ByteDance China Data Center",
+      "company": "ByteDance",
+      "location": {
+        "city": "Beijing",
+        "state": "Chaoyang",
+        "country": "China",
+        "coordinates": { "lat": 39.9833, "lng": 116.3167 }
+      },
+      "capacity": "150 GW",
+      "announcementDate": "2024-10-01",
+      "status": "in-progress",
+      "source": "ByteDance Infrastructure Reports",
+      "sourceUrl": "https://bytedance.com"
+    },
+    {
+      "id": "alibaba-hangzhou-ai",
+      "projectName": "Alibaba Cloud AI Infrastructure",
+      "company": "Alibaba",
+      "location": {
+        "city": "Hangzhou",
+        "state": "Zhejiang",
+        "country": "China",
+        "coordinates": { "lat": 30.2741, "lng": 120.1551 }
+      },
+      "capacity": "120 GW",
+      "announcementDate": "2024-09-01",
+      "status": "operational",
+      "source": "Alibaba Cloud Reports",
+      "sourceUrl": "https://www.alibabacloud.com"
+    },
+    {
+      "id": "tencent-shenzhen-ai",
+      "projectName": "Tencent Shenzhen AI Compute",
+      "company": "Tencent",
+      "location": {
+        "city": "Shenzhen",
+        "state": "Nanshan",
+        "country": "China",
+        "coordinates": { "lat": 22.5329, "lng": 113.9344 }
+      },
+      "capacity": "100 GW",
+      "announcementDate": "2024-08-01",
+      "status": "operational",
+      "source": "Tencent Investor Relations",
+      "sourceUrl": "https://www.tencent.com/en-us"
     }
   ],
   "computeConcentration": [

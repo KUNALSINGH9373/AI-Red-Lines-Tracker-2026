@@ -291,7 +291,6 @@ export default function Home() {
     showLabs: true,
     showDataCenters: true,
     showManufacturers: true,
-    showShipmentRegions: true,
   });
 
   return (
@@ -315,7 +314,6 @@ export default function Home() {
               showLabs={mapFilters.showLabs}
               showDataCenters={mapFilters.showDataCenters}
               showManufacturers={mapFilters.showManufacturers}
-              showShipmentRegions={mapFilters.showShipmentRegions}
               height={600}
             />
           </div>
