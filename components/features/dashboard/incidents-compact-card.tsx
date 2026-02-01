@@ -49,11 +49,8 @@ export function IncidentsCompactCard({
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="relative">
-                    <AlertCircle className="h-6 w-6 text-red-500" />
-                    <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                  </div>
-                  <span className="text-xs font-bold text-red-500">LIVE</span>
+                  <AlertCircle className="h-5 w-5 text-red-500" />
+                  <span className="text-xs font-semibold text-red-500">Recent AI Indicators Count</span>
                 </div>
 
                 <div className="mb-3">
