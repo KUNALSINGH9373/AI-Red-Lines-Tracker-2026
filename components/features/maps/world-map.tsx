@@ -7,6 +7,7 @@ import { MapTooltip } from './map-tooltip';
 import { getFrontierLabs } from '@/lib/data/frontier-labs-data';
 import { getChipManufacturers } from '@/lib/data/chip-manufacturers-data';
 import { getDataCenterExpansions } from '@/lib/data/compute-infrastructure-data';
+import { calculateAdjustedLabels } from '@/lib/utils/label-collision';
 
 const geoUrl = '/maps/world-110m.json';
 
@@ -46,6 +47,56 @@ export function WorldMap({
     () => (showManufacturers ? getChipManufacturers() : []),
     [showManufacturers]
   );
+
+  // Pre-calculate label distances with collision detection (recursive adjustment)
+  const labDistances = useMemo(() => {
+    const rayLengths = [90, 110, 130, 100, 120, 95, 115, 105, 125, 135];
+    const configs = labs.map((lab, index) => ({
+      id: lab.id,
+      angle: (index * (360 / labs.length) + 45) * Math.PI / 180,
+      baseDistance: rayLengths[index % rayLengths.length],
+      width: 120,
+      height: 24,
+    }));
+    return calculateAdjustedLabels(configs, height);
+  }, [labs, height]);
+
+  const dcDistances = useMemo(() => {
+    const rayLengths = [75, 95, 115, 85, 105, 125, 80, 100, 120, 90, 110, 130, 88, 108, 98, 118, 93, 113];
+    const configs = dataCenters
+      .filter(dc => dc.location.coordinates)
+      .map((dc, dataIndex) => {
+        const dcAtSameLocation = dataCenters.filter(d =>
+          d.location.coordinates &&
+          d.location.coordinates.lat === dc.location.coordinates!.lat &&
+          d.location.coordinates.lng === dc.location.coordinates!.lng
+        );
+        const indexInGroup = dcAtSameLocation.indexOf(dc);
+        const groupSize = dcAtSameLocation.length;
+        const angleOffset = (indexInGroup * (360 / Math.max(groupSize, 1))) * Math.PI / 180;
+        const baseAngle = (dataIndex * (360 / dataCenters.length) + 15) * Math.PI / 180;
+        return {
+          id: dc.id,
+          angle: baseAngle + angleOffset,
+          baseDistance: rayLengths[(dataIndex + indexInGroup) % rayLengths.length],
+          width: 150,
+          height: 32,
+        };
+      });
+    return calculateAdjustedLabels(configs, height);
+  }, [dataCenters, height]);
+
+  const mfrDistances = useMemo(() => {
+    const rayLengths = [85, 105, 125];
+    const configs = manufacturers.map((mfr, index) => ({
+      id: mfr.id,
+      angle: (index * (360 / manufacturers.length) + 90) * Math.PI / 180,
+      baseDistance: rayLengths[index % rayLengths.length],
+      width: 110,
+      height: 22,
+    }));
+    return calculateAdjustedLabels(configs, height);
+  }, [manufacturers, height]);
 
   const getDataCenterColor = (status: string) => {
     switch (status) {
@@ -179,14 +230,13 @@ export function WorldMap({
           </Marker>
 
 
-          {/* Lab HQs - Radial sun rays with VARYING lengths */}
+          {/* Lab HQs - Radial sun rays with collision detection */}
           {showLabs &&
             labs.map((lab, index) => {
               // Calculate radial angle for this marker (spread evenly)
               const angle = (index * (360 / labs.length) + 45) * Math.PI / 180;
-              // VARYING ray lengths to prevent overlap - alternating pattern
-              const rayLengths = [90, 110, 130, 100, 120, 95, 115, 105, 125, 135];
-              const rayLength = rayLengths[index % rayLengths.length];
+              // Use adjusted ray length from collision detection
+              const rayLength = labDistances.get(lab.id) || 90;
               const labelX = Math.cos(angle) * rayLength;
               const labelY = Math.sin(angle) * rayLength;
 
@@ -214,11 +264,7 @@ export function WorldMap({
                     />
 
                     {/* Marker at center */}
-                    <g
-                      onMouseMove={(e) => handleMarkerHover(e, 'lab', lab)}
-                      onMouseLeave={() => setHoveredMarker(null)}
-                      style={{ cursor: 'pointer' }}
-                    >
+                    <g pointerEvents="none">
                       <circle
                         cx={0}
                         cy={0}
@@ -237,8 +283,12 @@ export function WorldMap({
                       />
                     </g>
 
-                    {/* Label at ray end */}
-                    <g pointerEvents="none">
+                    {/* Label at ray end - Interactive */}
+                    <g
+                      onMouseMove={(e) => handleMarkerHover(e, 'lab', lab)}
+                      onMouseLeave={() => setHoveredMarker(null)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <rect
                         x={labelX - 60}
                         y={labelY - 12}
@@ -265,7 +315,7 @@ export function WorldMap({
               );
             })}
 
-          {/* Data Centers - Radial sun rays with VARYING lengths */}
+          {/* Data Centers - Radial sun rays with collision detection */}
           {showDataCenters &&
             dataCenters
               .filter((dc) => dc.location.coordinates)
@@ -287,9 +337,8 @@ export function WorldMap({
                 const baseAngle = (dataIndex * (360 / dataCenters.length) + 15) * Math.PI / 180;
                 const angle = baseAngle + angleOffset;
 
-                // VARYING ray lengths - 18 different lengths
-                const rayLengths = [75, 95, 115, 85, 105, 125, 80, 100, 120, 90, 110, 130, 88, 108, 98, 118, 93, 113];
-                const rayLength = rayLengths[(dataIndex + indexInGroup) % rayLengths.length];
+                // Use adjusted ray length from collision detection
+                const rayLength = dcDistances.get(dc.id) || 75;
                 const labelX = Math.cos(angle) * rayLength;
                 const labelY = Math.sin(angle) * rayLength;
 
@@ -322,11 +371,7 @@ export function WorldMap({
                       />
 
                       {/* Marker */}
-                      <g
-                        onMouseMove={(e) => handleMarkerHover(e, 'data-center', dc)}
-                        onMouseLeave={() => setHoveredMarker(null)}
-                        style={{ cursor: 'pointer' }}
-                      >
+                      <g pointerEvents="none">
                         <circle
                           cx={0}
                           cy={0}
@@ -345,8 +390,12 @@ export function WorldMap({
                         />
                       </g>
 
-                      {/* Label */}
-                      <g pointerEvents="none">
+                      {/* Label - Interactive */}
+                      <g
+                        onMouseMove={(e) => handleMarkerHover(e, 'data-center', dc)}
+                        onMouseLeave={() => setHoveredMarker(null)}
+                        style={{ cursor: 'pointer' }}
+                      >
                         <rect
                           x={labelX - 75}
                           y={labelY - 16}
@@ -384,14 +433,13 @@ export function WorldMap({
                 );
               })}
 
-          {/* Chip Manufacturers - Radial sun rays with VARYING lengths */}
+          {/* Chip Manufacturers - Radial sun rays with collision detection */}
           {showManufacturers &&
             manufacturers.map((mfr, index) => {
               // Radial angle
               const angle = (index * (360 / manufacturers.length) + 90) * Math.PI / 180;
-              // VARYING ray lengths for 3 manufacturers
-              const rayLengths = [85, 105, 125];
-              const rayLength = rayLengths[index % rayLengths.length];
+              // Use adjusted ray length from collision detection
+              const rayLength = mfrDistances.get(mfr.id) || 85;
               const labelX = Math.cos(angle) * rayLength;
               const labelY = Math.sin(angle) * rayLength;
 
@@ -421,11 +469,7 @@ export function WorldMap({
                     />
 
                     {/* Marker */}
-                    <g
-                      onMouseMove={(e) => handleMarkerHover(e, 'manufacturer', mfr)}
-                      onMouseLeave={() => setHoveredMarker(null)}
-                      style={{ cursor: 'pointer' }}
-                    >
+                    <g pointerEvents="none">
                       <rect
                         x={-5}
                         y={-5}
@@ -446,8 +490,12 @@ export function WorldMap({
                       />
                     </g>
 
-                    {/* Label */}
-                    <g pointerEvents="none">
+                    {/* Label - Interactive */}
+                    <g
+                      onMouseMove={(e) => handleMarkerHover(e, 'manufacturer', mfr)}
+                      onMouseLeave={() => setHoveredMarker(null)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <rect
                         x={labelX - 55}
                         y={labelY - 11}
