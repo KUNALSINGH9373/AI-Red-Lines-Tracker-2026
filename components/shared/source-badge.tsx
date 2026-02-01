@@ -6,17 +6,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getSourceById } from "@/lib/data/openai-data";
+import { Source } from "@/lib/types/risk-data";
 
 interface SourceBadgeProps {
-  sourceId: string;
+  source: Source;
   section?: string;
   variant?: "default" | "outline" | "secondary";
 }
 
-export function SourceBadge({ sourceId, section, variant = "outline" }: SourceBadgeProps) {
-  const source = getSourceById(sourceId);
-
+export function SourceBadge({ source, section, variant = "outline" }: SourceBadgeProps) {
   if (!source) return null;
 
   return (
@@ -55,14 +53,12 @@ export function SourceBadge({ sourceId, section, variant = "outline" }: SourceBa
 }
 
 interface SourceLinkProps {
-  sourceId: string;
+  source: Source;
   section?: string;
   children?: React.ReactNode;
 }
 
-export function SourceLink({ sourceId, section, children }: SourceLinkProps) {
-  const source = getSourceById(sourceId);
-
+export function SourceLink({ source, section, children }: SourceLinkProps) {
   if (!source) return null;
 
   return (

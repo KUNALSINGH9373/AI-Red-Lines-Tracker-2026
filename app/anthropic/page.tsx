@@ -86,10 +86,11 @@ export default function AnthropicDashboard() {
             riskLevels={riskLevels}
             labName="anthropic"
             frameworkVersion={frameworkVersion}
+            sources={sources}
           />
         </div>
         <div>
-          <ThresholdProximityIndicator assessments={assessments} threshold={0.85} />
+          <ThresholdProximityIndicator assessments={assessments} categories={categories} getModelById={getModelById} sources={sources} threshold={0.85} />
         </div>
       </div>
 
@@ -137,7 +138,7 @@ export default function AnthropicDashboard() {
           </Card>
         </div>
         <div>
-          <LatestUpdatesFeed events={events} />
+          <LatestUpdatesFeed events={events} sources={sources} />
         </div>
       </div>
 
@@ -162,7 +163,7 @@ export default function AnthropicDashboard() {
                     <strong>Claude Opus 4</strong> (May 2025) was the first Anthropic model deployed under <strong>ASL-3 protections</strong>, marking a significant milestone in AI safety implementation with enhanced security standards and deployment safeguards.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-ant-002" section="ASL-3 Activation Report" />
+                    <SourceBadge source={sources.find(s => s.id === "src-ant-002")!} section="ASL-3 Activation Report" />
                   </div>
                 </div>
               </div>
@@ -177,7 +178,7 @@ export default function AnthropicDashboard() {
                     <strong>Claude Opus 4.5</strong> shows <strong>high rule-out scores</strong> in CBRN uplift (95% proximity), AI R&D acceleration (92% proximity), and autonomy (93% proximity). Next frontier model could be expected to trigger full ASL-4 evaluation and potential pause/mitigation requirements.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-ant-006" section="Claude Opus 4.5 System Card" />
+                    <SourceBadge source={sources.find(s => s.id === "src-ant-006")!} section="Claude Opus 4.5 System Card" />
                   </div>
                 </div>
               </div>
@@ -192,8 +193,8 @@ export default function AnthropicDashboard() {
                     All Claude 4 Opus and Sonnet models carry <strong>precautionary ASL-3</strong> classifications, meaning they are deployed under ASL-3 protections even though definitive threshold crossing has not been confirmed. This represents a cautious approach to frontier AI safety.
                   </p>
                   <div className="mt-2 flex gap-2">
-                    <SourceBadge sourceId="src-ant-002" section="ASL-3 Report" />
-                    <SourceBadge sourceId="src-ant-006" section="Opus 4.5 Card" />
+                    <SourceBadge source={sources.find(s => s.id === "src-ant-002")!} section="ASL-3 Report" />
+                    <SourceBadge source={sources.find(s => s.id === "src-ant-006")!} section="Opus 4.5 Card" />
                   </div>
                 </div>
               </div>
@@ -208,7 +209,7 @@ export default function AnthropicDashboard() {
                     ASL-3 models implement comprehensive safeguards including: enhanced internal security to prevent model weight theft, CBRN-specific deployment restrictions, continuous monitoring systems, and expert uplift testing to assess real-world risk potential.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-ant-009" section="ASL-3 Deployment Safeguards" />
+                    <SourceBadge source={sources.find(s => s.id === "src-ant-009")!} section="ASL-3 Deployment Safeguards" />
                   </div>
                 </div>
               </div>

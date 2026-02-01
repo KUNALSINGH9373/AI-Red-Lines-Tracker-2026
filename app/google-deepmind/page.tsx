@@ -85,10 +85,11 @@ export default function GoogleDeepMindDashboard() {
             riskLevels={riskLevels}
             labName="google-deepmind"
             frameworkVersion={frameworkVersion}
+            sources={sources}
           />
         </div>
         <div>
-          <ThresholdProximityIndicator assessments={assessments} threshold={0.75} />
+          <ThresholdProximityIndicator assessments={assessments} categories={categories} getModelById={getModelById} sources={sources} threshold={0.75} />
         </div>
       </div>
 
@@ -134,7 +135,7 @@ export default function GoogleDeepMindDashboard() {
           </Card>
         </div>
         <div>
-          <LatestUpdatesFeed events={events} />
+          <LatestUpdatesFeed events={events} sources={sources} />
         </div>
       </div>
 
@@ -159,7 +160,7 @@ export default function GoogleDeepMindDashboard() {
                     As of November 2025, <strong>no Gemini models have crossed any Critical Capability Levels</strong>. All models remain below the CCL thresholds defined in FSF v3, though alert thresholds have been triggered in cybersecurity.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-gdm-005" section="Gemini 3 Pro FSF Report" />
+                    <SourceBadge source={sources.find(s => s.id === "src-gdm-005")!} section="Gemini 3 Pro FSF Report" />
                   </div>
                 </div>
               </div>
@@ -174,7 +175,7 @@ export default function GoogleDeepMindDashboard() {
                     <strong>Gemini 3 Pro</strong> reached the alert threshold for cybersecurity CCL (solved 11/12 key skills v1 challenges, 82% threshold proximity). However, v2 benchmark confirms CCL not crossed (0/13 v2 challenges solved end-to-end). Precautionary mitigations deployed.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-gdm-005" section="Cybersecurity Evaluation" />
+                    <SourceBadge source={sources.find(s => s.id === "src-gdm-005")!} section="Cybersecurity Evaluation" />
                   </div>
                 </div>
               </div>
@@ -189,7 +190,7 @@ export default function GoogleDeepMindDashboard() {
                     Gemini 3 Pro shows <strong>clear improvements on CBRN benchmarks</strong>, especially LabBench (practical biology research tasks). Despite improvements, scores remain well below alert thresholds (62% proximity), indicating responsible capability progression.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-gdm-005" section="CBRN Assessment" />
+                    <SourceBadge source={sources.find(s => s.id === "src-gdm-005")!} section="CBRN Assessment" />
                   </div>
                 </div>
               </div>
@@ -204,7 +205,7 @@ export default function GoogleDeepMindDashboard() {
                     FSF v3 (September 2025) introduced a new CCL for <strong>harmful manipulation</strong> - addressing AI models with powerful manipulative capabilities that could systematically change beliefs and behaviors. All current models remain below alert thresholds (45% proximity).
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-gdm-002" section="FSF v3.0" />
+                    <SourceBadge source={sources.find(s => s.id === "src-gdm-002")!} section="FSF v3.0" />
                   </div>
                 </div>
               </div>

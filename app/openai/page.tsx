@@ -85,10 +85,11 @@ export default function OpenAIDashboard() {
             riskLevels={riskLevels}
             labName="openai"
             frameworkVersion={frameworkVersion}
+            sources={sources}
           />
         </div>
         <div>
-          <ThresholdProximityIndicator assessments={assessments} />
+          <ThresholdProximityIndicator assessments={assessments} categories={categories} getModelById={getModelById} sources={sources} />
         </div>
       </div>
 
@@ -136,7 +137,7 @@ export default function OpenAIDashboard() {
           </Card>
         </div>
         <div>
-          <LatestUpdatesFeed events={events} />
+          <LatestUpdatesFeed events={events} sources={sources} />
         </div>
       </div>
 
@@ -220,8 +221,8 @@ export default function OpenAIDashboard() {
                     <strong>o3</strong> (December 2024) was the first OpenAI model to receive a <strong>High</strong> precautionary rating in biological and chemical threats (72% risk score, 90% threshold proximity). <strong>GPT-5</strong> (August 2025) also achieved High capability rating in bio/chem with 82% risk score and 95% threshold proximity.
                   </p>
                   <div className="mt-2 flex gap-2">
-                    <SourceBadge sourceId="src-004" section="o3 System Card" />
-                    <SourceBadge sourceId="src-007" section="GPT-5 System Card" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="o3 System Card" />
+                    <SourceBadge source={sources.find(s => s.id === "src-007")!} section="GPT-5 System Card" />
                   </div>
                 </div>
               </div>
@@ -236,7 +237,7 @@ export default function OpenAIDashboard() {
                     The <strong>o3 model</strong> shows <strong>95% threshold proximity</strong> in cybersecurity, indicating it is very close to or may have already crossed the high-risk threshold for cyber capabilities (78% risk score).
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-004" section="Section 5.2" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="Section 5.2" />
                   </div>
                 </div>
               </div>
@@ -251,8 +252,8 @@ export default function OpenAIDashboard() {
                     Risk levels have increased from <strong>GPT-4o (medium, 45-52%)</strong> to <strong>o-series models (medium-high, 48-78%)</strong>. The o-series shows significant capability improvements in reasoning-intensive risk categories.
                   </p>
                   <div className="mt-2 flex gap-2">
-                    <SourceBadge sourceId="src-001" section="GPT-4o Assessment" />
-                    <SourceBadge sourceId="src-004" section="o3 Assessment" />
+                    <SourceBadge source={sources.find(s => s.id === "src-001")!} section="GPT-4o Assessment" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="o3 Assessment" />
                   </div>
                 </div>
               </div>
@@ -267,8 +268,8 @@ export default function OpenAIDashboard() {
                     OpenAI applied precautionary <strong>medium risk ratings</strong> to o1-pro and o3 for persuasion capabilities, despite lower absolute scores, acknowledging uncertainty in measurement and potential for misuse.
                   </p>
                   <div className="mt-2 flex gap-2">
-                    <SourceBadge sourceId="src-003" section="Section 6.3" />
-                    <SourceBadge sourceId="src-004" section="Section 5.3" />
+                    <SourceBadge source={sources.find(s => s.id === "src-003")!} section="Section 6.3" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="Section 5.3" />
                   </div>
                 </div>
               </div>
@@ -283,7 +284,7 @@ export default function OpenAIDashboard() {
                     All high and medium risk models have <strong>enhanced mitigations</strong> including usage monitoring, content filtering, access controls, rate limiting, and real-time threat detection systems.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-002" section="Preparedness Framework v2" />
+                    <SourceBadge source={sources.find(s => s.id === "src-002")!} section="Preparedness Framework v2" />
                   </div>
                 </div>
               </div>

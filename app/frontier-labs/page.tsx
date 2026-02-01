@@ -174,8 +174,8 @@ function LabContent({ lab }: { lab: LabKey }) {
                     <strong>o3</strong> (December 2024) was the first OpenAI model to receive a <strong>High</strong> precautionary rating in biological and chemical threats (72% risk score, 90% threshold proximity). <strong>GPT-5</strong> (August 2025) also achieved High capability rating in bio/chem with 82% risk score and 95% threshold proximity.
                   </p>
                   <div className="mt-2 flex gap-2">
-                    <SourceBadge sourceId="src-004" section="o3 System Card" />
-                    <SourceBadge sourceId="src-007" section="GPT-5 System Card" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="o3 System Card" />
+                    <SourceBadge source={sources.find(s => s.id === "src-007")!} section="GPT-5 System Card" />
                   </div>
                 </div>
               </div>
@@ -190,7 +190,7 @@ function LabContent({ lab }: { lab: LabKey }) {
                     The <strong>o3 model</strong> shows <strong>95% threshold proximity</strong> in cybersecurity, indicating it is very close to or may have already crossed the high-risk threshold for cyber capabilities (78% risk score).
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-004" section="Section 5.2" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="Section 5.2" />
                   </div>
                 </div>
               </div>
@@ -315,10 +315,10 @@ function LabContent({ lab }: { lab: LabKey }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="lg:col-span-2">
-          <RiskOverviewCard assessments={assessments} getModelById={config.getModelById} riskLevels={riskLevels} />
+          <RiskOverviewCard assessments={assessments} getModelById={config.getModelById} riskLevels={riskLevels} sources={config.getSources()} />
         </div>
         <div>
-          <ThresholdProximityIndicator assessments={assessments} />
+          <ThresholdProximityIndicator assessments={assessments} categories={categories} getModelById={config.getModelById} sources={config.getSources()} />
         </div>
       </div>
 
@@ -366,7 +366,7 @@ function LabContent({ lab }: { lab: LabKey }) {
           </Card>
         </div>
         <div>
-          <LatestUpdatesFeed events={events} />
+          <LatestUpdatesFeed events={events} sources={config.getSources()} />
         </div>
       </div>
 

@@ -82,10 +82,11 @@ export default function XAIDashboard() {
             riskLevels={riskLevels}
             labName="xai"
             frameworkVersion={frameworkVersion}
+            sources={sources}
           />
         </div>
         <div>
-          <ThresholdProximityIndicator assessments={assessments} />
+          <ThresholdProximityIndicator assessments={assessments} categories={categories} getModelById={getModelById} sources={sources} />
         </div>
       </div>
 
@@ -133,7 +134,7 @@ export default function XAIDashboard() {
           </Card>
         </div>
         <div>
-          <LatestUpdatesFeed events={events} />
+          <LatestUpdatesFeed events={events} sources={sources} />
         </div>
       </div>
 
@@ -217,8 +218,8 @@ export default function XAIDashboard() {
                     <strong>Grok 4</strong> and <strong>Grok 4.1</strong> demonstrate expert-level and superhuman performance on biological threat benchmarks (WMDP Bio accuracy of 87% for Grok 4.1), exceeding human baselines. xAI has implemented comprehensive input filters for bioweapons knowledge to mitigate misuse risks.
                   </p>
                   <div className="mt-2 flex gap-2">
-                    <SourceBadge sourceId="src-003" section="Dual-Use Capabilities" />
-                    <SourceBadge sourceId="src-004" section="Dual-Use Capabilities" />
+                    <SourceBadge source={sources.find(s => s.id === "src-003")!} section="Dual-Use Capabilities" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="Dual-Use Capabilities" />
                   </div>
                 </div>
               </div>
@@ -233,8 +234,8 @@ export default function XAIDashboard() {
                     All Grok models maintain near-zero response rates (0.00-0.02) for harmful requests through system prompt refusal policies and input filtering. Refusals remain robust against jailbreak attempts and adversarial attacks.
                   </p>
                   <div className="mt-2 flex gap-2">
-                    <SourceBadge sourceId="src-003" section="Abuse Potential" />
-                    <SourceBadge sourceId="src-004" section="Abuse Potential" />
+                    <SourceBadge source={sources.find(s => s.id === "src-003")!} section="Abuse Potential" />
+                    <SourceBadge source={sources.find(s => s.id === "src-004")!} section="Abuse Potential" />
                   </div>
                 </div>
               </div>
@@ -249,7 +250,7 @@ export default function XAIDashboard() {
                     <strong>Grok Code Fast 1</strong>, a specialized model for agentic coding, shows elevated dishonesty rates (71.9% on MASK benchmark). This trade-off was accepted due to the narrow use-case focus and limited general-purpose exposure as a specialized tool.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-006" section="Concerning Propensities" />
+                    <SourceBadge source={sources.find(s => s.id === "src-006")!} section="Concerning Propensities" />
                   </div>
                 </div>
               </div>
@@ -264,7 +265,7 @@ export default function XAIDashboard() {
                     <strong>Grok Code Fast 1</strong> shows elevated vulnerability to agentic abuse (17% completion rate on AgentHarm benchmark) and hijacking attacks (26.9% success rate), reflecting challenges in securing specialized agent models.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-006" section="Abuse Potential" />
+                    <SourceBadge source={sources.find(s => s.id === "src-006")!} section="Abuse Potential" />
                   </div>
                 </div>
               </div>
@@ -279,7 +280,7 @@ export default function XAIDashboard() {
                     xAI uses rigorous quantitative benchmarks (WMDP, VCT, BioLP-Bench, CyBench, MASK) for risk assessment rather than qualitative ratings. All models maintain low overall risk through enforced safety measures and continuous monitoring.
                   </p>
                   <div className="mt-2">
-                    <SourceBadge sourceId="src-001" section="Framework Overview" />
+                    <SourceBadge source={sources.find(s => s.id === "src-001")!} section="Framework Overview" />
                   </div>
                 </div>
               </div>

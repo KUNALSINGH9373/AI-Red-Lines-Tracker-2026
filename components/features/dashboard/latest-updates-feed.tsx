@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, AlertCircle, FileText, TrendingUp } from "lucide-react";
-import type { TimelineEvent } from "@/lib/types/risk-data";
+import type { TimelineEvent, Source } from "@/lib/types/risk-data";
 import { format } from "date-fns";
 import { SourceBadge } from "@/components/shared/source-badge";
 
@@ -9,12 +9,14 @@ interface LatestUpdatesFeedProps {
   events: TimelineEvent[];
   limit?: number;
   onEventClick?: (event: TimelineEvent) => void;
+  sources?: Source[];
 }
 
 export function LatestUpdatesFeed({
   events,
   limit = 5,
   onEventClick,
+  sources,
 }: LatestUpdatesFeedProps) {
   const recentEvents = events.slice(0, limit);
 
@@ -84,8 +86,12 @@ export function LatestUpdatesFeed({
                         ))}
                       </>
                     )}
-                    {event.sourceId && (
-                      <SourceBadge sourceId={event.sourceId} variant="secondary" />
+                    {event.sourceId && sources && (
+                      <>
+                        {sources.find(s => s.id === event.sourceId) && (
+                          <SourceBadge source={sources.find(s => s.id === event.sourceId)!} variant="secondary" />
+                        )}
+                      </>
                     )}
                   </div>
                 </div>

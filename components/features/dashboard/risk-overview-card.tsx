@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
-import type { RiskAssessment, Model, RiskLevelConfig } from "@/lib/types/risk-data";
+import type { RiskAssessment, Model, RiskLevelConfig, Source } from "@/lib/types/risk-data";
 import { countByRiskLevel } from "@/lib/data/risk-calculations";
 import { SourceBadge } from "@/components/shared/source-badge";
 
@@ -16,6 +16,7 @@ interface RiskOverviewCardProps {
   riskLevels?: RiskLevelConfig[];
   labName?: "openai" | "anthropic" | "google-deepmind" | "xai";
   frameworkVersion?: string;
+  sources?: Source[];
 }
 
 // Risk level definitions by framework
@@ -62,6 +63,7 @@ export function RiskOverviewCard({
   riskLevels,
   labName,
   frameworkVersion,
+  sources,
 }: RiskOverviewCardProps) {
   const riskCounts = countByRiskLevel(assessments);
 
@@ -188,13 +190,11 @@ export function RiskOverviewCard({
                   .filter((a) => highRiskLevels.includes(a.overallRisk))
                   .map((assessment) => {
                     const model = getModelById(assessment.modelId);
+                    const source = sources?.find(s => s.url === model?.systemCardUrl);
                     return (
                       <div key={assessment.modelId} className="flex items-center gap-2 text-sm">
                         <span className="font-medium">{model?.name}</span>
-                        <SourceBadge
-                          sourceId={model?.systemCardUrl?.includes("o3-system-card") ? "src-004" : "src-001"}
-                          section="Overall Risk"
-                        />
+                        {source && <SourceBadge source={source} section="Overall Risk" />}
                       </div>
                     );
                   })}
@@ -210,14 +210,11 @@ export function RiskOverviewCard({
                   .filter((a) => mediumRiskLevels.includes(a.overallRisk))
                   .map((assessment) => {
                     const model = getModelById(assessment.modelId);
-                    const sourceId =
-                      model?.id === "gpt-4o" ? "src-001" :
-                      model?.id === "o3-mini" ? "src-005" :
-                      model?.id === "o1-pro" ? "src-003" : "src-002";
+                    const source = sources?.find(s => s.url === model?.systemCardUrl);
                     return (
                       <div key={assessment.modelId} className="flex items-center gap-2 text-sm">
                         <span className="font-medium">{model?.name}</span>
-                        <SourceBadge sourceId={sourceId} section="Risk Assessment" />
+                        {source && <SourceBadge source={source} section="Risk Assessment" />}
                       </div>
                     );
                   })}
