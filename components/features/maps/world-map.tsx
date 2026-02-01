@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 import { FrontierLab, DataCenterExpansion, ChipManufacturer } from '@/lib/types/risk-data';
 import { MapMarker } from './map-marker';
@@ -27,12 +27,18 @@ export function WorldMap({
   showShipmentRegions = true,
   height = 600,
 }: WorldMapProps) {
+  const [isClient, setIsClient] = useState(false);
   const [hoveredMarker, setHoveredMarker] = useState<{
     type: 'lab' | 'data-center' | 'manufacturer';
     data: FrontierLab | DataCenterExpansion | ChipManufacturer;
     x: number;
     y: number;
   } | null>(null);
+
+  // Ensure component only renders on client to avoid hydration mismatches
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Load data
   const labs = useMemo(() => (showLabs ? getFrontierLabs() : []), [showLabs]);
@@ -75,6 +81,19 @@ export function WorldMap({
       y: event.clientY - 10,
     });
   };
+
+  if (!isClient) {
+    return (
+      <div
+        className="border border-border rounded-lg overflow-hidden bg-card"
+        style={{ height: `${height}px` }}
+      >
+        <div className="w-full h-full bg-muted/50 flex items-center justify-center">
+          <div className="text-muted-foreground text-sm">Loading map...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
