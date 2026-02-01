@@ -50,7 +50,7 @@ export function WorldMap({
 
   // Pre-calculate label distances with collision detection (recursive adjustment)
   const labDistances = useMemo(() => {
-    const rayLengths = [90, 110, 130, 100, 120, 95, 115, 105, 125, 135];
+    const rayLengths = [90, 110, 130, 100, 150, 95, 115, 105, 125, 135];
     const configs = labs.map((lab, index) => ({
       id: lab.id,
       angle: (index * (360 / labs.length) + 45) * Math.PI / 180,
