@@ -89,8 +89,8 @@ export function WorldMap({
 
   return (
     <div className="space-y-4">
-      <div className="border border-border rounded-lg overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
-        <ComposableMap projection="geoEqualEarth">
+      <div className="border border-border rounded-lg overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center" style={{ height: `${height}px` }}>
+        <ComposableMap projection="geoEqualEarth" width={960} height={height}>
           {/* Ocean areas - decorative background */}
           <defs>
             <radialGradient id="ocean-glow">
@@ -269,13 +269,27 @@ export function WorldMap({
           {showDataCenters &&
             dataCenters
               .filter((dc) => dc.location.coordinates)
-              .map((dc, index) => {
+              .map((dc, dataIndex) => {
                 const color = getDataCenterColor(dc.status);
-                // Radial angle for spreading
-                const angle = (index * (360 / dataCenters.length) + 15) * Math.PI / 180;
+
+                // Group data centers by location to prevent label overlap
+                const dcAtSameLocation = dataCenters.filter((d) =>
+                  d.location.coordinates &&
+                  d.location.coordinates.lat === dc.location.coordinates!.lat &&
+                  d.location.coordinates.lng === dc.location.coordinates!.lng
+                );
+
+                const indexInGroup = dcAtSameLocation.indexOf(dc);
+                const groupSize = dcAtSameLocation.length;
+
+                // Spread labels around the location center based on group position
+                const angleOffset = (indexInGroup * (360 / Math.max(groupSize, 1))) * Math.PI / 180;
+                const baseAngle = (dataIndex * (360 / dataCenters.length) + 15) * Math.PI / 180;
+                const angle = baseAngle + angleOffset;
+
                 // VARYING ray lengths - 18 different lengths
                 const rayLengths = [75, 95, 115, 85, 105, 125, 80, 100, 120, 90, 110, 130, 88, 108, 98, 118, 93, 113];
-                const rayLength = rayLengths[index % rayLengths.length];
+                const rayLength = rayLengths[(dataIndex + indexInGroup) % rayLengths.length];
                 const labelX = Math.cos(angle) * rayLength;
                 const labelY = Math.sin(angle) * rayLength;
 
@@ -334,10 +348,10 @@ export function WorldMap({
                       {/* Label */}
                       <g pointerEvents="none">
                         <rect
-                          x={labelX - 65}
-                          y={labelY - 11}
-                          width={130}
-                          height={22}
+                          x={labelX - 75}
+                          y={labelY - 16}
+                          width={150}
+                          height={32}
                           fill="rgba(0,0,0,0.9)"
                           rx={3}
                           stroke={color}
@@ -345,13 +359,24 @@ export function WorldMap({
                         />
                         <text
                           x={labelX}
-                          y={labelY + 4}
-                          fontSize="9"
-                          fontWeight="600"
+                          y={labelY - 3}
+                          fontSize="8"
+                          fontWeight="700"
                           fill={color}
                           textAnchor="middle"
                         >
-                          {dc.projectName.substring(0, 20)}
+                          {dc.projectName.substring(0, 22)}
+                        </text>
+                        <text
+                          x={labelX}
+                          y={labelY + 8}
+                          fontSize="7"
+                          fontWeight="400"
+                          fill={color}
+                          opacity={0.8}
+                          textAnchor="middle"
+                        >
+                          {dc.location.state || dc.location.city}
                         </text>
                       </g>
                     </g>
