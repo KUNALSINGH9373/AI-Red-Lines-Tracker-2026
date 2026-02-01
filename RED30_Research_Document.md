@@ -9,7 +9,7 @@ Research Projects, AI Safety & Governance
 
 ## Abstract
 
-Frontier AI labs (OpenAI, Anthropic, Google DeepMind, xAI) are developing increasingly capable AI systems and publishing risk frameworks to track capabilities against defined thresholds. However, these frameworks use incompatible terminology, risk definitions, and assessment methodologies, making cross-lab capability comparison difficult for policymakers and researchers. We present RED30, an interactive web dashboard that unifies risk assessments across four major AI labs and 19 frontier models, tracks proximity to critical risk thresholds, monitors global AI compute infrastructure, and documents reported AI incidents. The system ingests official system cards and published frameworks, transforms framework-specific risk data into a standardized schema, and visualizes convergence and divergence in AI capability escalation across labs. RED30 serves as an open-source infrastructure for AI governance, enabling stakeholders to track quantified AI R&D red lines, benchmark cross-lab performance on standardized tasks, and monitor compute concentration in frontier AI development. The dashboard has been deployed as a public research tool and demonstrates that unified multi-lab risk tracking is both technically feasible and essential for informed AI policy discussion.
+Frontier AI labs (OpenAI, Anthropic, Google DeepMind, xAI) are developing increasingly capable AI systems and publishing risk frameworks to track capabilities against defined thresholds. However, these frameworks use incompatible terminology, risk definitions, and assessment methodologies, making cross-lab capability comparison difficult for policymakers and researchers. We present RED30, an interactive web dashboard that unifies published risk frameworks across four major AI labs, tracks proximity to critical risk thresholds, monitors global AI compute infrastructure, and documents reported AI incidents. The system transforms framework-specific risk definitions into a standardized schema, and visualizes convergence and divergence in AI capability escalation across labs. **Important limitation**: While OpenAI publishes system cards for most models, comprehensive system cards are limited for Anthropic, Google DeepMind, and xAI. This work is based primarily on published frameworks and risk assessments rather than exhaustive system card analysis. RED30 serves as open-source infrastructure for AI governance, demonstrating that unified multi-lab risk tracking is both technically feasible and essential for informed AI policy discussion, while revealing critical gaps in AI safety transparency and documentation.
 
 **Keywords:** AI Risk Assessment, Frontier AI Labs, Risk Frameworks, AI Governance, Capability Tracking, Compute Infrastructure
 
@@ -94,14 +94,22 @@ RED30 uniquely integrates risk frameworks, capability metrics, infrastructure da
 
 #### Data Sources
 
-All data comes from official published sources:
+Data comes from published frameworks and publicly available information:
 
-| Lab | Framework | Data Sources |
-|-----|-----------|--------------|
-| OpenAI | Preparedness Framework v2 | System cards, preparedness.openai.com |
-| Anthropic | Responsible Scaling Policy v2.2 | System cards, anthropic.com |
-| Google DeepMind | Frontier Safety Framework v3.0 | Model cards, deepmind.google |
-| xAI | Frontier AI Framework (Dec 2025) | System cards, data.x.ai |
+| Lab | Framework | Available Sources | Data Availability |
+|-----|-----------|------------------|-------------------|
+| OpenAI | Preparedness Framework v2 | ✅ System cards for GPT-4o, o1, o3 | High (3-4 models) |
+| Anthropic | Responsible Scaling Policy v2.2 | ⚠️ Framework document + blog posts | Medium (limited system cards) |
+| Google DeepMind | Frontier Safety Framework v3.0 | ⚠️ Framework + blog announcements | Medium (limited model cards) |
+| xAI | Frontier AI Framework | ⚠️ Framework document only | Low (limited public disclosure) |
+
+**Critical Data Availability Issue**: Most Anthropic, Google DeepMind, and xAI system cards referenced in this project are NOT publicly available. Risk assessments for these models are derived from:
+- Published framework documents
+- Blog post announcements
+- Inferred from frameworks (data gap: requires estimation)
+- Not from comprehensive system cards
+
+This represents a significant limitation and highlights a critical gap in AI safety transparency.
 
 #### Data Schema
 
@@ -366,9 +374,24 @@ This suggests labs are pushing capabilities toward high-risk zones while maintai
 
 ### Limitations
 
+#### Critical Data Availability Limitation
+
+**This is the most significant limitation of RED30:**
+
+The project is titled as tracking "30 Universal AI Red Lines Indicators" based on "official system cards" from major labs. However, **comprehensive system cards do not exist for most models tracked**:
+
+- **OpenAI**: 3-4 system cards publicly available (GPT-4o, o1, o3)
+- **Anthropic**: <2 confirmed system cards (mostly framework document + blog posts)
+- **Google DeepMind**: <2 confirmed system cards (mostly framework document)
+- **xAI**: 0-1 confirmed system cards (only framework document)
+
+**Impact**: Risk assessments for Anthropic, Google DeepMind, and xAI models are largely inferred from framework definitions rather than model-specific evaluations. This represents a fundamental gap between what the research document claims (unified system card analysis) and what is actually available (fragmented framework documents).
+
+**Recommendation for Future Work**: This project should be repositioned as tracking "published risk frameworks" rather than "system cards," and clearly separate framework-level definitions from model-specific assessments.
+
 #### Methodological Limitations
 
-1. **Data Source Reliability**: Risk assessments are self-reported by labs in system cards. No independent verification of claimed risk levels. Labs have incentive to understate risks or avoid publishing assessments.
+1. **Data Source Reliability**: Where system cards do exist, risk assessments are self-reported by labs. No independent verification of claimed risk levels. Labs have incentive to understate risks or avoid publishing assessments.
 
 2. **Scoring Normalization**: Mapping framework-specific risk levels to 0.0-1.0 scale involves subjective threshold placement. A model with "ASL-2" (Anthropic) scored as 0.50 may not be equivalent to "medium risk" (OpenAI, 0.40-0.70 range) despite appearance of comparability.
 
@@ -381,6 +404,8 @@ This suggests labs are pushing capabilities toward high-risk zones while maintai
 #### Scope Limitations
 
 1. **Lab Coverage**: Covers only 4 frontier labs. Excluded: open-source labs (Meta's Llama community), Chinese labs (Alibaba, Baidu, DeepSeek), smaller labs (Mistral, Hugging Face). Results may not generalize to global AI ecosystem.
+
+2. **System Card Gaps**: Data for Anthropic, Google DeepMind, and xAI models come from framework documents rather than model-specific system cards. This creates asymmetry: OpenAI models have dedicated safety documentation; others use generic framework risk definitions applied to multiple models without model-specific validation.
 
 2. **Timeframe**: Data collection focused on 2024-2026 period. Historical trends (2018-2023) not fully captured. Red line definitions are recent (OpenAI v2: 2024, xAI v1: Dec 2025).
 
@@ -402,7 +427,9 @@ This suggests labs are pushing capabilities toward high-risk zones while maintai
 
 ### What We Would Do Differently
 
-1. **Independent Verification**: Commission third-party assessments of frontier models to validate lab self-reports. Create incentive structures for labs to disclose rather than conceal risks.
+1. **Mandate System Card Disclosure**: Rather than inferring risk assessments from generic frameworks, require each lab to publish model-specific system cards with documented risk assessments per model. Current asymmetry (OpenAI disclosure vs. others) undermines comparative analysis.
+
+2. **Independent Verification**: Commission third-party assessments of frontier models to validate lab self-reports. Create incentive structures for labs to disclose rather than conceal risks.
 
 2. **Standardized Frameworks**: Work with labs to adopt unified risk assessment frameworks with consistent terminology and scoring. Reduce reliance on post-hoc normalization.
 
@@ -418,17 +445,42 @@ This suggests labs are pushing capabilities toward high-risk zones while maintai
 
 ## 6. Conclusion
 
-**RED30: 30 Universal AI Red Lines Indicators** demonstrates that unified, cross-lab AI risk tracking is both technically feasible and essential for informed governance. We have built and deployed a production system that:
+**RED30: 30 Universal AI Red Lines Indicators** demonstrates that unified, cross-lab AI risk tracking is both technically and operationally feasible, while revealing a critical governance gap: **asymmetric AI safety transparency across labs**.
 
-- **Unifies fragmented data**: Integrates risk assessments, system cards, and frameworks from 4 major labs into a single queryable interface
-- **Enables cross-lab comparison**: Maps incompatible frameworks to a standardized scale, revealing convergence and divergence in capability escalation
-- **Integrates infrastructure tracking**: Links capability assessments to compute expansion and chip manufacturing, showing how labs are simultaneously escalating capabilities and infrastructure
-- **Documents incident patterns**: Connects capability levels to reported AI incidents, revealing deployment-driven risk dynamics
+### What This Project Achieves
+
+We have built and deployed a production system that:
+
+- **Unifies fragmented frameworks**: Integrates published risk frameworks from 4 major labs into a single queryable interface
+- **Enables cross-lab comparison**: Maps incompatible frameworks to a standardized scale, revealing convergence and divergence in capability definitions
+- **Integrates infrastructure tracking**: Links framework definitions to compute expansion and chip manufacturing, showing systemic AI escalation dynamics
+- **Documents incident patterns**: Connects reported AI incidents to deploying organizations, revealing deployment-scale risk dynamics
 - **Provides open-source foundation**: Releases all code, data schemas, and documentation to enable other researchers to extend this work
 
-The system reveals critical gaps in AI governance infrastructure: fragmented frameworks, geographic concentration of compute, incomplete incident reporting, and limited transparency on emerging capabilities. Future work should focus on standardization, independent verification, and real-time data integration.
+### Critical Finding: The System Card Gap
 
-RED30 is designed as a living document of frontier AI development. As labs publish new frameworks or models are released, the system can be updated to incorporate new data. We invite researchers, policymakers, and other stakeholders to use, extend, and improve this infrastructure.
+**The most important finding is what's missing**: Most models tracked in RED30 lack dedicated system cards. Risk assessments are largely inferred from generic frameworks rather than model-specific evaluations:
+
+- **OpenAI**: High transparency (3-4 published system cards)
+- **Anthropic**: Low transparency (<2 system cards)
+- **Google DeepMind**: Low transparency (<2 system cards)
+- **xAI**: Very low transparency (0 published system cards)
+
+This asymmetry is a governance problem. Policymakers and researchers cannot perform rigorous comparative analysis when only one lab provides model-specific safety documentation.
+
+### Implications
+
+1. **For Policy**: This work demonstrates that unified AI risk tracking requires API-level commitment to standardized disclosure. Voluntary frameworks are insufficient.
+
+2. **For Governance**: The system reveals that computational capability escalation (measured in FLOP) is outpacing transparency escalation. Labs are simultaneously:
+   - Scaling training compute by 10-100x
+   - Expanding data centers globally
+   - Consolidating compute in 3-4 companies
+   - Reducing public safety documentation transparency
+
+3. **For Industry**: The open-source architecture of RED30 creates accountability infrastructure. As more labs publish data, the system can quickly integrate it. This incentivizes standardization.
+
+RED30 is designed as a living document of frontier AI development. As labs publish new frameworks or system cards, the system will be updated. We invite researchers, policymakers, and other stakeholders to use, extend, and improve this infrastructure—and most importantly, to advocate for the system card transparency that would make this work complete.
 
 ---
 
