@@ -101,24 +101,31 @@ export function IncidentsCompactCard({
           <Card className="border-red-500/30 bg-red-950/10">
             <CardContent className="p-4">
               <h3 className="text-lg font-semibold text-red-500 mb-4">Incidents by Organization</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2">
-                {incidents.map((incident) => (
-                  <div
-                    key={incident.id}
-                    className="p-2 rounded-lg border border-red-500/30 bg-red-950/40 hover:bg-red-500/10 transition-all cursor-help hover:border-red-500/60"
-                    title={`${incident.totalIncidents} incidents involving ${incident.name}`}
-                  >
-                    <div className="flex flex-col items-center gap-2 text-center">
-                      <span className="text-xs font-medium text-foreground leading-tight line-clamp-2">
-                        {incident.name}
-                      </span>
-                      <span className="text-sm font-bold text-red-500 bg-red-500/30 px-1.5 py-0.5 rounded text-center w-full">
-                        {incident.totalIncidents}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <TooltipProvider>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2">
+                  {incidents.map((incident) => (
+                    <Tooltip key={incident.id}>
+                      <TooltipTrigger asChild>
+                        <div className="p-2 rounded-lg border border-red-500/30 bg-red-950/40 hover:bg-red-500/10 transition-all cursor-help hover:border-red-500/60">
+                          <div className="flex flex-col items-center gap-2 text-center">
+                            <span className="text-xs font-medium text-foreground leading-tight line-clamp-2">
+                              {incident.name}
+                            </span>
+                            <span className="text-sm font-bold text-red-500 bg-red-500/30 px-1.5 py-0.5 rounded text-center w-full">
+                              {incident.totalIncidents}
+                            </span>
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="max-w-xs bg-red-900 text-white border-red-700">
+                        <p className="text-sm">
+                          {incident.totalIncidents} incidents involving {incident.name}
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </div>
+              </TooltipProvider>
             </CardContent>
           </Card>
         )}
