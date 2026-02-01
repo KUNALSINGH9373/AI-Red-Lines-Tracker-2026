@@ -9,7 +9,7 @@ export default function AIRedLineAnalysisPage() {
         <div className="mb-8">
           <h1 className="text-5xl font-bold mb-4">AI Red Line Analysis</h1>
           <p className="text-xl text-muted-foreground mb-8">
-            EU AI Act Category A Compliance Assessment - Frontier AI Models vs. Prohibited Practices
+            30 Universal AI Red Line Indicators - Verified Comparison Across 16 Frontier Models
           </p>
         </div>
       </div>

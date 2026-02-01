@@ -144,7 +144,7 @@ export default function AiRndDashboard() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="h-5 w-5" />
-            Current Proximity to Red Lines
+            Current Proximity to Thresholds
           </CardTitle>
           <CardDescription>
             Latest frontier model proximity to threshold crossing (based on latest system

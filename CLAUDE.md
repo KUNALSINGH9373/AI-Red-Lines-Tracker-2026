@@ -32,17 +32,16 @@ npm run build
 # Start production server
 npm start
 
-# Run linter
+# Run linter (ESLint + TypeScript)
 npm lint
 
 # Run linter with auto-fix
 npm lint -- --fix
-
-# Build production bundle locally (without starting server)
-npm run build
 ```
 
-**Requirements**: Node.js 18+
+**Requirements**: Node.js 18+, npm 9+
+
+**Note**: React 19 + react-simple-maps v3 require `legacy-peer-deps=true` in `.npmrc` (already configured) to avoid ERESOLVE warnings during install.
 
 ## Architecture Overview
 
@@ -134,13 +133,40 @@ Each lab follows a modular, reusable pattern supporting framework-specific termi
 
 **Key Design**: Each lab defines its own risk categories and levels in `risk-assessments.json`, allowing framework-specific terminology (e.g., ASL-1/2/3/4 for Anthropic, CCL for Google, Abuse Potential/Concerning Propensities for xAI).
 
-**Adding a New Lab**:
-1. Create `/app/[newlab]/page.tsx` (template: copy from `/app/openai/page.tsx`)
-2. Create `/data/[newlab]/` with four JSON files matching your framework
-3. Create `/lib/data/[newlab]-data.ts` implementing 18 accessor functions
-4. Add lab config to `/app/frontier-labs/page.tsx` LAB_CONFIG object
-5. Update `/app/page.tsx` to include new lab in FrontierLabsPreview component
-6. Add model colors to `CHART_COLORS` in `/lib/constants/thresholds.ts`
+**Adding a New Lab (Complete Workflow)**:
+
+1. **Create data files**:
+   - Create `/data/[newlab]/` directory
+   - Create `models.json` with model metadata (id, name, family, releaseDate, systemCardUrl)
+   - Create `risk-assessments.json` with framework definition (riskLevels, riskCategories, assessments array)
+   - Create `events.json` with timeline events (model releases, framework updates)
+   - Create `sources.json` with document citations and PDF paths
+
+2. **Create data accessor**:
+   - Create `/lib/data/[newlab]-data.ts` with 18 functions (getModels, getRiskAssessments, getRiskCategories, etc.)
+   - Use `require()` for JSON imports: `const data = require('@/data/[newlab]/models.json')`
+
+3. **Create lab dashboard**:
+   - Create `/app/[newlab]/page.tsx` (copy template from `/app/openai/page.tsx`)
+   - Update imports to use `[newlab]-data.ts` accessor
+   - Ensure page uses correct risk category and level terminology
+
+4. **Add to unified dashboard**:
+   - Update `/app/frontier-labs/page.tsx` LAB_CONFIG object with new lab
+   - Include lab name, accessor function reference, tab icon, color scheme
+
+5. **Add to homepage**:
+   - Update `/app/page.tsx` FrontierLabsPreview component to show new lab
+
+6. **Add colors**:
+   - Add all model colors to CHART_COLORS in `/lib/constants/thresholds.ts`
+   - Format: `'[modelId]': '#HexColor'`
+
+7. **Test**:
+   - Run `npm run dev`
+   - Navigate to `/[newlab]` to verify dashboard renders
+   - Check `/frontier-labs` tab switching works
+   - Verify `/` homepage shows preview card
 
 ### Key Type System
 
@@ -379,6 +405,16 @@ Always validate that `systemCardUrl` in models.json matches the corresponding UR
 - [ ] systemCardUrl points to correct model's card (no cross-lab contamination)
 - [ ] All source sections referenced in assessments exist in sources.json
 - [ ] All new models have colors defined in CHART_COLORS
+- [ ] Assessment dates are in YYYY-MM-DD format
+- [ ] No trailing commas in JSON files
+
+**Validation Workflow**:
+1. Edit data files in `/data/[lab]/`
+2. Run `npm run dev` and navigate to the lab dashboard
+3. Open browser DevTools (F12) → Console tab to check for errors
+4. Verify charts render and show expected data
+5. Test filtering and category selection
+6. Run `npm lint` to catch any TypeScript errors
 
 ### Understanding Risk Progression Chart
 
@@ -427,9 +463,10 @@ Use `require()` for JSON imports (Next.js handles path resolution).
 
 ### Component Patterns
 
-- **Server Components** (default): Pages and layout components
-- **Client Components**: Interactive features (charts, filters, theme toggle) use `'use client'`
+- **Server Components** (default): Pages and layout components render on the server
+- **Client Components**: Interactive features (charts, filters, theme toggle) use `'use client'` directive
 - **Props Structure**: Pass data as props; avoid prop drilling with component composition
+- **React 19 Note**: Use standard React patterns. Server-side rendering is handled by Next.js automatically
 
 ### Filter Pattern (Map Filters Example)
 
@@ -461,6 +498,26 @@ This pattern is reusable for other filter components (risk level, data center st
 - Validate data at the accessor layer
 - Use optional chaining and nullish coalescing for defensive programming
 - Provide fallback UI for missing data
+
+### State Management
+
+The dashboard uses minimal state management (no Redux/Zustand):
+
+1. **Component-level state** (`useState`) for UI interactivity:
+   - Map filters (show/hide entity types)
+   - Tab selection in multi-lab dashboard
+   - Modal open/close states
+
+2. **Data flows unidirectionally**:
+   - Pages (server) fetch data and pass as props to components
+   - Components use `useState` for UI state only
+   - No data mutations; all data flows read-only from JSON files
+
+3. **Theme state** (persisted via `next-themes`):
+   - Dark/light mode preference stored in localStorage
+   - Applied globally via CSS variables in `globals.css`
+
+**Adding New State**: If new stateful UI is needed, use `useState` in the component. Avoid lifting state to page level unless multiple components share it.
 
 ## Important Notes
 
@@ -515,10 +572,11 @@ Each assessment must cite specific sections and link to official system cards in
 
 ### Build and Deployment
 
-- **Development**: `npm run dev` (hot reload, port 3000, watch mode)
-- **Build**: `npm run build` (Next.js Turbopack, pre-renders all routes)
-- **Production**: `npm start` (built files from `.next/`)
-- **Linting**: `npm lint` (ESLint + TypeScript on all files)
+- **Development**: `npm run dev` (hot reload, port 3000, watch mode, file watching enabled)
+- **Build**: `npm run build` (Next.js Turbopack, pre-renders all static routes, optimizes bundles)
+- **Production**: `npm start` (serves built files from `.next/`, requires `npm run build` first)
+- **Linting**: `npm lint` (ESLint + TypeScript checking on all files in `/app` and `/lib`)
+- **Vercel**: Automatically detects Next.js, uses default Node.js 18+ runtime, commits `.npmrc` with legacy-peer-deps
 
 ### Configuration Reference
 
@@ -528,20 +586,30 @@ Each assessment must cite specific sections and link to official system cards in
 - **globals.css**: Tailwind v4 + PostCSS, defines CSS variable theme
 - **eslint.config.mjs**: Next.js preset with Core Web Vitals
 
-### Common Issues
+### Common Issues and Debugging
+
+**Data Validation:**
+- **Build fails with type errors**: Run `npm lint` first to check TypeScript errors
+- **Data not appearing in charts**: Verify JSON files in `/data/[lab]/` have correct format and IDs match across files
+- **Risk scores showing as 0 or NaN**: Ensure scores in risk-assessments.json are decimals (0.0–1.0), not strings
 
 **Charts:**
 - **Chart not rendering**: Check that categoryIds in assessments match riskCategories defined in same file
-- **Model colors missing**: Add entry to CHART_COLORS in `/lib/constants/thresholds.ts`
+- **Model colors missing**: Add entry to CHART_COLORS in `/lib/constants/thresholds.ts` (e.g., `grok-3: '#8B5CF6'`)
 - **Risk Progression showing wrong data**: Verify assessmentDate format is YYYY-MM-DD in risk-assessments.json
 - **Heatmap cells empty**: Ensure transformToHeatmapData can find matching model-category pairs
 
-**World Map:**
-- **Map not rendering**: Verify `/public/maps/world-110m.json` exists (TopoJSON file)
-- **Hydration mismatch error**: WorldMap must render client-side only (useEffect + useState check is in place)
-- **Markers not appearing**: Check that coordinates exist in data files (especially data centers which are optional)
-- **Vercel deployment fails with ERESOLVE**: Ensure `.npmrc` with `legacy-peer-deps=true` is committed
+**World Map (Client-Side Rendering):**
+- **Map not rendering**: Verify `/public/maps/world-110m.json` exists (TopoJSON file, 105KB)
+- **Hydration mismatch error**: WorldMap must render client-side only (useEffect + useState check prevents server rendering)
+- **Markers not appearing**: Check that coordinates exist in data files; data centers may have null coordinates
+- **Vercel deployment fails with ERESOLVE**: Ensure `.npmrc` with `legacy-peer-deps=true` is committed to git
 - **Map tooltips showing wrong data**: Verify data accessor functions return correct lab/manufacturer/data-center objects
+- **Loading skeleton shows indefinitely**: Check browser console for errors; common cause is missing or malformed TopoJSON data
+
+**Styling and Theme:**
+- **Dark mode not applying**: Verify next-themes is initialized in `layout.tsx` and theme provider wraps page content
+- **Tailwind classes not working**: Rebuild dev server (`npm run dev` again) after modifying tailwind config
 
 ## Related Documentation
 

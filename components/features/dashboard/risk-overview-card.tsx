@@ -106,18 +106,11 @@ export function RiskOverviewCard({
 
   const stats = [
     {
-      label: "Critical Risk",
-      level: "critical",
-      value: criticalCount,
-      icon: AlertCircle,
-      color: "#991b1b",
-    },
-    {
-      label: "High Risk",
-      level: "high",
-      value: highCount,
-      icon: AlertTriangle,
-      color: "#ef4444",
+      label: "Low Risk",
+      level: "low",
+      value: lowCount,
+      icon: Shield,
+      color: "#10b981",
     },
     {
       label: "Medium Risk",
@@ -127,11 +120,18 @@ export function RiskOverviewCard({
       color: "#f59e0b",
     },
     {
-      label: "Low Risk",
-      level: "low",
-      value: lowCount,
-      icon: Shield,
-      color: "#10b981",
+      label: "High Risk",
+      level: "high",
+      value: highCount,
+      icon: AlertTriangle,
+      color: "#ef4444",
+    },
+    {
+      label: "Critical Risk",
+      level: "critical",
+      value: criticalCount,
+      icon: AlertCircle,
+      color: "#991b1b",
     },
   ];
 

@@ -318,33 +318,31 @@ export default function Home() {
           {/* Map Filters */}
           <MapFilters onFiltersChange={setMapFilters} />
 
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Map - Full width on mobile, 85% on desktop */}
-            <div className="flex-1 lg:w-[85%]" style={{ height: "500px" }}>
-              <WorldMap
-                showLabs={mapFilters.showLabs}
-                showDataCenters={mapFilters.showDataCenters}
-                showManufacturers={mapFilters.showManufacturers}
-                height={500}
-              />
-            </div>
+          {/* Map - Full width */}
+          <div style={{ height: "600px" }}>
+            <WorldMap
+              showLabs={mapFilters.showLabs}
+              showDataCenters={mapFilters.showDataCenters}
+              showManufacturers={mapFilters.showManufacturers}
+              height={600}
+            />
+          </div>
 
-            {/* Incidents Card - Below on mobile, 15% sidebar on desktop */}
-            <div className="w-full lg:w-[15%] lg:min-w-[280px]">
-              <IncidentsCompactCard
-                totalIncidents={getGlobalIncidentTotal()}
-                lastUpdated={getIncidentsSource().lastUpdated}
-                sourceUrl={getIncidentsSourceUrl()}
-                incidents={getIncidents()}
-                defaultExpanded={true}
-              />
-            </div>
+          {/* Incidents Card - Below map, full width */}
+          <div className="mt-6">
+            <IncidentsCompactCard
+              totalIncidents={getGlobalIncidentTotal()}
+              lastUpdated={getIncidentsSource().lastUpdated}
+              sourceUrl={getIncidentsSourceUrl()}
+              incidents={getIncidents()}
+              defaultExpanded={true}
+            />
           </div>
 
           {/* AI R&D Proximity Gauge */}
           <div className="mt-12">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold mb-2">Frontier Model Proximity to Red Lines</h3>
+              <h3 className="text-2xl font-bold mb-2">Frontier Model Proximity to Thresholds</h3>
               <p className="text-muted-foreground">
                 Current assessment of how close frontier models are to critical AI R&D acceleration thresholds across labs
               </p>
