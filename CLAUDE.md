@@ -70,7 +70,8 @@ UI Components (pages, features)
   ├── /layout                # Header, footer, theme provider/toggle
   ├── /features
   │   ├── /dashboard         # Risk overview, threshold indicator, updates feed, spotlight cards
-  │   └── /charts            # Line, bar, radar, heatmap visualizations (Recharts)
+  │   ├── /charts            # Line, bar, radar, heatmap visualizations (Recharts)
+  │   └── /maps              # Interactive world map with filters, tooltips, legend
   └── /shared                # Source badges with lab citations
 
 /lib                         # Business logic and utilities
@@ -86,11 +87,15 @@ UI Components (pages, features)
   ├── /openai/              # OpenAI models and assessments
   ├── /anthropic/           # Anthropic models and assessments
   ├── /google-deepmind/     # Google DeepMind models and assessments
-  └── /xai/                 # xAI Grok models and assessments
-      ├── models.json       # 4 Grok models
-      ├── risk-assessments.json  # 3-category framework
-      ├── events.json       # Model releases and framework updates
-      └── sources.json      # Links to 6 xAI documents
+  ├── /xai/                 # xAI Grok models and assessments
+  │   ├── models.json       # 4 Grok models
+  │   ├── risk-assessments.json  # 3-category framework
+  │   ├── events.json       # Model releases and framework updates
+  │   └── sources.json      # Links to 6 xAI documents
+  └── /cross-lab/           # Cross-lab data (compute infrastructure, world map)
+      ├── frontier-labs.json # 4 lab HQs with coordinates
+      ├── chip-manufacturers.json # 3 manufacturers, shipment zones
+      └── compute-infrastructure.json # Data centers with coordinates, training compute
 ```
 
 ### Multi-Lab Architecture
@@ -121,6 +126,7 @@ Each lab follows a modular, reusable pattern supporting framework-specific termi
 
 Core types in `/lib/types/risk-data.ts`:
 
+**Risk Assessment Types:**
 - **Model**: `{ id, name, family, releaseDate, systemCardUrl }`
 - **RiskAssessment**: `{ modelId, assessmentDate, overallRisk, categoryRisks: CategoryRisk[] }`
 - **CategoryRisk**: `{ categoryId, riskLevel, score, thresholdProximity, notes, mitigations, sourceSection }`
@@ -128,6 +134,13 @@ Core types in `/lib/types/risk-data.ts`:
 - **RiskLevelConfig**: `{ level, color, label }` (framework-specific)
 - **TimelineEvent**: `{ id, date, type, title, description, modelIds, categoryIds, sourceId }`
 - **Source**: `{ id, title, url, type, publishDate, pdfPath }`
+
+**World Map Types:**
+- **FrontierLab**: `{ id, name, city, state?, country, coordinates, framework, modelCount, primaryColor, latestModel, latestReleaseDate, dataCenterCount }`
+- **ChipManufacturer**: `{ id, name, city, state?, country, coordinates, primaryColor, chipModels[], totalShipments2025, topShipmentRegion }`
+- **ShipmentZone**: `{ id, region, coordinates.polygon, totalShipments2025, percentage, color }`
+- **MapMarker**: Union type `{ type: 'lab'|'data-center'|'manufacturer', data: FrontierLab|DataCenterExpansion|ChipManufacturer }`
+- **DataCenterExpansion**: `{ id, projectName, company, location: { city, state?, country, coordinates? }, capacity, announcementDate, status: 'announced'|'in-progress'|'operational', source, sourceUrl? }`
 
 **Risk Scoring**: 0.0–1.0 scale (stored as decimal, displayed as percentage)
 - Each lab can define custom risk levels in `risk-assessments.json`
@@ -144,10 +157,51 @@ Core types in `/lib/types/risk-data.ts`:
 - **Language**: TypeScript 5 (strict mode)
 - **Styling**: Tailwind CSS 4 with CSS variables for theming
 - **Components**: shadcn/ui (Radix UI based)
-- **Visualization**: Recharts 3.7.0
+- **Visualization**: Recharts 3.7.0 for dashboards, react-simple-maps for world map
+- **Maps**: react-simple-maps 3.0.0 + topojson for SVG-based world map
 - **Icons**: Lucide React
 - **Theming**: next-themes (dark/light mode with persistence)
 - **Utilities**: date-fns, class-variance-authority, clsx, tailwind-merge
+
+**Note**: react-simple-maps v3 doesn't officially support React 19, but works via `legacy-peer-deps=true` in `.npmrc`. Server hydration handled via client-side rendering check.
+
+## World Map Feature (Home Page)
+
+The home page features an interactive SVG-based world map showing global AI infrastructure:
+
+### Map Components Structure
+- **world-map.tsx**: Main map component using react-simple-maps + TopoJSON
+- **map-filters.tsx**: Toggle buttons for Frontier Labs, Data Centers, Manufacturers, Shipment Zones
+- **map-tooltip.tsx**: Context-aware hover tooltips
+- **map-legend.tsx**: Color-coded legend for entity types and statuses
+- **map-marker.tsx**: Reusable marker component (unused in current version, kept for extensibility)
+
+### Map Data
+- **frontier-labs.json**: 4 lab HQs (OpenAI/Anthropic SF, Google London, xAI Palo Alto)
+  - Contains: coordinates, framework version, model count, latest model date
+- **chip-manufacturers.json**: 3 chip makers (NVIDIA/AMD/Intel Santa Clara)
+  - Contains: coordinates, chip models, 2025 shipment counts, shipment zones
+- **compute-infrastructure.json**: Updated with lat/lng for 10 data centers
+  - Color-coded by status: announced (amber), in-progress (blue), operational (green)
+
+### Map Data Accessors
+- **frontier-labs-data.ts**: 8 functions (getFrontierLabs, getLabById, getLabsByCountry, etc.)
+- **chip-manufacturers-data.ts**: 9 functions (getChipManufacturers, getShipmentZones, etc.)
+- Existing **compute-infrastructure-data.ts**: Already has getDataCenterExpansions()
+
+### Integration Details
+- Map is rendered client-side only (useEffect check prevents hydration mismatch)
+- SVG rendering (no external map APIs)
+- Dark/light theme support via CSS variables
+- Responsive design (600px default height, adjustable)
+- Performance: All routes < 200ms render time
+
+### Hydration Note
+react-simple-maps calculates SVG transform attributes on client, causing server/client mismatches. Solution: Render only on client using useState + useEffect. Shows loading skeleton during server render.
+
+### Deployment
+- **.npmrc**: `legacy-peer-deps=true` enables Vercel deployment with react-simple-maps v3 + React 19
+- No ERESOLVE errors during `npm install` on Vercel
 
 ## Common Development Tasks
 
@@ -223,6 +277,31 @@ Use `require()` for JSON imports (Next.js handles path resolution).
 - **Client Components**: Interactive features (charts, filters, theme toggle) use `'use client'`
 - **Props Structure**: Pass data as props; avoid prop drilling with component composition
 
+### Filter Pattern (Map Filters Example)
+
+Map filters use a controlled component pattern:
+
+1. Parent component (`page.tsx`) maintains filter state with `useState`
+2. Filter component (`map-filters.tsx`) accepts callback `onFiltersChange`
+3. Child map component (`world-map.tsx`) receives filter props and updates rendering
+4. Filter updates are synchronous and immediate (no debouncing needed)
+
+Example:
+```typescript
+// Parent
+const [filters, setFilters] = useState({ showLabs: true, ... });
+<MapFilters onFiltersChange={setFilters} />
+<WorldMap showLabs={filters.showLabs} ... />
+
+// Filter Component
+<button onClick={() => {
+  const newState = !showLabs;
+  onFiltersChange({ showLabs: newState, ... });
+}} />
+```
+
+This pattern is reusable for other filter components (risk level, data center status, etc.).
+
 ### Error Handling
 
 - Validate data at the accessor layer
@@ -246,11 +325,22 @@ Each assessment must cite specific sections and link to official system cards in
 
 ### Key Data Files to Know
 
+**Risk Assessment:**
 - `/lib/constants/thresholds.ts`: RISK_THRESHOLDS (0.4, 0.7, 0.9), THRESHOLD_PROXIMITY_WARNING (0.85), CHART_COLORS object
-- `/lib/types/risk-data.ts`: All core type definitions
+- `/lib/types/risk-data.ts`: All core type definitions (risk, map, compute types)
 - `/lib/data/chart-transformers.ts`: `transformToTimeSeriesData()`, `transformToRadarData()`, `transformToHeatmapData()` (used by all charts)
 - `/lib/data/risk-calculations.ts`: `countByRiskLevel()`, risk score aggregation functions
 - `/app/frontier-labs/page.tsx`: LAB_CONFIG object defines tab switching behavior and data access for unified dashboard
+
+**World Map & Infrastructure:**
+- `/app/page.tsx`: Home page with MapFilters component, stateful filter management
+- `/components/features/maps/world-map.tsx`: Main map component (client-side rendered only)
+- `/lib/data/frontier-labs-data.ts`: Accessor functions for lab data (8 functions)
+- `/lib/data/chip-manufacturers-data.ts`: Accessor functions for manufacturer data (9 functions)
+- `/lib/data/compute-infrastructure-data.ts`: Existing accessor for data centers (includes geocoding)
+- `/data/cross-lab/frontier-labs.json`: Lab HQs data
+- `/data/cross-lab/chip-manufacturers.json`: Manufacturer data + shipment zones
+- `/public/maps/world-110m.json`: TopoJSON world map (105KB)
 
 ### Build and Deployment
 
@@ -269,10 +359,18 @@ Each assessment must cite specific sections and link to official system cards in
 
 ### Common Issues
 
+**Charts:**
 - **Chart not rendering**: Check that categoryIds in assessments match riskCategories defined in same file
 - **Model colors missing**: Add entry to CHART_COLORS in `/lib/constants/thresholds.ts`
 - **Risk Progression showing wrong data**: Verify assessmentDate format is YYYY-MM-DD in risk-assessments.json
 - **Heatmap cells empty**: Ensure transformToHeatmapData can find matching model-category pairs
+
+**World Map:**
+- **Map not rendering**: Verify `/public/maps/world-110m.json` exists (TopoJSON file)
+- **Hydration mismatch error**: WorldMap must render client-side only (useEffect + useState check is in place)
+- **Markers not appearing**: Check that coordinates exist in data files (especially data centers which are optional)
+- **Vercel deployment fails with ERESOLVE**: Ensure `.npmrc` with `legacy-peer-deps=true` is committed
+- **Map tooltips showing wrong data**: Verify data accessor functions return correct lab/manufacturer/data-center objects
 
 ## Related Documentation
 
