@@ -117,7 +117,7 @@ export function IncidentsCompactCard({
                           </div>
                         </div>
                       </TooltipTrigger>
-                      <TooltipContent side="bottom" className="max-w-xs bg-red-900 text-white border-red-700">
+                      <TooltipContent side="top" align="center" className="max-w-xs bg-red-900 text-white border-red-700">
                         <p className="text-sm">
                           {incident.totalIncidents} incidents involving {incident.name}
                         </p>
