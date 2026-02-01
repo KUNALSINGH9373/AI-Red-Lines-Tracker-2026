@@ -305,7 +305,7 @@ export default function Home() {
   return (
     <div>
       {/* World Map Section */}
-      <div className="mb-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-12 bg-muted/30 border-y">
+      <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-12 bg-muted/30 border-y">
         <div className="container">
           <div className="text-center mb-8">
             <Globe className="h-10 w-10 mx-auto mb-4 text-primary" />
@@ -318,19 +318,19 @@ export default function Home() {
           {/* Map Filters */}
           <MapFilters onFiltersChange={setMapFilters} />
 
-          <div className="flex gap-4">
-            {/* Map - 70% */}
-            <div style={{ height: "600px", flex: "0 0 70%" }} className="rounded-lg overflow-hidden">
+          <div className="flex flex-col lg:flex-row gap-4">
+            {/* Map - Full width on mobile, 85% on desktop */}
+            <div className="flex-1 lg:w-[85%]" style={{ height: "500px" }}>
               <WorldMap
                 showLabs={mapFilters.showLabs}
                 showDataCenters={mapFilters.showDataCenters}
                 showManufacturers={mapFilters.showManufacturers}
-                height={600}
+                height={500}
               />
             </div>
 
-            {/* Incidents Card - 30% */}
-            <div style={{ flex: "0 0 30%", display: "flex", alignItems: "flex-start" }}>
+            {/* Incidents Card - Below on mobile, 15% sidebar on desktop */}
+            <div className="w-full lg:w-[15%] lg:min-w-[280px]">
               <IncidentsCompactCard
                 totalIncidents={getGlobalIncidentTotal()}
                 lastUpdated={getIncidentsSource().lastUpdated}
@@ -358,7 +358,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="container py-16">
+      <div className="container pb-16">
         {/* Hero Section - Simplified */}
         <div className="text-center mb-16">
           <Activity className="h-16 w-16 mx-auto mb-6 text-primary" />
