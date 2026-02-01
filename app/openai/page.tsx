@@ -27,6 +27,7 @@ import { RiskCategoryRadar } from "@/components/features/charts/risk-category-ra
 import { RiskHeatmap } from "@/components/features/charts/risk-heatmap";
 import { ExternalLink, AlertTriangle, TrendingUp } from "lucide-react";
 import { SourceBadge } from "@/components/shared/source-badge";
+import { LabLogo } from "@/components/shared/lab-logo";
 import { CHART_COLORS } from "@/lib/constants/thresholds";
 
 export default function OpenAIDashboard() {
@@ -48,7 +49,10 @@ export default function OpenAIDashboard() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-4xl font-bold mb-2">OpenAI Risk Dashboard</h1>
+            <div className="flex items-center gap-3 mb-2">
+              <LabLogo lab="openai" size="lg" />
+              <h1 className="text-4xl font-bold">Risk Dashboard</h1>
+            </div>
             <p className="text-muted-foreground">
               Tracking model capabilities against Preparedness Framework{" "}
               {frameworkVersion} thresholds

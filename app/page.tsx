@@ -38,6 +38,7 @@ import {
 import { IncidentsCompactCard } from "@/components/features/dashboard/incidents-compact-card";
 import { CrossLabProximityGauge } from "@/components/features/charts/cross-lab-proximity-gauge";
 import { getAiRndBenchmarks } from "@/lib/data/cross-lab-data";
+import { LabLogo } from "@/components/shared/lab-logo";
 
 function FrontierLabsPreview() {
   const openAIModels = getOpenAIModels();
@@ -69,7 +70,10 @@ function FrontierLabsPreview() {
       {/* OpenAI */}
       <Card className="col-span-1 md:col-span-4 lg:col-span-1">
         <CardHeader>
-          <CardTitle className="text-base">OpenAI</CardTitle>
+          <div className="flex items-center gap-2 mb-1">
+            <LabLogo lab="openai" size="sm" />
+            <CardTitle className="text-base">OpenAI</CardTitle>
+          </div>
           <CardDescription>Preparedness Framework v2</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -97,7 +101,10 @@ function FrontierLabsPreview() {
       {/* Anthropic */}
       <Card className="col-span-1 md:col-span-4 lg:col-span-1">
         <CardHeader>
-          <CardTitle className="text-base">Anthropic</CardTitle>
+          <div className="flex items-center gap-2 mb-1">
+            <LabLogo lab="anthropic" size="sm" />
+            <CardTitle className="text-base">Anthropic</CardTitle>
+          </div>
           <CardDescription>Responsible Scaling Policy (RSP) v2.2</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -125,7 +132,10 @@ function FrontierLabsPreview() {
       {/* Google DeepMind */}
       <Card className="col-span-1 md:col-span-4 lg:col-span-1">
         <CardHeader>
-          <CardTitle className="text-base">Google DeepMind</CardTitle>
+          <div className="flex items-center gap-2 mb-1">
+            <LabLogo lab="google-deepmind" size="sm" />
+            <CardTitle className="text-base">Google DeepMind</CardTitle>
+          </div>
           <CardDescription>Frontier Safety Framework v3.0</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -153,7 +163,10 @@ function FrontierLabsPreview() {
       {/* xAI */}
       <Card className="col-span-1 md:col-span-4 lg:col-span-1">
         <CardHeader>
-          <CardTitle className="text-base">xAI</CardTitle>
+          <div className="flex items-center gap-2 mb-1">
+            <LabLogo lab="xai" size="sm" />
+            <CardTitle className="text-base">xAI</CardTitle>
+          </div>
           <CardDescription>Frontier AI Framework</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -298,8 +311,8 @@ function ComputeInfrastructurePreview() {
 export default function Home() {
   const [mapFilters, setMapFilters] = useState({
     showLabs: true,
-    showDataCenters: true,
-    showManufacturers: true,
+    showDataCenters: false,
+    showManufacturers: false,
   });
 
   return (

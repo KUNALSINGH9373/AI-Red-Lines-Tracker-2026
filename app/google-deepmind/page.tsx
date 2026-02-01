@@ -27,6 +27,7 @@ import { RiskCategoryRadar } from "@/components/features/charts/risk-category-ra
 import { RiskHeatmap } from "@/components/features/charts/risk-heatmap";
 import { ExternalLink, AlertTriangle, TrendingUp, Shield, CheckCircle2 } from "lucide-react";
 import { SourceBadge } from "@/components/shared/source-badge";
+import { LabLogo } from "@/components/shared/lab-logo";
 import { CHART_COLORS } from "@/lib/constants/thresholds";
 
 export default function GoogleDeepMindDashboard() {
@@ -48,7 +49,10 @@ export default function GoogleDeepMindDashboard() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Google DeepMind Risk Dashboard</h1>
+            <div className="flex items-center gap-3 mb-2">
+              <LabLogo lab="google-deepmind" size="lg" />
+              <h1 className="text-4xl font-bold">Risk Dashboard</h1>
+            </div>
             <p className="text-muted-foreground">
               Tracking model capabilities against Frontier Safety Framework{" "}
               {frameworkVersion} (CCL Framework)
