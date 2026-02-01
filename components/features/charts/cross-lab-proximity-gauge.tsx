@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ThresholdGauge } from "./threshold-gauge";
 import { RadialBarChart, RadialBar, ResponsiveContainer, PolarAngleAxis } from "recharts";
 import type { BenchmarkResult } from "@/lib/types/risk-data";
@@ -8,11 +9,11 @@ interface CrossLabProximityGaugeProps {
   benchmarkResults: BenchmarkResult[];
 }
 
-const LAB_PROXIMITY: Record<string, { proximity: number | null; label: string }> = {
-  openai: { proximity: 0.5, label: "GPT-5" },
-  anthropic: { proximity: 0.77, label: "Claude Opus 4.5" },
-  "google-deepmind": { proximity: 0.4, label: "Gemini 3 Pro" },
-  xai: { proximity: null, label: "Grok 4.1 Fast" },
+const LAB_PROXIMITY: Record<string, { proximity: number | null; label: string; path: string }> = {
+  openai: { proximity: 0.5, label: "GPT-5", path: "/openai" },
+  anthropic: { proximity: 0.77, label: "Claude Opus 4.5", path: "/anthropic" },
+  "google-deepmind": { proximity: 0.4, label: "Gemini 3 Pro", path: "/google-deepmind" },
+  xai: { proximity: null, label: "Grok 4.1 Fast", path: "/xai" },
 };
 
 export function CrossLabProximityGauge({
@@ -27,14 +28,14 @@ export function CrossLabProximityGauge({
             : lab.charAt(0).toUpperCase() + lab.slice(1);
 
         return (
-          <div
-            key={lab}
-            className={`flex flex-col items-center p-3 rounded-lg border ${
-              data.proximity === null
-                ? "bg-gray-50 dark:bg-gray-900/50 border-dashed border-gray-300 dark:border-gray-700"
-                : ""
-            }`}
-          >
+          <Link key={lab} href={data.path} className="group">
+            <div
+              className={`flex flex-col items-center p-3 rounded-lg border cursor-pointer transition-all duration-200 group-hover:shadow-lg group-hover:scale-105 ${
+                data.proximity === null
+                  ? "bg-gray-50 dark:bg-gray-900/50 border-dashed border-gray-300 dark:border-gray-700 group-hover:bg-gray-100 dark:group-hover:bg-gray-800/50"
+                  : "group-hover:bg-accent"
+              }`}
+            >
             <h3 className="text-lg font-semibold mb-4 text-center">{labLabel}</h3>
             {data.proximity !== null ? (
               <div className="w-full flex justify-center">
@@ -81,7 +82,8 @@ export function CrossLabProximityGauge({
                 </div>
               </div>
             )}
-          </div>
+            </div>
+          </Link>
         );
       })}
     </div>
