@@ -50,7 +50,7 @@ export function IncidentsCompactCard({
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertCircle className="h-5 w-5 text-red-500" />
-                  <span className="text-xs font-semibold text-red-500">Recent AI Indicators Count</span>
+                  <span className="text-xs font-semibold text-red-500">Recent AI Incidents Count</span>
                 </div>
 
                 <div className="mb-3">
