@@ -47,71 +47,64 @@ export function IncidentsCompactCard({
         }
       `}</style>
 
-      <div className="w-full space-y-4">
-        {/* Main Indicator Card - Compact */}
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="cursor-pointer" onClick={() => setExpanded(!expanded)}>
-                <Card className="incident-blink-compact border-2 border-red-500 bg-red-950/30 hover:bg-red-950/40 transition-colors">
-                  <CardContent className="p-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2">
-                        <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
-                        <div className="min-w-fit">
-                          <p className="text-xs font-semibold text-red-500">Incidents</p>
-                          <p className="text-xl font-bold text-red-500">{totalIncidents.toLocaleString()}</p>
+      <div className="w-full">
+        {/* Two Column Layout - Incidents Count + Organizations */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Left Column - Main Indicator Card */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="cursor-pointer lg:col-span-1">
+                  <Card className="incident-blink-compact border-2 border-red-500 bg-red-950/30 hover:bg-red-950/40 transition-colors h-full">
+                    <CardContent className="p-4">
+                      <div className="flex flex-col items-center gap-4 text-center">
+                        <AlertCircle className="h-6 w-6 text-red-500" />
+                        <div>
+                          <p className="text-xs font-semibold text-red-500 mb-2">Recent AI Incidents</p>
+                          <p className="text-3xl font-bold text-red-500">{totalIncidents.toLocaleString()}</p>
                         </div>
-                      </div>
-                      <div className="text-right text-xs text-muted-foreground flex-1">
-                        <div className="mb-1">
-                          <span>{incidents.length} Organizations</span>
-                        </div>
-                        <div className="flex items-center gap-2 justify-end">
-                          <span>Updated: {lastUpdated}</span>
+                        <div className="w-full pt-4 border-t border-red-500/20 space-y-2 text-xs text-muted-foreground">
+                          <div>{incidents.length} Organizations Tracked</div>
+                          <div>Updated: {lastUpdated}</div>
                           <a
                             href={sourceUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-0.5 text-blue-500 hover:text-blue-400 font-medium"
+                            className="inline-flex items-center gap-1 text-blue-500 hover:text-blue-400 font-medium"
                             onClick={(e) => e.stopPropagation()}
                           >
+                            Database
                             <ExternalLink className="h-3 w-3" />
                           </a>
                         </div>
                       </div>
-                      <ChevronDown
-                        className={`h-5 w-5 text-muted-foreground transition-transform flex-shrink-0 ${expanded ? 'rotate-180' : ''}`}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="right" className="max-w-xs bg-red-900 text-white border-red-700">
-              <p className="text-sm">
-                Malaysian Teenager Allegedly Arrested for Creating and Selling AI-Generated Deepfake Images of Schoolmates and Alumni in Johor
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="max-w-xs bg-red-900 text-white border-red-700">
+                <p className="text-sm">
+                  Malaysian Teenager Allegedly Arrested for Creating and Selling AI-Generated Deepfake Images of Schoolmates and Alumni in Johor
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
 
-        {/* Expanded Incidents List - Grid Layout */}
-        {expanded && (
-          <Card className="border-red-500/30 bg-red-950/10">
+          {/* Right Column - Incidents by Organization */}
+          <Card className="border-red-500/30 bg-red-950/10 lg:col-span-2">
             <CardContent className="p-4">
               <h3 className="text-lg font-semibold text-red-500 mb-4">Incidents by Organization</h3>
               <TooltipProvider>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-2">
                   {incidents.map((incident) => (
                     <Tooltip key={incident.id}>
                       <TooltipTrigger asChild>
-                        <div className="p-2 rounded-lg border border-red-500/30 bg-red-950/40 hover:bg-red-500/10 transition-all cursor-help hover:border-red-500/60">
+                        <div className="p-2 rounded-lg border-2 border-red-400 dark:border-red-500/60 bg-red-100 dark:bg-red-950/40 hover:bg-red-200 dark:hover:bg-red-500/10 transition-all cursor-help">
                           <div className="flex flex-col items-center gap-2 text-center">
-                            <span className="text-xs font-medium text-foreground leading-tight line-clamp-2">
+                            <span className="text-xs font-bold text-red-900 dark:text-foreground leading-tight line-clamp-2">
                               {incident.name}
                             </span>
-                            <span className="text-sm font-bold text-red-500 bg-red-500/30 px-1.5 py-0.5 rounded text-center w-full">
+                            <span className="text-sm font-bold text-white bg-red-500 px-1.5 py-0.5 rounded text-center w-full">
                               {incident.totalIncidents}
                             </span>
                           </div>
@@ -128,7 +121,7 @@ export function IncidentsCompactCard({
               </TooltipProvider>
             </CardContent>
           </Card>
-        )}
+        </div>
       </div>
     </>
   );
