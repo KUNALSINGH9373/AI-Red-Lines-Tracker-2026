@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**AI Red Lines Tracker** is an interactive web dashboard tracking frontier AI model capabilities against critical AI risk thresholds. It visualizes official risk assessments from major AI labs (OpenAI, Anthropic, Google DeepMind, xAI) across their respective risk frameworks, plus cross-lab AI R&D benchmarking and compute infrastructure analysis.
+**AI Red Lines Tracker** is an interactive web dashboard tracking frontier AI model capabilities against critical AI risk thresholds. It visualizes official risk assessments from major AI labs (OpenAI, Anthropic, Google DeepMind, xAI) across their respective risk frameworks, plus cross-lab AI R&D benchmarking, compute infrastructure analysis, and EU AI Act compliance.
 
 Currently tracking:
 - **OpenAI**: 5 models across Preparedness Framework v2 categories (bio-chem, cyber, persuasion, ai-self-improvement)
@@ -14,6 +14,7 @@ Currently tracking:
 - **Cross-Lab AI R&D**: METR benchmark results and red line definitions across 3 major labs
 - **Compute Infrastructure**: Training compute analysis, data center expansions, chip shipments, compute concentration
 - **AI Incidents**: Documented incidents from the AI Incident Database, tracking harmed parties and system involvement
+- **EU AI Red Lines (RED30)**: 30-indicator universal red line framework across 4 severity tiers (critical, systemic, individual, emerging standards)
 
 All data sourced from official system cards, published frameworks, and public research datasets.
 
@@ -72,6 +73,7 @@ UI Components (pages, features)
   ├── page.tsx               # Home/landing page (world map with infrastructure)
   ├── frontier-labs/page.tsx # Unified multi-lab dashboard with tab switching
   ├── ai-rnd/page.tsx        # AI R&D benchmarks and red lines comparison
+  ├── ai-red-line-analysis/page.tsx # EU AI red lines (RED30) framework assessment
   ├── compute-infrastructure/page.tsx # Compute analysis dashboard
   ├── ai-incidents/page.tsx  # AI incidents tracking dashboard
   └── [lab]/page.tsx         # Lab-specific dashboards (openai/, anthropic/, google-deepmind/, xai/)
@@ -228,9 +230,14 @@ Core types in `/lib/types/risk-data.ts`:
 The home page features an interactive SVG-based world map showing global AI infrastructure:
 
 ### Map Components Structure
-- **world-map.tsx**: Main map component using react-simple-maps + TopoJSON
+- **world-map.tsx**: Main map component using react-simple-maps + TopoJSON with pinned marker support
+  - Client-side rendering only (useEffect hydration check prevents server/client mismatch)
+  - Pinned marker state for persistent tooltips on click
+  - Click-outside handler for closing tooltips
+  - Label collision detection with recursive angle adjustment
+  - Special label positioning for China-based labs (pushed downward)
 - **map-filters.tsx**: Toggle buttons for Frontier Labs, Data Centers, Manufacturers, Shipment Zones
-- **map-tooltip.tsx**: Context-aware hover tooltips
+- **map-tooltip.tsx**: Context-aware hover/pinned tooltips with click handlers
 - **map-legend.tsx**: Color-coded legend for entity types and statuses
 - **map-marker.tsx**: Reusable marker component (unused in current version, kept for extensibility)
 
@@ -323,6 +330,42 @@ Global compute infrastructure analysis for frontier AI development:
 - `getChipShipments()` - Semiconductor supply data
 - `getDataCentersByCountry(country)` - Filter by location
 - `getDataCentersByStatus(status)` - Filter by project status
+
+## EU AI Red Lines Feature (/ai-red-line-analysis)
+
+Universal 30-indicator red line framework for assessing frontier AI models against critical harm categories:
+
+### Data Structure (EUAIAnalysis component)
+Four severity tiers with 30 total indicators:
+
+1. **Category 1: Critical Harm (8 indicators)** - Direct severe harm, crimes, vulnerable populations
+   - CSAM prevention, fraud/identity theft, violence/terrorism incitement, harassment, children's data exploitation, sensitive data violation, biometric misuse, mass surveillance
+
+2. **Category 2: Systemic Harm (8 indicators)** - Discrimination affecting entire demographic groups
+   - Racial/ethnic, gender, employment, credit/financial, housing discrimination, defamation, vulnerability exploitation, algorithmic redlining
+
+3. **Category 3: Individual Harm (8 indicators)** - Individual rights, fairness, due process
+   - Unauthorized data processing, disability discrimination, age discrimination, lack of explainability, no human review, lack of contestation, deceptive marketing, dark patterns
+
+4. **Category 4: Emerging Standards (6 indicators)** - Transparency, emerging requirements, accountability
+   - Data transparency, data deletion, cross-border transfers, synthetic content disclosure, high-risk opacity, audit trails
+
+### Key Components
+- **EUAIAnalysis**: Main component displaying all 30 indicators with 4-lab comparison matrix
+- **StatusBadge**: Visual indicator for testing status ([X] tested, [~] partial, [ ] no evidence, [N/A] not applicable)
+- **CategoryMatrix**: Detailed table showing evidence levels for each indicator by lab
+
+### Evidence Levels
+- **[X] Strong Evidence**: Lab has tested capability + documented results
+- **[~] Partial Evidence**: Lab has policy + some testing or qualitative evidence
+- **[ ] No Evidence**: Not tested or documented
+- **[N/A] Not Applicable**: Outside lab's framework scope
+
+### Assessment Framework
+- Aggregates evidence across 4 labs (Anthropic, OpenAI, Google DeepMind, xAI)
+- 16 frontier AI models assessed (5 Anthropic, 4 OpenAI, 3 Google DeepMind, 4 xAI)
+- Highlights testing gaps vs. policy-only coverage
+- Identifies areas requiring stronger quantitative evaluation
 
 ## AI Incidents Feature (/ai-incidents)
 
@@ -438,6 +481,23 @@ Chart components in `/components/features/charts/`:
 
 **Color Assignment**: Model colors defined in `/lib/constants/thresholds.ts` CHART_COLORS object. Add new model colors there (e.g., xAI models use purple shades: #8B5CF6, #7C3AED, etc.)
 
+### Creating Comparison Matrices (Evidence/Assessment Tables)
+
+Matrix components displaying model-category or indicator-lab assessments:
+
+1. Define status levels as string union type (e.g., `type EvidenceLevel = "strong" | "partial" | "none" | "na"`)
+2. Create STATUS_MAP object for color/label mappings (e.g., `EVIDENCE_MAP`, `STATUS_COLORS`)
+3. Use category/indicator grouping with nested lab columns
+4. Apply status badges or color highlights per cell
+5. Include summary rows (Category Score, Total, etc.)
+6. Add legend section explaining evidence levels/status meanings
+
+**Example Pattern** (from EvidenceMatrix):
+- Definition Map: `labsByKey.get(lab) ?? null` (handle undefined from Map.get())
+- Status Color Mapping: `STATUS_COLORS[evidence] || default`
+- Category Grouping: `uniqueCategories.map(categoryId)` with nested `labs.map(lab)`
+- Highlighting: Conditional className based on whether lab "owns" the indicator/category
+
 ### Styling and Theme
 
 - **Utility classes**: Tailwind CSS (e.g., `className="flex items-center gap-4"`)
@@ -499,6 +559,15 @@ This pattern is reusable for other filter components (risk level, data center st
 - Use optional chaining and nullish coalescing for defensive programming
 - Provide fallback UI for missing data
 
+### TypeScript Type Safety
+
+- **Strict Mode**: `tsconfig.json` enforces strict null checks and strict property initialization
+- **Nullable vs Undefined**: Use `Type | null` for intentional absence, `Type | undefined` for optional values
+  - Example: `Map.get()` returns `T | undefined`, convert to `null` with `?? null` when needed for function signatures
+- **Union Types**: Prefer union types for multi-state values (e.g., `'strong' | 'partial' | 'none' | 'na'` for evidence levels)
+- **Discriminated Unions**: Use `type` fields to distinguish union variants (e.g., `{ type: 'lab'; data: FrontierLab } | { type: 'data-center'; data: DataCenterExpansion }`)
+- **Exhaustiveness Checking**: TypeScript will error if switch statements don't handle all union variants
+
 ### State Management
 
 The dashboard uses minimal state management (no Redux/Zustand):
@@ -553,11 +622,13 @@ Each assessment must cite specific sections and link to official system cards in
 - `/data/cross-lab/chip-manufacturers.json`: Chip manufacturers with shipment zones
 - `/public/maps/world-110m.json`: TopoJSON world map (105KB)
 
-**AI R&D & Compute:**
+**AI R&D, Compute & Red Lines:**
 - `/app/ai-rnd/page.tsx`: METR benchmarks and red line comparison dashboard
+- `/app/ai-red-line-analysis/page.tsx`: EU AI red lines (RED30) framework with 30-indicator assessment across 4 labs
 - `/app/compute-infrastructure/page.tsx`: Compute analysis dashboard (training scale, data centers, market concentration)
 - `/lib/data/cross-lab-data.ts`: AI R&D benchmark and red line definition accessors
 - `/lib/data/compute-infrastructure-transformers.ts`: Compute chart data formatters
+- `/components/features/dashboard/eu-ai-analysis.tsx`: RED30 framework component with 4 severity tiers
 - `/data/cross-lab/ai-rnd-benchmarks.json`: METR benchmark results and red line definitions
 - `/data/cross-lab/compute-infrastructure.json`: Training compute, data centers, chip shipments, compute concentration
 
@@ -606,6 +677,8 @@ Each assessment must cite specific sections and link to official system cards in
 - **Vercel deployment fails with ERESOLVE**: Ensure `.npmrc` with `legacy-peer-deps=true` is committed to git
 - **Map tooltips showing wrong data**: Verify data accessor functions return correct lab/manufacturer/data-center objects
 - **Loading skeleton shows indefinitely**: Check browser console for errors; common cause is missing or malformed TopoJSON data
+- **Pinned tooltips not closing**: Ensure click-outside handler is registered; check that `pinnedMarker` state is being updated correctly
+- **Label overlapping with markers**: Verify label rayLength configuration and collision detection algorithm in world-map.tsx
 
 **Styling and Theme:**
 - **Dark mode not applying**: Verify next-themes is initialized in `layout.tsx` and theme provider wraps page content
