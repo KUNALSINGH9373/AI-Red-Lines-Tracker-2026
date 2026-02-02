@@ -175,7 +175,7 @@ export function EvidenceMatrix({
                   </td>
 
                   {labs.map((lab) => {
-                    const labDef = labsByKey.get(lab);
+                    const labDef = labsByKey.get(lab) ?? null;
                     const evidence = determineEvidenceLevel(lab, labDef);
                     const evidenceCell = EVIDENCE_MAP[evidence];
 
