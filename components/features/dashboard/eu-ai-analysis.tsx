@@ -730,6 +730,203 @@ export function EUAIAnalysis() {
         </CardContent>
       </Card>
 
+      {/* Evidence Matrix - Testing vs Policy */}
+      <Card className="border-indigo-200 bg-indigo-50 dark:bg-indigo-950/20">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle2 className="h-5 w-5" />
+            What Labs Actually Test vs. What They Just Have Policies For
+          </CardTitle>
+          <CardDescription>
+            Visual summary showing evidence levels across all 30 red line indicators by lab
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {/* Legend */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="p-4 rounded-lg border bg-card">
+                <div className="flex items-start gap-3">
+                  <div className="text-lg font-bold text-green-600 flex-shrink-0">
+                    ✓
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm">[X] Strong Evidence</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Tested &amp; documented with quantitative evaluation
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg border bg-card">
+                <div className="flex items-start gap-3">
+                  <div className="text-lg font-bold text-yellow-600 flex-shrink-0">
+                    ~
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm">[~] Partial Evidence</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Policy exists with testing, or qualitative evidence
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg border bg-card">
+                <div className="flex items-start gap-3">
+                  <div className="text-lg font-bold text-red-600 flex-shrink-0">
+                    ○
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm">[ ] No Evidence</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Not tested/documented
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 rounded-lg border bg-card">
+                <div className="flex items-start gap-3">
+                  <div className="text-lg font-bold text-gray-600 flex-shrink-0">
+                    —
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm">[N/A] Not Applicable</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Not applicable to lab's scope or design
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Testing Status Summary Matrix */}
+            <div className="overflow-x-auto border rounded-lg">
+              <table className="w-full text-sm">
+                <thead className="bg-muted/50 border-b">
+                  <tr>
+                    <th className="p-4 text-left font-semibold border-r">Lab</th>
+                    <th className="p-4 text-center font-semibold border-r bg-green-50 dark:bg-green-950/20">
+                      [X] Strong
+                    </th>
+                    <th className="p-4 text-center font-semibold border-r bg-yellow-50 dark:bg-yellow-950/20">
+                      [~] Partial
+                    </th>
+                    <th className="p-4 text-center font-semibold border-r bg-red-50 dark:bg-red-950/20">
+                      [ ] None
+                    </th>
+                    <th className="p-4 text-center font-semibold bg-gray-50 dark:bg-gray-950/20">
+                      [N/A]
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b hover:bg-muted/25">
+                    <td className="p-4 font-semibold bg-red-50 dark:bg-red-950/20 border-r">
+                      Anthropic
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-green-600">2</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-yellow-600">8</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-red-600">10</span>
+                    </td>
+                    <td className="p-4 text-center">
+                      <span className="font-bold text-gray-600">10</span>
+                    </td>
+                  </tr>
+                  <tr className="border-b hover:bg-muted/25">
+                    <td className="p-4 font-semibold bg-blue-50 dark:bg-blue-950/20 border-r">
+                      OpenAI
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-green-600">2</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-yellow-600">7</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-red-600">11</span>
+                    </td>
+                    <td className="p-4 text-center">
+                      <span className="font-bold text-gray-600">10</span>
+                    </td>
+                  </tr>
+                  <tr className="border-b hover:bg-muted/25">
+                    <td className="p-4 font-semibold bg-green-50 dark:bg-green-950/20 border-r">
+                      Google DeepMind
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-green-600">2</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-yellow-600">7</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-red-600">11</span>
+                    </td>
+                    <td className="p-4 text-center">
+                      <span className="font-bold text-gray-600">10</span>
+                    </td>
+                  </tr>
+                  <tr className="border-b hover:bg-muted/25">
+                    <td className="p-4 font-semibold bg-purple-50 dark:bg-purple-950/20 border-r">
+                      xAI
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-green-600">3</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-yellow-600">7</span>
+                    </td>
+                    <td className="p-4 text-center border-r">
+                      <span className="font-bold text-red-600">10</span>
+                    </td>
+                    <td className="p-4 text-center">
+                      <span className="font-bold text-gray-600">10</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Summary Insights */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              <div className="p-4 rounded-lg border bg-blue-50 dark:bg-blue-950/20">
+                <h4 className="font-semibold text-sm mb-2 text-blue-900 dark:text-blue-100">
+                  What This Shows
+                </h4>
+                <ul className="text-xs text-blue-800 dark:text-blue-200 space-y-2">
+                  <li>
+                    <strong>[X] Strong:</strong> Red line defined + quantitatively tested
+                  </li>
+                  <li>
+                    <strong>[~] Partial:</strong> Policy defined with some testing or qualitative evaluation
+                  </li>
+                  <li>
+                    <strong>[ ] None:</strong> Category not formally tested or documented
+                  </li>
+                  <li>
+                    <strong>[N/A]:</strong> Not applicable to lab's framework or design scope
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg border bg-green-50 dark:bg-green-950/20">
+                <h4 className="font-semibold text-sm mb-2 text-green-900 dark:text-green-100">
+                  Key Insight
+                </h4>
+                <p className="text-xs text-green-800 dark:text-green-200">
+                  All four labs have policies covering ~20 indicators (strong + partial evidence). Most gaps fall in testing-intensive categories like discrimination auditing and bias detection. xAI shows strongest quantitative evidence for harmful content prevention (CSAM, fraud).
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Overview Section with Simple Charts */}
       <OverviewSection />
 

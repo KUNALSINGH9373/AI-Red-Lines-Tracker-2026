@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Globe, Building2, Cpu } from 'lucide-react';
+import { Globe, Building2, Cpu, Info } from 'lucide-react';
 
 interface MapFiltersProps {
   onFiltersChange: (filters: {
@@ -82,6 +82,11 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
           3
         </Badge>
       </button>
+
+      <div className="flex items-center gap-1.5 ml-auto text-xs text-muted-foreground">
+        <Info className="h-4 w-4" />
+        <span>Hover on each facility for more details</span>
+      </div>
     </div>
   );
 }

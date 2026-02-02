@@ -328,6 +328,13 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Important For Section */}
+          <div className="mb-8 p-4 rounded-lg border border-green-200 bg-green-50 dark:bg-green-950/20">
+            <p className="text-sm text-green-950 dark:text-green-200">
+              <strong>Important For:</strong> AI policymakers, safety researchers, institutional risk managers, and governance leaders monitoring frontier AI capabilities and risk assessments.
+            </p>
+          </div>
+
           {/* Map Filters */}
           <MapFilters onFiltersChange={setMapFilters} />
 

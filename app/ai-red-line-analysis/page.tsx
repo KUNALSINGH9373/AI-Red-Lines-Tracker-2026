@@ -7,7 +7,7 @@ export default function AIRedLineAnalysisPage() {
     <div>
       <div className="container py-8 pb-0">
         <div className="mb-8">
-          <h1 className="text-5xl font-bold mb-4">AI Red Line Analysis</h1>
+          <h1 className="text-5xl font-bold mb-4">RED30 Model Risk Analysis</h1>
           <p className="text-xl text-muted-foreground mb-8">
             30 Universal AI Red Line Indicators - Verified Comparison Across 16 Frontier Models
           </p>

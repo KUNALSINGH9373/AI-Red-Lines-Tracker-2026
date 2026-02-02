@@ -31,11 +31,40 @@ export function WorldMap({
     x: number;
     y: number;
   } | null>(null);
+  const [pinnedMarker, setPinnedMarker] = useState<{
+    type: 'lab' | 'data-center' | 'manufacturer';
+    data: FrontierLab | DataCenterExpansion | ChipManufacturer;
+    x: number;
+    y: number;
+  } | null>(null);
 
   // Ensure component only renders on client to avoid hydration mismatches
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  // Handle click outside to close pinned tooltip
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (pinnedMarker) {
+        const target = event.target as HTMLElement;
+        // Check if click is on the tooltip or map
+        const isOnTooltip = target.closest('[class*="max-w-sm"]') !== null;
+        const isOnMap = target.closest('svg') !== null;
+
+        // If click is outside both tooltip and map, close the pinned marker
+        if (!isOnTooltip && !isOnMap) {
+          setPinnedMarker(null);
+          setHoveredMarker(null);
+        }
+      }
+    };
+
+    if (isClient) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [pinnedMarker, isClient]);
 
   // Load data
   const labs = useMemo(() => (showLabs ? getFrontierLabs() : []), [showLabs]);
@@ -50,14 +79,20 @@ export function WorldMap({
 
   // Pre-calculate label distances with collision detection (recursive adjustment)
   const labDistances = useMemo(() => {
-    const rayLengths = [90, 110, 130, 100, 150, 95, 115, 105, 125, 135];
-    const configs = labs.map((lab, index) => ({
-      id: lab.id,
-      angle: (index * (360 / labs.length) + 45) * Math.PI / 180,
-      baseDistance: rayLengths[index % rayLengths.length],
-      width: 120,
-      height: 24,
-    }));
+    const rayLengths = [90, 110, 130, 100, 85, 80, 75, 90, 110, 120, 110];
+    const configs = labs.map((lab, index) => {
+      // Special handling for China-based labs to push labels downward
+      const isChina = lab.country === 'China';
+      const angleOffset = isChina ? 180 : 0; // Push China labs downward (opposite direction)
+
+      return {
+        id: lab.id,
+        angle: (index * (360 / labs.length) + 45 + angleOffset) * Math.PI / 180,
+        baseDistance: rayLengths[index % rayLengths.length],
+        width: 120,
+        height: 24,
+      };
+    });
     return calculateAdjustedLabels(configs, height);
   }, [labs, height]);
 
@@ -116,8 +151,33 @@ export function WorldMap({
     type: 'lab' | 'data-center' | 'manufacturer',
     data: FrontierLab | DataCenterExpansion | ChipManufacturer
   ) => {
-    const rect = event.currentTarget.getBoundingClientRect();
+    // Don't show hover tooltip if a marker is pinned
+    if (pinnedMarker) return;
+
     setHoveredMarker({
+      type,
+      data,
+      x: event.clientX,
+      y: event.clientY - 10,
+    });
+  };
+
+  const handleMarkerClick = (
+    event: any,
+    type: 'lab' | 'data-center' | 'manufacturer',
+    data: FrontierLab | DataCenterExpansion | ChipManufacturer
+  ) => {
+    event.stopPropagation();
+
+    // If this marker is already pinned, unpin it
+    if (pinnedMarker && pinnedMarker.data === data) {
+      setPinnedMarker(null);
+      setHoveredMarker(null);
+      return;
+    }
+
+    // Pin this marker
+    setPinnedMarker({
       type,
       data,
       x: event.clientX,
@@ -286,7 +346,8 @@ export function WorldMap({
                     {/* Label at ray end - Interactive */}
                     <g
                       onMouseMove={(e) => handleMarkerHover(e, 'lab', lab)}
-                      onMouseLeave={() => setHoveredMarker(null)}
+                      onMouseLeave={() => !pinnedMarker && setHoveredMarker(null)}
+                      onClick={(e) => handleMarkerClick(e, 'lab', lab)}
                       style={{ cursor: 'pointer' }}
                     >
                       <rect
@@ -393,7 +454,8 @@ export function WorldMap({
                       {/* Label - Interactive */}
                       <g
                         onMouseMove={(e) => handleMarkerHover(e, 'data-center', dc)}
-                        onMouseLeave={() => setHoveredMarker(null)}
+                        onMouseLeave={() => !pinnedMarker && setHoveredMarker(null)}
+                        onClick={(e) => handleMarkerClick(e, 'data-center', dc)}
                         style={{ cursor: 'pointer' }}
                       >
                         <rect
@@ -426,6 +488,16 @@ export function WorldMap({
                           textAnchor="middle"
                         >
                           {dc.location.state || dc.location.city}
+                        </text>
+                        <text
+                          x={labelX + 8}
+                          y={labelY + 8}
+                          fontSize="8"
+                          fontWeight="700"
+                          fill={color}
+                          textAnchor="start"
+                        >
+                          ℹ
                         </text>
                       </g>
                     </g>
@@ -493,7 +565,8 @@ export function WorldMap({
                     {/* Label - Interactive */}
                     <g
                       onMouseMove={(e) => handleMarkerHover(e, 'manufacturer', mfr)}
-                      onMouseLeave={() => setHoveredMarker(null)}
+                      onMouseLeave={() => !pinnedMarker && setHoveredMarker(null)}
+                      onClick={(e) => handleMarkerClick(e, 'manufacturer', mfr)}
                       style={{ cursor: 'pointer' }}
                     >
                       <rect
@@ -516,6 +589,16 @@ export function WorldMap({
                       >
                         {mfr.name}
                       </text>
+                      <text
+                        x={labelX + 8}
+                        y={labelY + 4}
+                        fontSize="9"
+                        fontWeight="700"
+                        fill={mfr.primaryColor}
+                        textAnchor="start"
+                      >
+                        ℹ
+                      </text>
                     </g>
                   </g>
                 </Marker>
@@ -525,13 +608,15 @@ export function WorldMap({
       </div>
 
       {/* Tooltip */}
-      {hoveredMarker && (
+      {(pinnedMarker || hoveredMarker) && (
         <MapTooltip
-          x={hoveredMarker.x}
-          y={hoveredMarker.y}
+          x={pinnedMarker?.x ?? hoveredMarker?.x ?? 0}
+          y={pinnedMarker?.y ?? hoveredMarker?.y ?? 0}
           visible={true}
-          data={hoveredMarker.data}
-          type={hoveredMarker.type}
+          data={pinnedMarker?.data ?? hoveredMarker?.data ?? null}
+          type={pinnedMarker?.type ?? hoveredMarker?.type ?? 'lab'}
+          isPinned={!!pinnedMarker}
+          onClose={() => setPinnedMarker(null)}
         />
       )}
 

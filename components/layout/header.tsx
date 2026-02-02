@@ -16,14 +16,14 @@ export function Header() {
               href="/ai-red-line-analysis"
               className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
             >
-              AI Red Line Analysis
+              RED30 Model Risk Analysis
             </Link>
             <span className="text-foreground/30">•</span>
             <Link
               href="/frontier-labs"
               className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
             >
-              Frontier Labs
+              Frontier Labs Risk Analysis
             </Link>
             <span className="text-foreground/30">•</span>
             <Link
@@ -36,7 +36,7 @@ export function Header() {
               href="/compute-infrastructure"
               className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium"
             >
-              Compute Infrastructure
+              Global Compute Infrastructure
             </Link>
             <span className="text-foreground/30">•</span>
             <Link

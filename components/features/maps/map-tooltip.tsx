@@ -1,7 +1,7 @@
 'use client';
 
 import { FrontierLab, DataCenterExpansion, ChipManufacturer } from '@/lib/types/risk-data';
-import { ExternalLink, MapPin, Building2, Cpu, Globe } from 'lucide-react';
+import { ExternalLink, MapPin, Building2, Cpu, Globe, X } from 'lucide-react';
 
 interface MapTooltipProps {
   x: number;
@@ -9,9 +9,11 @@ interface MapTooltipProps {
   visible: boolean;
   data: FrontierLab | DataCenterExpansion | ChipManufacturer | null;
   type: 'lab' | 'data-center' | 'manufacturer';
+  isPinned?: boolean;
+  onClose?: () => void;
 }
 
-export function MapTooltip({ x, y, visible, data, type }: MapTooltipProps) {
+export function MapTooltip({ x, y, visible, data, type, isPinned, onClose }: MapTooltipProps) {
   if (!visible || !data) return null;
 
   const content = getTooltipContent(data, type);
@@ -22,9 +24,20 @@ export function MapTooltip({ x, y, visible, data, type }: MapTooltipProps) {
       style={{
         left: `${x}px`,
         top: `${y}px`,
-        transform: 'translate(-50%, -120%)',
+        transform: 'translate(-50%, 20%)',
       }}
     >
+      {isPinned && onClose && (
+        <div className="flex justify-end mb-3 pb-3 border-b border-border">
+          <button
+            onClick={onClose}
+            className="p-1 hover:bg-muted rounded transition-colors"
+            title="Close"
+          >
+            <X className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+          </button>
+        </div>
+      )}
       {content}
     </div>
   );

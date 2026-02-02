@@ -37,7 +37,7 @@ export default function ComputeInfrastructureDashboard() {
       <div className="mb-12">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Compute Resources & Infrastructure</h1>
+            <h1 className="text-4xl font-bold mb-2">Global Compute Infrastructure</h1>
             <p className="text-muted-foreground text-lg">
               Track training compute, data centers, and AI chip shipments across frontier AI labs
             </p>
