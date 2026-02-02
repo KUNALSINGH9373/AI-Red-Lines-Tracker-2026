@@ -489,16 +489,6 @@ export function WorldMap({
                         >
                           {dc.location.state || dc.location.city}
                         </text>
-                        <text
-                          x={labelX + 8}
-                          y={labelY + 8}
-                          fontSize="8"
-                          fontWeight="700"
-                          fill={color}
-                          textAnchor="start"
-                        >
-                          ℹ
-                        </text>
                       </g>
                     </g>
                   </Marker>
@@ -588,16 +578,6 @@ export function WorldMap({
                         textAnchor="middle"
                       >
                         {mfr.name}
-                      </text>
-                      <text
-                        x={labelX + 8}
-                        y={labelY + 4}
-                        fontSize="9"
-                        fontWeight="700"
-                        fill={mfr.primaryColor}
-                        textAnchor="start"
-                      >
-                        ℹ
                       </text>
                     </g>
                   </g>
